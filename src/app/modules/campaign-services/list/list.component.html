@@ -1,0 +1,97 @@
+<div class="card">
+
+    <!-- table data -->
+    <p-table #campaignServiceData [value]="campaignAds" dataKey="campaignServiceId" styleClass="p-datatable-sm"
+        responsiveLayout="scroll" scrollHeight="calc(100vh - 333px)" [loading]="fetchingData">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-content-between">
+                <div class="flex">
+                    <a [routerLink]="'/campaigns'" [queryParams]="{ tab: '3' }">{{'Campaign' | translate}}</a>
+                </div>
+
+                <p-calendar [(ngModel)]="dateFilter" styleClass="pr-3" inputStyleClass="pr-5"
+                    placeholder="{{'Filter_by_date' | translate}}" [readonlyInput]="true" appendTo="body"
+                    (ngModelChange)="dateFilterChange($event)">
+                </p-calendar>
+                <button *ngIf="dateFilter?.length === 2" pButton pRipple type="button" icon="pi pi-times"
+                    style="position: absolute; top: 0; right: 1rem;" class="p-button-rounded p-button-text p-button-sm"
+                    (click)="clearDate()"></button>
+
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>{{'Status' | translate}}</th>
+                <th>{{'Campaign' | translate}}</th>
+                <th>{{'Project_name' | translate}}</th>
+                <th>{{'Customer' | translate}}</th>
+                <th>{{'Hotline' | translate}}</th>
+                <th>{{'Performance' | translate}}</th>
+                <th>{{'Account' | translate}}</th>
+                <th>{{'Ad_staff' | translate}}</th>
+                <th>{{'Cost_per_result' | translate}}</th>
+                <th>{{'Result' | translate}}</th>
+                <th>{{'Cost' | translate}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-campaignService let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="campaignService" *ngIf="campaignService.isActive">
+                <td>
+                    <p-inputSwitch (onChange)="changeState($event, campaignService)"
+                        [(ngModel)]="campaignService.isActive"></p-inputSwitch>
+                </td>
+                <td>
+                    <div>
+                        <div>{{campaignService.customerName}}</div>
+                        <div>{{campaignService.project}}</div>
+                        <div>{{campaignService.serviceName}}</div>
+                    </div>
+                </td>
+                <td>{{campaignService.project}}</td>
+                <td>{{campaignService.customerName}}</td>
+                <td>{{campaignService.hotline}}</td>
+                <td>{{campaignService.campaign.performanceString}}</td>
+                <td>{{campaignService.adAccount}}</td>
+                <td>{{campaignService.adStaffName}}</td>
+                <td>{{campaignService.campaignAdsIndex.cpr | number}}</td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.result"
+                                (onBlur)="changeAmount(campaignService)" required>
+                            </p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <input pInputText type="text" disabled
+                                value="{{(campaignService.campaignAdsIndex.result ? campaignService.campaignAdsIndex.result : 0) | number}}">
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.amount"
+                                (onBlur)="changeAmount(campaignService)" required>
+                            </p-inputNumber>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <input pInputText type="text" disabled
+                                value="{{(campaignService.campaignAdsIndex.amount ? campaignService.campaignAdsIndex.amount : 0) | number}}">
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="flex justify-content-end">
+                <button pButton styleClass="p-button-sm"
+                    label="{{'Update' | translate}} {{recordsHasChanged.length}} {{'Records' | translate}}"
+                    (click)="updateCost()" [disabled]="!recordsHasChanged.length"></button>
+            </div>
+        </ng-template>
+    </p-table>
+
+    <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+        [rowsPerPageOptions]="[10, 20, 50, 100]"></p-paginator>
+</div>

@@ -1,0 +1,100 @@
+<div class="field">
+    <label for="organization" class="block">{{'Organization' | translate}}</label>
+    <p-dropdown inputId="organization" [options]="organizations" styleClass="w-full" [filter]="true"
+        filterValue="fullname" placeholder="{{'Select_organization' | translate}}" [disabled]="dialogConfig?.data?.method"
+        [(ngModel)]="dialogData.oraginzationId" (ngModelChange)="organizationChange($event)"
+        optionLabel="organizationName" appendTo="body" optionValue="organizationId">
+    </p-dropdown>
+</div>
+
+<div class="field">
+    <label for="customer" class="block">{{'Customer' | translate}}</label>
+    <p-dropdown inputId="customer" [options]="customers" styleClass="w-full" [filter]="true" filterValue="fullname" [disabled]="dialogConfig?.data?.method"
+        placeholder="{{'Select_customer' | translate}}" [(ngModel)]="dialogData.customerId" optionLabel="fullname"
+        appendTo="body" optionValue="userId">
+    </p-dropdown>
+    <small *ngIf="!dialogData.customerId && invalid" class="p-error">{{'Customer_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="project" class="block">{{'Project' | translate}}</label>
+    <p-dropdown inputId="project" [options]="projects" styleClass="w-full" [filter]="true" filterValue="name" [disabled]="dialogConfig?.data?.method"
+        placeholder="{{'Select_project' | translate}}" [(ngModel)]="dialogData.projectId" optionLabel="name"
+        appendTo="body" optionValue="projectId">
+    </p-dropdown>
+    <small *ngIf="!dialogData.projectId && invalid" class="p-error">{{'Project_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="hotline" class="block">{{'Hotline' | translate}}</label>
+    <input id="hotline" type="text" pInputText class="w-full" [(ngModel)]="dialogData.hotline" autocomplete="off" [disabled]="dialogConfig?.data?.method"/>
+    <small *ngIf="!dialogData.hotline && invalid" class="p-error">{{'Hotline_required' | translate}}</small>
+</div>
+
+<!-- <div class="field">
+    <label for="hotline" class="block">{{'Target' | translate}}</label>
+    <input id="hotline" type="text" pInputText class="w-full" [(ngModel)]="dialogData.goal" autocomplete="off" />
+</div> -->
+
+<div class="field">
+    <label for="description" class="block">{{'Description' | translate}}</label>
+    <textarea pInputTextarea id="description" type="text" pInputText class="w-full" [(ngModel)]="dialogData.description" [disabled]="dialogConfig?.data?.method"
+        autocomplete="off"></textarea>
+    <!-- <small *ngIf="!dialogData.description && invalid" class="p-error">{{'Description_required' | translate}}</small> -->
+</div>
+
+
+<!-- <div class="field">
+    <label for="dailyPayment" class="block">{{'Daily_payment' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.dailyPayment" class="w-full" styleClass="w-full" inputId="dailyPayment"
+        autocomplete="off"></p-inputNumber>
+</div> -->
+
+<div class="field">
+    <label for="feeType" class="block">{{'Fee_type' | translate}}</label>
+    <p-dropdown inputId="feeType" [options]="feeType" styleClass="w-full" [filter]="true" filterValue="label" [disabled]="dialogConfig?.data?.method"
+        placeholder="{{'Select_fee_type' | translate}}" [(ngModel)]="dialogData.feeType" optionLabel="label"
+        appendTo="body" optionValue="value">
+    </p-dropdown>
+</div>
+
+<div class="field" *ngIf="dialogData.feeType === 1">
+    <label for="fixedRate" class="block">{{'Fixed_rate' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.fixedRate" class="w-full" styleClass="w-full" inputId="fixedRate" suffix=" %" [disabled]="dialogConfig?.data?.method"
+        autocomplete="off"></p-inputNumber>
+    <small *ngIf="!dialogData.fixedRate && invalid" class="p-error">{{'Fee_required' | translate}}</small>
+</div>
+
+<div class="field" *ngIf="dialogData.feeType === 2">
+    <label for="dateRange" class="block">{{'Start_date' | translate}}</label>
+    <p-calendar [(ngModel)]="startDate" styleClass="w-full" showIcon="true" appendTo="body" [disabled]="dialogConfig?.data?.method"></p-calendar>
+</div>
+
+<div class="field" *ngIf="dialogData.feeType === 2">
+    <label for="fixedAmount" class="block">{{'Fixed_amount' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.fixedAmount" class="w-full" styleClass="w-full" inputId="fixedAmount" [disabled]="dialogConfig?.data?.method"
+        autocomplete="off"></p-inputNumber>
+    <small *ngIf="!dialogData.fixedAmount && invalid" class="p-error">{{'Fee_required' | translate}}</small>
+</div>
+
+<div class="field" *ngIf="dialogData.feeType === 3">
+    <label for="dailyPayment" class="block">{{'Custom_rate' | translate}}</label>
+    <input id="dailyPayment" type="text" pInputText class="w-full" [(ngModel)]="dialogData.dailyPayment" [disabled]="dialogConfig?.data?.method"
+        autocomplete="off" />
+</div>
+
+
+
+<div class="flex justify-content-end mt-3" *ngIf="!dialogConfig?.data?.method">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" *ngIf="!dialogConfig.data?.campaignId" styleClass="p-button-text"
+        (click)="create()">
+    </p-button>
+
+    <!-- <p-button icon="pi pi-check" label="{{'Update' | translate}}" *ngIf="dialogConfig?.data" styleClass="p-button-text"
+        (click)="update()">
+    </p-button> -->
+</div>

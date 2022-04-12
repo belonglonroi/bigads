@@ -1,0 +1,28 @@
+<div class="flex flex-column md:flex-row">
+    <div class="card md:w-4 w-full mr-4 flex flex-column justify-content-center align-items-center">
+        <p-avatar styleClass="w-6rem h-6rem m-3" [image]="user.avatar" shape="circle" size="xlarge"></p-avatar>
+
+        <span class="text-xl font-medium">{{user.lastName + ' ' + user.firstName}}</span>
+        <span class="mb-3">({{user.email}})</span>
+
+        <div class="flex justify-content-between w-full mb-2">
+            <span>{{'Phone' | translate}}</span>
+            <span>{{user.phone}}</span>
+        </div>
+
+        <div class="flex justify-content-between w-full mb-2">
+            <span>{{'Gender' | translate}}</span>
+            <span>{{user.genderId === 1 ? 'Nữ' : 'Nam'}}</span>
+        </div>
+
+        <div class="flex justify-content-between w-full mb-2">
+            <span>{{'Role' | translate}}</span>
+            <span>{{user.userRole?.roleName}}</span>
+        </div>
+
+        <p-button label="{{'Update_profile' | translate}}" icon="pi pi-user-edit" styleClass="p-button-sm w-full p-button-info" (click)="openDialogUpdateProfile()" class="w-full px-4 py-2"></p-button>
+        <p-button label="{{'Change_password' | translate}}" icon="pi pi-key" styleClass="p-button-sm w-full p-button-danger" (click)="openDialogChangePass()" class="w-full px-4"></p-button>
+
+    </div>
+    <div class="card md:w-8 w-full"></div>
+</div>

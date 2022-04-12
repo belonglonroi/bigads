@@ -1,0 +1,108 @@
+<div class="card">
+
+    <div class="flex justify-content-between mb-3">
+        <div>
+            <span class="p-input-icon-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" placeholder="{{'Search_by_customer' | translate}}"
+                    [ngModel]="customerName" (ngModelChangeDebounced)="searchByCustomer($event)">
+            </span>
+            <button type="text" pButton label="{{'Campaign_filter' | translate}}" icon="pi pi-filter"
+                class="p-button-text" (click)="filterUpdate = undefined; op.toggle($event)"></button>
+            <p-overlayPanel #op>
+                <ng-template pTemplate>
+                    <app-campaign-filter [filterUpdate]="filterUpdate" (updated)="op.toggle($event)">
+                    </app-campaign-filter>
+                </ng-template>
+            </p-overlayPanel>
+            <p-chip *ngFor="let item of filterBinding" [label]="getFilterItem(item)" [removable]="true"
+                styleClass="p-1 mx-1 border-round cursor-pointer" (onRemove)="removeFilter(item)"
+                (click)="filterUpdate = item; op.toggle($event)">
+            </p-chip>
+        </div>
+
+        <div class="relative">
+            <!-- <span class="mr-3">{{'Created_date' | translate}}</span> -->
+            <p-calendar #calendar [(ngModel)]="dateFilter" styleClass="pr-3" inputStyleClass="pr-5" [numberOfMonths]="2"
+                placeholder="{{'Filter_by_date' | translate}}" selectionMode="range" [readonlyInput]="true"
+                (ngModelChange)="dateFilterChange($event)">
+                <p-footer>
+                    <button type="text" pButton label="{{'Today' | translate}}" class="p-button-text"
+                        (click)="selectDate(1); calendar.toggle()"></button>
+                    <button type="text" pButton label="{{'Yesterday' | translate}}" class="p-button-text"
+                        (click)="selectDate(2); calendar.toggle()"></button>
+                    <button type="text" pButton label="{{'7_days_ago' | translate}}" class="p-button-text"
+                        (click)="selectDate(3); calendar.toggle()"></button>
+                    <button type="text" pButton label="{{'30_days_ago' | translate}}" class="p-button-text"
+                        (click)="selectDate(4); calendar.toggle()"></button>
+                    <button type="text" pButton label="{{'This_month' | translate}}" class="p-button-text"
+                        (click)="selectDate(5); calendar.toggle()"></button>
+                    <button type="text" pButton label="{{'Last_month' | translate}}" class="p-button-text"
+                        (click)="selectDate(6); calendar.toggle()"></button>
+                </p-footer>
+            </p-calendar>
+            <button *ngIf="dateFilter?.length === 2" pButton pRipple type="button" icon="pi pi-times"
+                style="position: absolute; top: 0; right: 1rem;" class="p-button-rounded p-button-text p-button-sm"
+                (click)="clearDate()"></button>
+        </div>
+    </div>
+
+    <p-tabView styleClass="w-full" [activeIndex]="activeIndex">
+
+        <p-tabPanel *ngIf="actions.includes(500)" headerStyleClass="w-4" [cache]="false">
+
+            <ng-template pTemplate="header">
+                <span>{{'Organization' | translate}}</span>
+                <p-chip label="{{('Selected_item' | translate) + ' ' + selectedOrganizations.length}}"
+                    *ngIf="selectedOrganizations?.length > 0" [removable]="true"
+                    (onRemove)="selectedOrganizationsRemoved()" styleClass="custom-chip z-5"></p-chip>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+                <app-organization [organizationsInput]="selectedOrganizations"></app-organization>
+            </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel headerStyleClass="w-4" [cache]="false">
+
+            <ng-template pTemplate="header">
+                <span>{{'Customer' | translate}}</span>
+                <p-chip label="{{('Selected_item' | translate) + ' ' + selectedCustomers.length}}"
+                    *ngIf="selectedCustomers?.length > 0" [removable]="true" (onRemove)="selectedCustomersRemoved()"
+                    styleClass="custom-chip z-5"></p-chip>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+                <app-customer [customerName]="customerName" [organizationsInput]="selectedOrganizations" [customersInput]="selectedCustomers">
+                </app-customer>
+            </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel headerStyleClass="w-4" [cache]="false">
+            <ng-template pTemplate="header">
+                <span>{{'Project' | translate}}</span>
+                <p-chip label="{{('Selected_item' | translate) + ' ' + selectedProjects.length}}"
+                    *ngIf="selectedProjects?.length > 0" [removable]="true" (onRemove)="selectedProjectsRemoved()"
+                    styleClass="custom-chip z-5"></p-chip>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+                <app-project></app-project>
+            </ng-template>
+        </p-tabPanel>
+
+        <p-tabPanel headerStyleClass="w-4" [cache]="false">
+            <ng-template pTemplate="header">
+                <span>{{'Campaign' | translate}}</span>
+                <p-chip label="{{('Selected_item' | translate) + ' ' + selectedCampaignAds.length}}"
+                    *ngIf="selectedCampaignAds?.length > 0" [removable]="true" (onRemove)="selectedCampaignAdsRemoved()"
+                    styleClass="custom-chip z-5"></p-chip>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+                <app-campaign-ad></app-campaign-ad>
+            </ng-template>
+        </p-tabPanel>
+    </p-tabView>
+
+</div>

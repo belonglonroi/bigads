@@ -1,0 +1,56 @@
+<div class="card">
+    <p-treeTable #serviceData [value]="services" responsiveLayout="scroll" styleClass="p-treetable-sm"
+        scrollHeight="calc(100vh - 333px)" [loading]="fetchingData">
+        <ng-template *ngIf="actions.includes(301)" pTemplate="caption">
+            <div class="flex">
+                <p-button label="{{'Add_service' | translate}}" icon="pi pi-plus" styleClass="p-button-sm"
+                    (click)="openDialog()"></p-button>
+                <!-- <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="serviceData.filterGlobal($event.target.value, 'contains')"
+                        [value]="serviceData.filters['global']?.value"
+                        placeholder="{{'Search_placeholder' | translate}}" />
+                </span> -->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 5rem" ttResizableColumn></th>
+                <th>{{'Name' | translate}}</th>
+                <th>{{'Description' | translate}}</th>
+                <th>{{'Created_by' | translate}}</th>
+                <th>{{'Created_date' | translate}}</th>
+                <th>{{'Last_modified' | translate}}</th>
+                <th ttResizableColumn style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr [ttRow]="rowNode">
+                <td style="width: 5rem">
+                    <p-inputSwitch [disabled]="!actions.includes(304)" [(ngModel)]="rowData.isActive" (onChange)="toggleState(rowData, $event)">
+                    </p-inputSwitch>
+                </td>
+                <td>
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    {{rowData.serviceName}}
+                </td>
+                <td>{{rowData.description}}</td>
+                <td>{{rowData.createdName}}</td>
+                <td>{{rowData.createdDate}}</td>
+                <td>{{rowData.modifiedDate}}</td>
+                <td style="min-width: 100px; max-width: 120px;">
+                    <button [disabled]="!actions.includes(302)" pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Update' | translate}}"
+                        tooltipPosition="top" class="p-button-rounded p-button-text"
+                        (click)="openDialog(rowData)"></button>
+
+                    <button [disabled]="!actions.includes(303)" pButton pRipple type="button" icon="pi pi-trash" pTooltip="{{'Delete' | translate}}"
+                        tooltipPosition="top" class="p-button-rounded p-button-text p-button-danger"
+                        (click)="delete(rowData)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+
+    <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+        [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
+</div>

@@ -1,0 +1,93 @@
+<div class="field">
+    <label for="name" class="block">{{'Name' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.name" autocomplete="off"
+        [disabled]="config.data?.method" />
+    <small *ngIf="!dialogData.name && invalid" class="p-error">{{'Name_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="campaign" class="block">{{'Customer' | translate}}</label>
+    <p-dropdown [options]="customers" styleClass="w-full" [(ngModel)]="dialogData.customerId"
+        [disabled]="config.data?.method" (ngModelChange)="changeCustomer($event)" optionLabel="fullname"
+        optionValue="userId" placeholder="{{ 'Select_customer' | translate }}" [filter]="true" appendTo="body"
+        filterBy="fullname">
+    </p-dropdown>
+    <small *ngIf="!dialogData.customerId && invalid" class="p-error">{{'Customer_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="campaign" class="block">{{'Project' | translate}}</label>
+    <p-dropdown [options]="filterCampaigns" styleClass="w-full" [(ngModel)]="dialogData.campaignId"
+        [disabled]="config.data?.method" optionLabel="projectName" optionValue="campaignId"
+        placeholder="{{ 'Select_project' | translate }}" [filter]="true" appendTo="body" filterBy="projectName">
+    </p-dropdown>
+    <small *ngIf="!dialogData.campaignId && invalid" class="p-error">{{'Campaign_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="service" class="block">{{'Service' | translate}}</label>
+    <p-dropdown [options]="services" styleClass="w-full" [(ngModel)]="dialogData.serviceId" optionLabel="serviceName"
+        optionValue="serviceId" appendTo="body" placeholder="{{ 'Select_service' | translate }}" [filter]="true"
+        [disabled]="config.data?.method" filterBy="serviceName">
+        <ng-template let-service pTemplate="item">
+            <div [ngStyle]="{'padding-left': service.isChildren? '1rem' : '0'}">{{service.serviceName}}</div>
+        </ng-template>
+    </p-dropdown>
+    <small *ngIf="!dialogData.serviceId && invalid" class="p-error">{{'Organization_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="adStaff" class="block">{{'Ad_staff' | translate}}</label>
+    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.adStaffId" optionLabel="fullname"
+        optionValue="userId" appendTo="body" placeholder="{{ 'Select_ad_staff' | translate }}" [filter]="true"
+        [disabled]="config.data?.method" filterBy="fullname">
+    </p-dropdown>
+</div>
+
+<div class="field">
+    <label for="contentStaff" class="block">{{'Content_staff' | translate}}</label>
+    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.contentStaffId" optionLabel="fullname"
+        [disabled]="config.data?.method" optionValue="userId" appendTo="body"
+        placeholder="{{ 'Select_content_staff' | translate }}" [filter]="true" filterBy="fullname">
+    </p-dropdown>
+</div>
+
+
+<div class="field">
+    <label for="planningStaff" class="block">{{'Planning_staff' | translate}}</label>
+    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.planningStaffId"
+        optionLabel="fullname" optionValue="userId" appendTo="body" [disabled]="config.data?.method"
+        placeholder="{{ 'Select_planning_staff' | translate }}" [filter]="true" filterBy="fullname">
+    </p-dropdown>
+</div>
+
+<div class="field">
+    <label for="goal" class="block">{{'Target' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.goal" class="w-full" styleClass="w-full" inputId="goal" autocomplete="off"
+        [disabled]="config.data?.method">
+    </p-inputNumber>
+    <!-- <small *ngIf="!dialogData.goal && invalid" class="p-error">{{'Amount_required' | translate}}</small> -->
+</div>
+
+<div class="field">
+    <label for="note" class="block">{{'Description' | translate}}</label>
+    <textarea pInputTextarea class="w-full" [(ngModel)]="dialogData.description"
+        [disabled]="config.data?.method"></textarea>
+</div>
+
+<div class="field">
+    <label for="dateRange" class="block">{{'Start_date' | translate}}</label>
+    <p-calendar [(ngModel)]="startDate" styleClass="w-full" showIcon="true" appendTo="body"
+        [disabled]="config.data?.method"></p-calendar>
+</div>
+
+
+
+<div class="flex justify-content-end mt-3" *ngIf="!config.data?.method">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" *ngIf="!config.data?.campaignServiceId"
+        (click)="create()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" styleClass="p-button-text" *ngIf="config.data?.campaignServiceId"
+        (click)="update()"></p-button>
+</div>

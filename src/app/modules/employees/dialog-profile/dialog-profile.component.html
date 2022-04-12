@@ -1,0 +1,41 @@
+<div class="field">
+    <label for="lastName" class="block">{{'Last_name' | translate}}</label>
+    <input id="lastName" type="text" pInputText class="w-full" [(ngModel)]="dialogData.lastName" autocomplete="off" />
+    <small *ngIf="!dialogData.lastName && invalid" class="p-error">{{'Lastname_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="firstName" class="block">{{'First_name' | translate}}</label>
+    <input id="firstName" type="text" pInputText class="w-full" [(ngModel)]="dialogData.firstName" autocomplete="off" />
+    <small *ngIf="!dialogData.firstName && invalid" class="p-error">{{'Firstname_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="firstName" class="block">{{'Gender' | translate}}</label>
+    <p-dropdown [options]="gender" styleClass="w-full" [(ngModel)]="dialogData.genderId" optionLabel="label"
+        appendTo="body" optionValue="genderId">
+    </p-dropdown>
+    <small *ngIf="!dialogData.genderId && invalid" class="p-error">{{'Gender_required' |
+        translate}}</small>
+</div>
+
+<button pButton class="mb-3 block" mode="basic" accept="image/*" maxFileSize="1000000" (click)="file.click()"
+    (change)="selectFileHandler($event)" label="{{'Choose_image' | translate}}"></button>
+<input type="file" #file style="display: none;" (change)="selectFileHandler($event)" accept="image/*">
+<p-image *ngIf="this.dialogData.image" [src]="imagePreview" alt="avatar" width="100" height="100"></p-image>
+
+<div class="field">
+    <label for="email" class="block">{{'Email' | translate}}</label>
+    <input id="email" type="text" pInputText class="w-full" [(ngModel)]="dialogData.email" autocomplete="off" />
+</div>
+
+
+
+<div class="flex justify-content-end mt-3">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" (click)="submitHandler()">
+    </p-button>
+</div>

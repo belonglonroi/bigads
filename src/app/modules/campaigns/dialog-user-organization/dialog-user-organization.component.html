@@ -1,0 +1,21 @@
+<div style="position: relative; overflow: hidden;">
+    <div class="overlay" *ngIf="isLoading">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    </div>
+    <div class="field">
+        <label for="owner">{{'Owner' | translate}}</label>
+        <p-dropdown [disabled]="!actions.includes(202)" inputId="owner" styleClass="w-full" [options]="customers"
+            [(ngModel)]="dialogData.owner" (ngModelChange)="changeOwner($event)" optionLabel="fullname"
+            placeholder="{{'Owner_selected' | translate}}" optionValue="userId" appendTo="body" filter="true">
+        </p-dropdown>
+    </div>
+
+    <div class="field">
+        <label for="member">{{'Member' | translate}}</label>
+        <p-multiSelect [disabled]="!actions.includes(201)" inputId="member" styleClass="w-full" [options]="customers"
+            [(ngModel)]="dialogData.member" optionLabel="fullname" placeholder="{{'Member_selected' | translate}}"
+            optionValue="userId" selectedItemsLabel="{0} {{'Items_selected' | translate}}" appendTo="body"
+            (onChange)="changeHandler($event)">
+        </p-multiSelect>
+    </div>
+</div>

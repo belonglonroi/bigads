@@ -1,0 +1,92 @@
+<div class="card">
+
+    <!-- table data -->
+    <p-table #employeesData [value]="employees" styleClass="p-datatable-sm" dataKey="userId" responsiveLayout="scroll"
+        scrollHeight="calc(100vh - 333px)" [loading]="fetchingData">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <div class="flex">
+                    <p-button label="{{'Add_employee' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"
+                        (click)="openDialogCreate()"></p-button>
+                    <p-splitButton label="{{'Add_employee_from_Excel' | translate}}" icon="pi pi-plus" [model]="items">
+                    </p-splitButton>
+                    <input type="file" #file style="display: none;" (change)="selectFileHandler($event)"
+                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    <a #template href="/assets/template/template_create_employees.xlsx"></a>
+                </div>
+                <!-- <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="employeesData.filterGlobal($event.target.value, 'contains')"
+                        placeholder="{{'Search_placeholder' | translate}}" />
+                </span> -->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>{{'Full_name' | translate}}</th>
+                <th>{{'Role' | translate}}</th>
+                <th>{{'Email' | translate}}</th>
+                <th>{{'Phone' | translate}}</th>
+                <th>{{'Gender' | translate}}</th>
+                <th>{{'Last_login' | translate}}</th>
+                <th>{{'Action' | translate}}</th>
+            </tr>
+            <tr>
+                <th>
+                    <input pInputText type="text" class="w-full" [ngModel]="filter.name"
+                        (ngModelChangeDebounced)="changeFilter($event, 'name')"
+                        placeholder="{{'Search_by_name' | translate}}" />
+                </th>
+                <th>
+                    <p-dropdown [options]="roles" [(ngModel)]="filter.roleId" optionLabel="roleName" styleClass="w-full"
+                        optionValue="roleId" appendTo="body" placeholder="{{'Select_role' | translate}}"
+                        (ngModelChange)="changeFilter($event, 'roleId')">
+                    </p-dropdown>
+                </th>
+                <th></th>
+                <th>
+                    <input pInputText type="text" class="w-full" [ngModel]="filter.phone"
+                        (ngModelChangeDebounced)="changeFilter($event, 'phone')"
+                        placeholder="{{'Search_by_phone' | translate}}" />
+                </th>
+                <th></th>
+                <th></th>
+                <th>
+                    <p-dropdown [options]="status" [(ngModel)]="filter.isActive" optionLabel="label" styleClass="w-full"
+                        optionValue="value" appendTo="body" placeholder="{{'Status' | translate}}"
+                        (ngModelChange)="changeFilter($event, 'isActive')">
+                    </p-dropdown>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employee>
+            <tr>
+                <td>
+                    <div class="flex align-items-center">
+                        <p-avatar [image]="employee.avatar" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                        {{employee.fullname}}
+                    </div>
+                </td>
+                <td>{{employee.role}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.phone}}</td>
+                <td>{{employee.gender}}</td>
+                <td>{{employee.lastLogin | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>
+                    <button [disabled]="!actions.includes(103)" pButton pRipple type="button" icon="pi pi-sliders-v"
+                        pTooltip="{{'Role' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                        (click)="openDialogPromoteRole(employee)"></button>
+
+                    <button [disabled]="!actions.includes(101) || !actions.includes(102)" pButton pRipple type="button"
+                        icon="{{ employee.isActive ? 'pi pi-lock' : 'pi pi-lock-open' }}"
+                        pTooltip="{{employee.isActive ? ('Deactive' | translate) : ('Active' | translate)}}"
+                        tooltipPosition="top" class="p-button-rounded p-button-text p-button-secondary"
+                        (click)="changeStateHandler(employee)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+        [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
+</div>

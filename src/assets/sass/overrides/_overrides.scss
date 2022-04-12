@@ -1,0 +1,22 @@
+// Suggested location to add your overrides so that migration would be easy by just updating the SASS folder in the future
+.p-datatable-loading-overlay, .p-treetable-loading-overlay {
+    background-color: white;
+}
+
+.p-splitbutton-defaultbutton, .p-splitbutton-menubutton {
+    font-size: 0.875rem !important;
+    padding: 0.4375rem 0.875rem !important;
+}
+
+.p-button:disabled {
+    cursor: not-allowed;
+}
+
+.layout-sidebar {
+    width: 200px;
+}
+// p-inputswitch {
+//     &:disabled {
+//         cursor: not-allowed;
+//     }
+// }

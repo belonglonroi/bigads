@@ -1,0 +1,17 @@
+:host ::ng-deep .p-chip.custom-chip {
+    background: var(--primary-color);
+    color: var(--primary-color-text);
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+:host ::ng-deep .p-chip.campaign-filter-chip {
+    background: var(--primary-color);
+    color: var(--primary-color-text);
+    // position: absolute;
+    // right: 0.5rem;
+    // top: 50%;
+    // transform: translate(0, -50%);
+}

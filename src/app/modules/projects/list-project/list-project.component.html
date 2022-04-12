@@ -1,0 +1,57 @@
+<div class="card">
+
+    <!-- table data -->
+    <p-table #projectData [value]="projects" styleClass="p-datatable-sm" responsiveLayout="scroll"
+        scrollHeight="calc(100vh - 333px)" [loading]="fetchingData">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <p-button *ngIf="actions.includes(401)" label="{{'Add_project' | translate}}" icon="pi pi-plus"
+                    styleClass="p-button-sm" (click)="openDialog()"></p-button>
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [ngModel]="filter.name"
+                        (ngModelChangeDebounced)="searchByName($event)"
+                        placeholder="{{'Search_placeholder' | translate}}" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th pResizableColumn></th> -->
+                <th>{{'Name' | translate}}</th>
+                <th>{{'Description' | translate}}</th>
+                <th>{{'Created_by' | translate}}</th>
+                <th>{{'Created_date' | translate}}</th>
+                <th>{{'Last_modified' | translate}}</th>
+                <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-project>
+            <tr>
+                <!-- <td>
+                    <p-inputSwitch [(ngModel)]="role.isActive" (onChange)="toggleState(role, $event)"></p-inputSwitch>
+                </td> -->
+                <td>
+                    {{project.name}}
+                </td>
+                <td>{{project.description}}</td>
+                <td>{{project.createdName}}</td>
+                <td>{{project.createdDate}}</td>
+                <td>{{project.modifiedDate}}</td>
+                <td style="min-width: 100px; max-width: 120px;">
+                    <button [disabled]="!actions.includes(402)" pButton pRipple type="button" icon="pi pi-pencil"
+                        pTooltip="{{'Edit' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                        (click)="openDialog(project)"></button>
+
+                    <button [disabled]="!actions.includes(403)" pButton pRipple type="button" icon="pi pi-trash"
+                        pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                        class="p-button-rounded p-button-text p-button-danger" (click)="delete(project)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+        [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
+
+</div>

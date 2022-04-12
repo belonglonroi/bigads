@@ -1,0 +1,119 @@
+<div class="field">
+    <label for="name" class="block">{{'Campaign_service' | translate}}</label>
+    <p-dropdown [options]="campaignServices" styleClass="w-full" [(ngModel)]="dialogData.campaignServiceId"
+        optionLabel="name" optionValue="campaignServiceId"
+        placeholder="{{ 'Select_campaign_service' | translate }}" [filter]="true" filterBy="name">
+    </p-dropdown>
+    <small *ngIf="!dialogData.campaignServiceId && invalid" class="p-error">{{'Lastname_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Ad_account' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.adAccount" autocomplete="off" />
+    <small *ngIf="!dialogData.adAccount && invalid" class="p-error">{{'Ad_account_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Amount' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.amount" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+    <small *ngIf="!dialogData.amount && invalid" class="p-error">{{'Amount_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Cpm' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.cpm" class="w-full" styleClass="w-full" inputId="feeRate" autocomplete="off">
+    </p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Cpc' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.cpc" class="w-full" styleClass="w-full" inputId="feeRate" autocomplete="off">
+    </p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Ctr' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.ctr" class="w-full" styleClass="w-full" inputId="feeRate" autocomplete="off">
+    </p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Result' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.result" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'View' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.view" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Frequency' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.frequency" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Approach' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.approach" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Message' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.message" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Comment' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.comment" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Click' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.click" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+    <small *ngIf="!dialogData.click && invalid" class="p-error">{{'Click_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Like' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.like" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Time_view' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.timeView" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Video_view' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.videoView" class="w-full" styleClass="w-full" inputId="feeRate"
+        autocomplete="off"></p-inputNumber>
+</div>
+
+<div class="field">
+    <label for="date" class="block">{{'Input_date' | translate}}</label>
+    <p-calendar appendTo="body" inputId="date" [(ngModel)]="dialogData.inputDate" styleClass="w-full"
+        dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+    <small *ngIf="!dialogData.inputDate && invalid" class="p-error">{{'Payment_date_required' | translate}}</small>
+</div>
+
+
+<div class="flex justify-content-end mt-3">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" *ngIf="!dialogConfig.data" styleClass="p-button-text"
+        (click)="create()">
+    </p-button>
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" *ngIf="dialogConfig?.data" styleClass="p-button-text"
+        (click)="update()">
+    </p-button>
+</div>

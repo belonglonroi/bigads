@@ -1,0 +1,42 @@
+<div class="surface-card flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+        <div class="col-12 mt-5 xl:mt-0 text-center">
+            <img src="assets/images/logo-svg.svg" alt="logo" style="height:6rem;">
+        </div>
+        <div class="col-12 xl:col-6"
+            style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, rgba(33, 150, 243, 0.4) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="surface-card h-full w-full m-0 py-7 px-4" style="border-radius:53px;">
+                <div class="text-center mb-5">
+                    <span class="text-600 font-medium">{{ 'Sign_in_to_continue' | translate }}</span>
+                </div>
+
+                <div class="w-full md:w-10 mx-auto">
+                    <label for="email1" class="block text-900 text-xl font-medium mb-2">{{ 'Phone' | translate
+                        }}</label>
+                    <input id="email1" type="text" pInputText class="w-full p-3"
+                        [ngClass]="{'ng-invalid ng-dirty': !formLogin.phone}" [(ngModel)]="formLogin.phone"
+                        autocomplete="off">
+                    <small class="p-error" *ngIf="!formLogin.phone && invalid">{{'Phone_required' | translate}}</small>
+
+                    <label for="password1" class="block text-900 font-medium text-xl mb-2">{{ 'Password' | translate
+                        }}</label>
+                    <input id="password1" type="password" pInputText class="w-full p-3"
+                        [(ngModel)]="formLogin.password" autocomplete="off">
+                    <small class="p-error" *ngIf="!formLogin.password && invalid">{{'Password_required' | translate}}</small>
+
+                    <div class="flex align-items-center justify-content-between my-5">
+                        <div class="flex align-items-center">
+                            <p-checkbox id="rememberme1" [(ngModel)]="formLogin.remember" styleClass="mr-2">
+                            </p-checkbox>
+                            <label for="rememberme1">{{ 'Remember_me' | translate }}</label>
+                        </div>
+                        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">{{
+                            'Forgot_password' | translate }}</a>
+                    </div>
+                    <button pButton pRipple label="{{ 'Sign_in' | translate }}" class="w-full p-3 text-xl" [disabled]="loading"
+                        (click)="loginHandler()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

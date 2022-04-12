@@ -1,0 +1,116 @@
+<p-table #campaignAdsData [value]="campaignAds" dataKey="campaignServiceId" styleClass="p-datatable-sm"
+    scrollHeight="calc(100vh - 433px)" [loading]="fetchingData" [(selection)]="selectedCampaignAds" [scrollable]="true"
+    (selectionChange)="selectionChange()" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <p-button label="{{'Add_campaign' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"
+                (click)="openDialog()"></p-button>
+            <p-button label="{{'Add_other_service' | translate}}" icon="pi pi-plus" styleClass="p-button-sm"
+                (click)="openDialogOtherService()"></p-button>
+
+            <span class="ml-auto">
+                <p-button label="{{'Delete' | translate}}" icon="pi pi-trash"
+                    styleClass="p-button-sm ml-2 p-button-danger" *ngIf="selectedCampaignAds?.length > 0"
+                    (click)="confirm($event)"></p-button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pFrozenColumn style="max-width: 4rem; min-width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pFrozenColumn style="max-width: 7rem; min-width: 7rem">{{'Status' | translate}}</th>
+            <th pFrozenColumn style="max-width: 20rem; min-width: 10rem">{{'Campaign' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Project' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Customer' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Hotline' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Service' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Performance' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Start_date' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'End_date' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Employees' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Target' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Description' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Fee' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Cost_per_result' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Result' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem">{{'Cost' | translate}}</th>
+            <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-campaignAd>
+        <tr>
+            <td pFrozenColumn style="max-width: 4rem; min-width: 4rem">
+                <p-tableCheckbox [value]="campaignAd"></p-tableCheckbox>
+            </td>
+            <td pFrozenColumn style="max-width: 7rem; min-width: 7rem">
+                <p-inputSwitch [(ngModel)]="campaignAd.isActive" (onChange)="toggleState(campaignAd, $event)">
+                </p-inputSwitch>
+            </td>
+            <td pFrozenColumn style="max-width: 20rem; min-width: 10rem;">
+                <div>
+                    <div>{{campaignAd.customerName}}</div>
+                    <div>{{campaignAd.project}}</div>
+                    <div>{{campaignAd.serviceName}}</div>
+                </div>
+            </td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.project}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.customerName}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.hotline}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceName}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaign.performanceString}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.startDate}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.endDate}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">
+                <div>
+                    <div>{{campaignAd.adStaffName}}</div>
+                    <div>{{campaignAd.planningStaffName}}</div>
+                    <div>{{campaignAd.contentStaffName}}</div>
+                </div>
+            </td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.goal | number}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.description}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceFee | number}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaignAdsIndex.cpr | number}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaignAdsIndex.result | number}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaignAdsIndex.amount | number}}</td>
+            <td style="min-width: 100px; max-width: 120px;">
+                <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
+                    tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialog(campaignAd, 'VIEW')"></button>
+
+                <button pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Edit' | translate}}"
+                    tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialogHandler(campaignAd)"></button>
+
+                <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="{{'Delete' | translate}}"
+                    tooltipPosition="top" class="p-button-rounded p-button-text p-button-danger"
+                    (click)="delete(campaignAd)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-end">
+            <div class="px-2">
+                <div class="text-center">{{total.avgAmountPer | number}}</div>
+                <div class="font-italic">{{'Average_amount' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalResult | number}}</div>
+                <div class="font-italic">{{'Total_result' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalAmount | number}}</div>
+                <div class="font-italic">{{'Total_amount' | translate}}</div>
+            </div>
+        </div>
+    </ng-template>
+</p-table>
+
+<p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+    [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
+
+<p-confirmPopup></p-confirmPopup>

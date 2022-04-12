@@ -1,0 +1,9 @@
+<p-dropdown appendTo="body" [options]="roles" [(ngModel)]="selectedRoles" optionLabel="roleName" [filter]="true"
+    filterBy="roleName" placeholder="{{'Select_role' | translate}}" styleClass="w-full"></p-dropdown>
+
+<div class="flex justify-content-end mt-3">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" (click)="submitHandler()">
+    </p-button>
+</div>

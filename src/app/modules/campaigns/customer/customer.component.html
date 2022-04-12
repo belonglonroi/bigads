@@ -1,0 +1,118 @@
+<p-table #customerData [value]="customers" dataKey="userId" styleClass="p-datatable-sm" responsiveLayout="scroll"
+    scrollHeight="calc(100vh - 433px)" [loading]="fetchingData" [(selection)]="selectedCustomers"
+    (selectionChange)="selectionChange()" [scrollable]="true">
+    <ng-template *ngIf="actions.includes(105) || actions.includes(107)" pTemplate="caption">
+        <div class="flex">
+            <p-button *ngIf="actions.includes(105)" label="{{'Add_customer' | translate}}" icon="pi pi-plus"
+                styleClass="p-button-sm" (click)="openDialog()"></p-button>
+            <p-fileUpload *ngIf="actions.includes(105)" mode="basic"
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                maxFileSize="1000000" styleClass="p-button-sm ml-2" (onSelect)="selectFileHandler($event)" [auto]="true"
+                chooseLabel="{{'Add_employee_from_Excel' | translate}}"></p-fileUpload>
+
+            <span class="ml-auto">
+                <p-button label="{{'Delete' | translate}}" icon="pi pi-trash"
+                    styleClass="p-button-sm ml-2 p-button-danger"
+                    *ngIf="actions.includes(107) && selectedCustomers?.length > 0" (click)="confirm($event)"></p-button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pFrozenColumn style="max-width: 4rem; min-width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pFrozenColumn>
+                {{'Customer' | translate}}
+            </th>
+            <th>
+                {{'Phone' | translate}}
+            </th>
+            <th>
+                {{'Performance' | translate}}
+            </th>
+            <th>
+                {{'Customer_transaction' | translate}}
+            </th>
+            <th>
+                {{'Expenditure' | translate}}
+            </th>
+            <th>
+                {{'Accounting' | translate}}
+            </th>
+            <th>
+                {{'Fee' | translate}}
+            </th>
+            <th>
+                {{'Fee_rate' | translate}}
+            </th>
+            <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+        <tr>
+            <td pFrozenColumn style="max-width: 4rem; min-width: 4rem">
+                <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+            </td>
+            <td pFrozenColumn>
+                {{customer.customerName}}
+            </td>
+            <td>
+                {{customer.phone}}
+            </td>
+            <td>
+                <div>
+                    <div>{{customer.performanceRate}}</div>
+                    <div [ngStyle]="{'color': getColor(customer.performanceString)}">{{customer.performanceString}}
+                    </div>
+                </div>
+            </td>
+            <td>{{customer.transactionAmount | number}}</td>
+            <td>{{customer.expenditureAmount | number}}</td>
+            <td>{{customer.accountingAmount | number}}</td>
+            <td>{{customer.feeAmount | number}}</td>
+            <td>{{customer.feeRate * 100}} %</td>
+            <td style="min-width: 100px; max-width: 120px;">
+                <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
+                    tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialog(customer, 'VIEW')"></button>
+
+                <button [disabled]="!actions.includes(106)" pButton pRipple type="button" icon="pi pi-pencil"
+                    pTooltip="{{'Edit' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialog(customer)"></button>
+
+                <button [disabled]="!actions.includes(107)" pButton pRipple type="button" icon="pi pi-trash"
+                    pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="delete(customer)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-end">
+            <div class="px-2">
+                <div class="text-center">{{total.totalTransactionAmount | number}}</div>
+                <div class="font-italic">{{'Total_transaction_amount' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalExpenditureAmount | number}}</div>
+                <div class="font-italic">{{'Total_expenditure_amount' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalAccountingAmount | number}}</div>
+                <div class="font-italic">{{'Total_accounting_amount' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalFeeAmount | number}}</div>
+                <div class="font-italic">{{'Total_fee_amount' | translate}}</div>
+            </div>
+        </div>
+    </ng-template>
+</p-table>
+
+<p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+    [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
+
+<p-confirmPopup></p-confirmPopup>

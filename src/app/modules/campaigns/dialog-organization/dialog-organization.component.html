@@ -1,0 +1,54 @@
+<div class="field">
+    <label for="name" class="block">{{'Organization' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.organizationName" autocomplete="off"
+        [disabled]="dialogConfig.data?.method" />
+    <small *ngIf="!dialogData.organizationName && invalid" class="p-error">{{'Ad_account_required' | translate}}</small>
+</div>
+
+<div class="field" *ngIf="dialogConfig.data?.method">
+    <label for="name" class="block">{{'Owner' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.owner" autocomplete="off"
+        [disabled]="true" />
+</div>
+
+<div class="field" *ngIf="dialogConfig.data?.method">
+    <label for="name" class="block">{{'Member' | translate}}</label>
+    <p-listbox [options]="this.dialogData.member" class="w-full" [disabled]="true">
+    </p-listbox>
+</div>
+
+<div class="field">
+    <label for="fanpage" class="block">{{'Fanpage' | translate}}</label>
+    <input id="fanpage" type="text" pInputText class="w-full" [(ngModel)]="dialogData.fanpage" autocomplete="off"
+        [disabled]="dialogConfig.data?.method" />
+</div>
+
+<div class="field">
+    <label for="website" class="block">{{'Website' | translate}}</label>
+    <input id="website" type="text" pInputText class="w-full" [(ngModel)]="dialogData.website" autocomplete="off"
+        [disabled]="dialogConfig.data?.method" />
+</div>
+
+<div class="field">
+    <label for="address" class="block">{{'Address' | translate}}</label>
+    <input id="address" type="text" pInputText class="w-full" [(ngModel)]="dialogData.address" autocomplete="off"
+        [disabled]="dialogConfig.data?.method" />
+</div>
+
+<div class="field">
+    <label for="description" class="block">{{'Description' | translate}}</label>
+    <input id="description" type="text" pInputText class="w-full" [(ngModel)]="dialogData.description"
+        autocomplete="off" [disabled]="dialogConfig.data?.method" />
+</div>
+
+
+<div *ngIf="!dialogConfig.data?.method" class="flex justify-content-end mt-3">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" *ngIf="!dialogConfig.data?.organizationId" styleClass="p-button-text"
+        (click)="create()">
+    </p-button>
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" *ngIf="dialogConfig.data?.organizationId" styleClass="p-button-text"
+        (click)="update()">
+    </p-button>
+</div>

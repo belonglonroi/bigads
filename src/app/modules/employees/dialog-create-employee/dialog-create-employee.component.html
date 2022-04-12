@@ -1,0 +1,33 @@
+<form>
+    <div class="field">
+        <label for="phone" class="block">{{'Phone' | translate}}</label>
+        <input id="phone" type="text" pInputText [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.phone}"
+            class="w-full" [(ngModel)]="formCreate.phone" name="phone" autocomplete="off" />
+        <small *ngIf="invalid && !formCreate.phone" class="p-error">{{'Phone_required' | translate}}</small>
+    </div>
+
+    <div class="field">
+        <label for="password" class="block">{{'Password' | translate}}</label>
+        <input id="password" type="password" pInputText
+            [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.password}" class="w-full"
+            [(ngModel)]="formCreate.password" name="password" autocomplete="off" />
+        <small *ngIf="invalid && !formCreate.password" class="p-error">{{'Password_required' |
+            translate}}</small>
+    </div>
+
+    <div class="field">
+        <label for="confirm" class="block">{{'Confirm_password' | translate}}</label>
+        <input id="confirm" type="password" pInputText
+            [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.confirmPassword}" class="w-full"
+            [(ngModel)]="formCreate.confirmPassword" name="confirmPassword" autocomplete="off" />
+        <small *ngIf="invalid && !formCreate.confirmPassword" class="p-error">{{'Confirm_password_required' |
+            translate}}</small>
+    </div>
+</form>
+
+<div class="flex justify-content-end">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" (click)="submitHandler()">
+    </p-button>
+</div>

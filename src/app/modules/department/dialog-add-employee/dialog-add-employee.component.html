@@ -1,0 +1,4 @@
+<p-multiSelect [options]="employees" [(ngModel)]="selectedEmployees" defaultLabel="{{'Select_employee' | translate}}"
+    styleClass="w-full" optionLabel="fullname" optionValue="userId"
+    selectedItemsLabel="{0} {{'Items_selected' | translate}}" appendTo="body" (onChange)="changeHandler($event)">
+</p-multiSelect>

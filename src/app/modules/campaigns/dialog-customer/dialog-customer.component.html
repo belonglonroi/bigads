@@ -1,0 +1,77 @@
+<div class="field">
+    <label for="name" class="block">{{'Last_name' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.lastName" autocomplete="off"
+        [disabled]="dialogConfig?.data?.method" />
+    <small *ngIf="!dialogData.lastName && invalid" class="p-error">{{'Lastname_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'First_name' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.firstName" autocomplete="off"
+        [disabled]="dialogConfig?.data?.method" />
+    <small *ngIf="!dialogData.firstName && invalid" class="p-error">{{'Firstname_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Phone' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.phone" autocomplete="off"
+        [disabled]="dialogConfig?.data?.method" />
+    <small *ngIf="!dialogData.phone && invalid" class="p-error">{{'Phone_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="name" class="block">{{'Email' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.email" autocomplete="off"
+        [disabled]="dialogConfig?.data?.method" />
+</div>
+
+<div class="field">
+    <label for="gender" class="block">{{'Gender' | translate}}</label>
+    <p-dropdown inputId="gender" [options]="gender" styleClass="w-full" [(ngModel)]="dialogData.genderId"
+        [disabled]="dialogConfig?.data?.method" placeholder="{{'Select_gender' | translate}}" optionLabel="label"
+        appendTo="body" optionValue="genderId">
+    </p-dropdown>
+    <small *ngIf="!dialogData.genderId && invalid" class="p-error">{{'Gender_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="customerType" class="block">{{'Customer_type' | translate}}</label>
+    <p-dropdown inputId="customerType" [options]="customerType" styleClass="w-full"
+        [disabled]="dialogConfig?.data?.method" placeholder="{{'Select_customer_type' | translate}}"
+        [(ngModel)]="dialogData.customerType" optionLabel="label" appendTo="body" optionValue="customerType">
+    </p-dropdown>
+    <small *ngIf="!dialogData.customerType && invalid" class="p-error">{{'Customer_type_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="feeRate" class="block">{{'Fee' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.feeRate" class="w-full" styleClass="w-full"
+        inputId="feeRate" suffix=" %" [disabled]="dialogConfig?.data?.method" autocomplete="off"></p-inputNumber>
+    <!-- <small *ngIf="!dialogData.feeRate && invalid" class="p-error">{{'Fee_required' | translate}}</small> -->
+</div>
+
+<div class="field">
+    <label for="businessStaff" class="block">{{'Business_staff' | translate}}</label>
+    <p-dropdown inputId="businessStaff" [options]="employees" styleClass="w-full" [filter]="true" filterValue="fullname"
+        [disabled]="dialogConfig?.data?.method" placeholder="{{'Select_business_staff' | translate}}"
+        [(ngModel)]="dialogData.businessStaffId" optionLabel="fullname" appendTo="body" optionValue="userId">
+    </p-dropdown>
+    <small *ngIf="!dialogData.businessStaffId && invalid" class="p-error">{{'Business_staff_required' |
+        translate}}</small>
+</div>
+
+
+
+<div class="flex justify-content-end mt-3" *ngIf="!dialogConfig?.data?.method">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" *ngIf="!dialogConfig.data?.userId" styleClass="p-button-text"
+        (click)="create()">
+    </p-button>
+
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" *ngIf="dialogConfig.data?.userId" styleClass="p-button-text"
+        (click)="update()">
+    </p-button>
+</div>

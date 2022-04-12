@@ -1,0 +1,70 @@
+<!-- <div class="flex md:flex-row flex-column"> -->
+<div>
+    <div class="field">
+        <label for="organization" class="block">{{'Organization' | translate}}</label>
+        <p-dropdown [options]="organizations" styleClass="w-full" [(ngModel)]="dialogData.organizationId"
+            (ngModelChange)="changeOrganization($event)" optionLabel="organizationName" optionValue="organizationId"
+            placeholder="{{ 'Select_organization' | translate }}" [filter]="true" filterBy="organizationName">
+        </p-dropdown>
+    </div>
+    <div class="field">
+        <label for="customer" class="block">{{'Customer' | translate}}</label>
+        <p-dropdown [options]="customers" styleClass="w-full" [(ngModel)]="dialogData.customerId"
+            (ngModelChange)="changeCustomer($event)" optionLabel="fullname" optionValue="userId"
+            placeholder="{{ 'Select_customer' | translate }}" [filter]="true" filterBy="fullname"></p-dropdown>
+        <small *ngIf="!dialogData.customerId && invalid" class="p-error">{{'Customer_required' | translate}}</small>
+    </div>
+
+    <div class="field">
+        <label for="campaign" class="block">{{'Project' | translate}}</label>
+        <!-- <input id="campaign" type="text" pInputText class="w-full" [(ngModel)]="dialogData.campaignId" autocomplete="off" /> -->
+        <p-dropdown [options]="campaigns" styleClass="w-full" [(ngModel)]="dialogData.campaignId"
+            optionLabel="projectName" optionValue="campaignId" placeholder="{{ 'Select_project' | translate }}"
+            [filter]="true" filterBy="projectName">
+        </p-dropdown>
+        <small *ngIf="!dialogData.campaignId && invalid" class="p-error">{{'Campaign_required' | translate}}</small>
+    </div>
+
+    <div class="field">
+        <label for="type" class="block">{{'Transaction_type' | translate}}</label>
+        <p-dropdown [options]="paymentType" styleClass="w-full" [(ngModel)]="dialogData.paymentType" optionLabel="name"
+            optionValue="code">
+        </p-dropdown>
+    </div>
+
+    <div class="field">
+        <label for="amount" class="block">{{'Amount' | translate}}</label>
+        <p-inputNumber inputId="amount" class="w-full" styleClass="w-full" [(ngModel)]="dialogData.amount">
+        </p-inputNumber>
+        <small *ngIf="!dialogData.amount && invalid" class="p-error">{{'Amount_required' | translate}}</small>
+    </div>
+
+    <!-- <div class="field">
+            <label for="note" class="block">{{'Note' | translate}}</label>
+            <textarea pInputTextarea class="w-full" [(ngModel)]="dialogData.note"></textarea>
+        </div> -->
+
+    <div class="field">
+        <label for="date" class="block">{{'Transaction_date' | translate}}</label>
+        <p-calendar appendTo="body" inputId="date" [(ngModel)]="dialogData.paymentDate" styleClass="w-full"
+            dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+        <small *ngIf="!dialogData.paymentDate && invalid" class="p-error">{{'Payment_date_required' |
+            translate}}</small>
+    </div>
+</div>
+
+<!-- <div *ngIf="campaignPayments?.length > 0">
+        show preview
+    </div> -->
+<!-- </div> -->
+
+<div class="flex justify-content-end mt-3">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" *ngIf="!config.data"
+        (click)="createPayments()"></p-button>
+    <!-- <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text"
+        *ngIf="!config.data && campaignPayments?.length > 0" (click)="createPayments()"></p-button> -->
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" styleClass="p-button-text" *ngIf="config.data"
+        (click)="update()"></p-button>
+</div>

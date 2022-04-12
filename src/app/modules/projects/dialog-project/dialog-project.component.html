@@ -1,0 +1,22 @@
+<div class="field">
+    <label for="name" class="block">{{'Name' | translate}}</label>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="dialogData.name" autocomplete="off" />
+    <small *ngIf="!dialogData.name && invalid" class="p-error">{{'Name_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="description" class="block">{{'Description' | translate}}</label>
+    <textarea pInputTextarea id="description" type="text" pInputText class="w-full" [(ngModel)]="dialogData.description"
+        autocomplete="off"></textarea>
+    <small *ngIf="!dialogData.description && invalid" class="p-error">{{'Description_required' | translate}}</small>
+</div>
+
+
+<div class="flex justify-content-end mt-3">
+    <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
+        (click)="dialogRef.close()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" *ngIf="!config.data"
+        (click)="create()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" styleClass="p-button-text" *ngIf="config.data"
+        (click)="update()"></p-button>
+</div>
