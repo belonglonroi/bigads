@@ -87,7 +87,7 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-project></app-project>
+                <app-project [customerName]="customerName"></app-project>
             </ng-template>
         </p-tabPanel>
 
@@ -100,7 +100,7 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-campaign-ad></app-campaign-ad>
+                <app-campaign-ad [customerName]="customerName"></app-campaign-ad>
             </ng-template>
         </p-tabPanel>
     </p-tabView>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { Campaign } from 'src/app/core/models/campaign.model';
@@ -20,8 +20,9 @@ import { UserService } from 'src/app/core/services/user.service';
     styleUrls: ['./project.component.scss'],
     providers: [ConfirmationService, DialogService]
 })
-export class ProjectComponent extends BaseClass implements OnInit {
+export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
 
+    @Input() customerName: string;
     projects: Campaign[] = [];
     fetchingData: boolean = false;
     selectedProjects: Campaign[] = [];
@@ -44,6 +45,13 @@ export class ProjectComponent extends BaseClass implements OnInit {
         private userService: UserService,
     ) {
         super();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['customerName']?.currentValue) {
+            this.reportService.campaignFilter$.value.customerNameStr = changes['customerName'].currentValue;
+            this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
+        }
     }
 
     ngOnInit(): void {

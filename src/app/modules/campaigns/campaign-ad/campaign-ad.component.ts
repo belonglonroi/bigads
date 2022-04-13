@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { CampaignAds } from 'src/app/core/models/campaign-ads.model';
@@ -23,8 +23,9 @@ import { DialogOrtherServiceComponent } from '../dialog-orther-service/dialog-or
     styleUrls: ['./campaign-ad.component.scss'],
     providers: [ConfirmationService, DialogService]
 })
-export class CampaignAdComponent extends BaseClass implements OnInit {
+export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges {
 
+    @Input() customerName: string;
     campaignAds: CampaignAds[] = [];
     fetchingData: boolean = false;
     selectedCampaignAds: CampaignService[] = []
@@ -43,6 +44,13 @@ export class CampaignAdComponent extends BaseClass implements OnInit {
         private campaignServicesService: CampaignServicesService,
     ) {
         super();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['customerName']?.currentValue) {
+            this.reportService.campaignFilter$.value.customerNameStr = changes['customerName'].currentValue;
+            this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
+        }
     }
 
     ngOnInit(): void {
@@ -162,7 +170,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit {
     }
 
     openDialogHandler(e: CampaignService) {
-        if(e.service.serviceTypeId == 2) {
+        if (e.service.serviceTypeId == 2) {
             this.openDialogOtherService(e);
         } else {
             this.openDialog(e);

@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
@@ -25,9 +25,12 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
 
+    @ViewChild('file', { static: false }) file: ElementRef;
+    @ViewChild('template', { static: false }) template: ElementRef;
     @Input() organizationsInput: Organization[];
     @Input() customersInput: User[];
     @Input() customerName: string;
+    items: MenuItem[];
     customers: User[] = [];
     fetchingData: boolean = false;
     selectedOrganizations: Organization[] = [];
@@ -60,14 +63,31 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
             this.selectedOrganizations = changes.organizationsInput.currentValue;
         }
 
-        if (!changes['customerName']?.firstChange) {
-            this.campaignFilter.customerNameStr = changes['customerName'].currentValue;
-            this.getCustomers();
+        if (changes['customerName']?.currentValue) {
+            this.reportService.campaignFilter$.value.customerNameStr = changes['customerName'].currentValue;
+            this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
         }
     }
 
     ngOnInit(): void {
         this.actions = this.userService.action;
+
+        this.items = [
+            {
+                label: this.translate.instant('Download_file_template'),
+                icon: 'pi pi-download',
+                command: () => {
+                    this.template.nativeElement.click();
+                },
+            },
+            {
+                label: this.translate.instant('Upload_file'),
+                icon: 'pi pi-upload',
+                command: () => {
+                    this.file.nativeElement.click();
+                },
+            }
+        ];
 
         this.reportService.dateFilter$.asObservable()
             .pipe(this.unsubsribeOnDestroy)

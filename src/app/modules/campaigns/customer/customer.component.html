@@ -4,11 +4,12 @@
     <ng-template *ngIf="actions.includes(105) || actions.includes(107)" pTemplate="caption">
         <div class="flex">
             <p-button *ngIf="actions.includes(105)" label="{{'Add_customer' | translate}}" icon="pi pi-plus"
-                styleClass="p-button-sm" (click)="openDialog()"></p-button>
-            <p-fileUpload *ngIf="actions.includes(105)" mode="basic"
-                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                maxFileSize="1000000" styleClass="p-button-sm ml-2" (onSelect)="selectFileHandler($event)" [auto]="true"
-                chooseLabel="{{'Add_employee_from_Excel' | translate}}"></p-fileUpload>
+                styleClass="p-button-sm mr-2" (click)="openDialog()"></p-button>
+            <p-splitButton label="{{'Add_employee_from_Excel' | translate}}" icon="pi pi-plus" [model]="items">
+            </p-splitButton>
+            <input type="file" #file style="display: none;" (change)="selectFileHandler($event)"
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            <a #template href="/assets/template/template_create_employees.xlsx"></a>
 
             <span class="ml-auto">
                 <p-button label="{{'Delete' | translate}}" icon="pi pi-trash"

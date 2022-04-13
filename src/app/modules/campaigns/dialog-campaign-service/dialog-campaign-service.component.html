@@ -37,6 +37,13 @@
 </div>
 
 <div class="field">
+    <label for="adAccount" class="block">{{'Ad_account' | translate}}</label>
+    <input id="adAccount" type="text" pInputText class="w-full" [(ngModel)]="dialogData.adAccount" autocomplete="off"
+        [disabled]="config.data?.method" />
+    <!-- <small *ngIf="!dialogData.name && invalid" class="p-error">{{'Name_required' | translate}}</small> -->
+</div>
+
+<div class="field">
     <label for="adStaff" class="block">{{'Ad_staff' | translate}}</label>
     <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.adStaffId" optionLabel="fullname"
         optionValue="userId" appendTo="body" placeholder="{{ 'Select_ad_staff' | translate }}" [filter]="true"

@@ -203,4 +203,60 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
                 }
             })
     }
+
+    update() {
+        if (!this.dialogData.projectId || !this.dialogData.customerId || !this.dialogData.hotline) {
+            this.invalid = true;
+            return;
+        }
+
+        for (const key in this.dialogData) {
+            if (!this.dialogData[key]) {
+                delete this.dialogData[key];
+            }
+        }
+
+        if (this.dialogData.feeType === 1) {
+            this.dialogData.fixedRate = this.dialogData.fixedRate / 100;
+            delete this.dialogData.fixedAmount;
+            delete this.dialogData.customRate;
+            delete this.dialogData.startDate;
+        } else if (this.dialogData.feeType === 2) {
+            delete this.dialogData.fixedRate;
+            delete this.dialogData.customRate;
+        } else {
+            delete this.dialogData.fixedAmount;
+            delete this.dialogData.fixedRate;
+            delete this.dialogData.startDate;
+        }
+
+        this.dialogData.startDate = moment(this.startDate).format('YYYY-MM-DD')
+
+        const param = {
+            ...this.dialogData,
+            campaignId: this.dialogConfig.data.campaignId,
+        }
+        this.tabProjectService.updateProject(param)
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (res) => {
+                    if (res.data) {
+                        this.messageConfig.messageConfig.next({
+                            severity: MESSAGE_TYPE.success,
+                            summary: this.translate.instant(MESSAGE_SUMARY.success),
+                            detail: this.translate.instant('Update_project_to_customer_successfully'),
+                        });
+
+                        this.dialogRef.close(true);
+                    }
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
+                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
+                    })
+                }
+            })
+    }
 }
