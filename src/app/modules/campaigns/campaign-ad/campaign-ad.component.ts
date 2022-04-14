@@ -10,7 +10,6 @@ import { CampaignFilter } from 'src/app/core/models/campaign-filter.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageConfigService } from 'src/app/service/message.config.service';
-import { CAMPAIGN_ADS_TABLE } from 'src/app/core/consts/campaign-table.const';
 import { DialogCampaignServiceComponent } from '../dialog-campaign-service/dialog-campaign-service.component';
 import { CampaignServicesService } from 'src/app/core/services/campaign-services.service';
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
@@ -54,10 +53,6 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     }
 
     ngOnInit(): void {
-        if (!localStorage.getItem('campaignAdsRp')) {
-            localStorage.setItem('campaignAdsRp', JSON.stringify(CAMPAIGN_ADS_TABLE));
-        }
-
         this.reportService.dateFilter$.asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({

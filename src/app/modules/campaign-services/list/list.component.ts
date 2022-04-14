@@ -170,6 +170,7 @@ export class ListComponent extends BaseClass implements OnInit {
                         summary: this.translate.instant(MESSAGE_SUMARY.success),
                         detail: this.translate.instant('Update_cost_successfully'),
                     });
+                    this.recordsHasChanged = [];
                     this.getCampaignServices();
                 },
                 error: (err) => {

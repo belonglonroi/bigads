@@ -12,7 +12,6 @@ import { MessageConfigService } from 'src/app/service/message.config.service';
 import * as moment from 'moment';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DialogCustomerComponent } from '../dialog-customer/dialog-customer.component';
-import { CUSTOMER_TABLE } from 'src/app/core/consts/campaign-table.const';
 import * as XLSX from 'xlsx';
 import { Router } from '@angular/router';
 import { Organization } from 'src/app/core/models/organization.model';

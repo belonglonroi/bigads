@@ -12,7 +12,6 @@ import { MessageConfigService } from 'src/app/service/message.config.service';
 import { DialogProjectComponent } from '../dialog-project/dialog-project.component';
 import { MESSAGE_SUMARY, MESSAGE_TYPE } from 'src/app/core/consts/message.const';
 import { TabProjectService } from 'src/app/core/services/tab-project.service';
-import { PROJECT_TABLE } from 'src/app/core/consts/campaign-table.const';
 import { UserService } from 'src/app/core/services/user.service';
 @Component({
     selector: 'app-project',

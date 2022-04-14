@@ -19,7 +19,7 @@
     <small *ngIf="!dialogData.serviceTypeId && invalid" class="p-error">{{'Service_type_required' | translate}}</small>
 </div>
 
-<div class="field" *ngIf="!config.data">
+<div class="field">
     <label for="description" class="block">{{'Parent_service' | translate}}</label>
     <p-dropdown appendTo="body" [options]="services" styleClass="w-full" [(ngModel)]="dialogData.parentId"
         optionLabel="serviceName" optionValue="serviceId" placeholder="{{ 'Select_parent_service' | translate }}"
