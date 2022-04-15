@@ -30,6 +30,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
         totalExpenditureAmount: 0,
         totalFeeAmount: 0,
         totalTransactionAmount: 0,
+        totalAnotherServiceFee: 0,
     };
     campaignFilter: CampaignFilter = {};
     actions: number[] = [];

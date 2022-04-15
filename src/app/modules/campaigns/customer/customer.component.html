@@ -23,29 +23,45 @@
             <th pFrozenColumn style="max-width: 4rem; min-width: 4rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th pFrozenColumn>
+            <th style="max-width: 25rem; min-width: 15rem" pFrozenColumn pSortableColumn="customerName">
                 {{'Customer' | translate}}
+                <p-sortIcon field="customerName"></p-sortIcon>
+                <p-columnFilter type="text" field="customerName" display="menu"></p-columnFilter>
             </th>
-            <th>
+            <th style="max-width: 25rem; min-width: 12rem" pSortableColumn="phone">
                 {{'Phone' | translate}}
+                <p-sortIcon field="phone"></p-sortIcon>
+                <p-columnFilter type="text" field="phone" display="menu"></p-columnFilter>
             </th>
-            <th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="performanceString">
                 {{'Performance' | translate}}
+                <p-sortIcon field="performanceString"></p-sortIcon>
+                <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
             </th>
-            <th>
+            <th style="max-width: 25rem; min-width: 15rem" pSortableColumn="transactionAmount">
                 {{'Customer_transaction' | translate}}
+                <p-sortIcon field="transactionAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="transactionAmount" display="menu"></p-columnFilter>
             </th>
-            <th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="expenditureAmount">
                 {{'Expenditure' | translate}}
+                <p-sortIcon field="expenditureAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="expenditureAmount" display="menu"></p-columnFilter>
             </th>
-            <th>
+            <th style="max-width: 25rem; min-width: 11rem" pSortableColumn="accountingAmount">
                 {{'Accounting' | translate}}
+                <p-sortIcon field="accountingAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="accountingAmount" display="menu"></p-columnFilter>
             </th>
-            <th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="feeAmount">
                 {{'Fee' | translate}}
+                <p-sortIcon field="feeAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="feeAmount" display="menu"></p-columnFilter>
             </th>
-            <th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="feeRate">
                 {{'Fee_rate' | translate}}
+                <p-sortIcon field="feeRate"></p-sortIcon>
+                <p-columnFilter type="numeric" field="feeRate" display="menu"></p-columnFilter>
             </th>
             <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
         </tr>
@@ -55,24 +71,24 @@
             <td pFrozenColumn style="max-width: 4rem; min-width: 4rem">
                 <p-tableCheckbox [value]="customer"></p-tableCheckbox>
             </td>
-            <td pFrozenColumn>
+            <td style="max-width: 25rem; min-width: 15rem" pFrozenColumn>
                 {{customer.customerName}}
             </td>
-            <td>
+            <td style="max-width: 25rem; min-width: 12rem">
                 {{customer.phone}}
             </td>
-            <td>
+            <td style="max-width: 25rem; min-width: 10rem">
                 <div>
                     <div>{{customer.performanceRate}}</div>
                     <div [ngStyle]="{'color': getColor(customer.performanceString)}">{{customer.performanceString}}
                     </div>
                 </div>
             </td>
-            <td>{{customer.transactionAmount | number}}</td>
-            <td>{{customer.expenditureAmount | number}}</td>
-            <td>{{customer.accountingAmount | number}}</td>
-            <td>{{customer.feeAmount | number}}</td>
-            <td>{{customer.feeRate * 100}} %</td>
+            <td style="max-width: 25rem; min-width: 15rem">{{customer.transactionAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{customer.expenditureAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 11rem">{{customer.accountingAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{customer.feeAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{customer.feeRate * 100}} %</td>
             <td style="min-width: 100px; max-width: 120px;">
                 <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
                     tooltipPosition="top" class="p-button-rounded p-button-text"
@@ -108,6 +124,11 @@
             <div class="px-2">
                 <div class="text-center">{{total.totalFeeAmount | number}}</div>
                 <div class="font-italic">{{'Total_fee_amount' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalAnotherServiceFee | number}}</div>
+                <div class="font-italic">{{'Total_another_service' | translate}}</div>
             </div>
         </div>
     </ng-template>

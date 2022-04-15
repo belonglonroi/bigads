@@ -17,17 +17,61 @@
             <th pFrozenColumn style="max-width: 4rem; min-width: 4rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th pFrozenColumn>{{'Project_name' | translate}}</th>
-            <th>{{'Customer' | translate}} </th>
-            <th>{{'Hotline' | translate}}</th>
-            <th>{{'Category' | translate}}</th>
-            <th>{{'Performance' | translate}}</th>
-            <th>{{'Customer_transaction' | translate}}</th>
-            <th>{{'Expenditure' | translate}}</th>
-            <th>{{'Accounting' | translate}}</th>
-            <th>{{'Fee' | translate}}</th>
-            <th>{{'Fee_rate' | translate}} </th>
-            <th>{{'Day_left' | translate}}</th>
+            <th style="max-width: 25rem; min-width: 15rem" pFrozenColumn pSortableColumn="projectName">
+                {{'Project_name' | translate}}
+                <p-sortIcon field="projectName"></p-sortIcon>
+                <p-columnFilter type="text" field="projectName" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 15rem" pSortableColumn="customerName">
+                {{'Customer' | translate}}
+                <p-sortIcon field="customerName"></p-sortIcon>
+                <p-columnFilter type="text" field="customerName" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="hotline">
+                {{'Hotline' | translate}}
+                <p-sortIcon field="hotline"></p-sortIcon>
+                <p-columnFilter type="text" field="hotline" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 12rem" pSortableColumn="category">
+                {{'Category' | translate}}
+                <p-sortIcon field="category"></p-sortIcon>
+                <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="performanceString">
+                {{'Performance' | translate}}
+                <p-sortIcon field="performanceString"></p-sortIcon>
+                <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 15rem" pSortableColumn="transactionAmount">
+                {{'Customer_transaction' | translate}}
+                <p-sortIcon field="transactionAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="transactionAmount" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="expenditureAmount">
+                {{'Expenditure' | translate}}
+                <p-sortIcon field="expenditureAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="expenditureAmount" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 11rem" pSortableColumn="accountingAmount">
+                {{'Accounting' | translate}}
+                <p-sortIcon field="accountingAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="accountingAmount" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="feeAmount">
+                {{'Fee' | translate}}
+                <p-sortIcon field="feeAmount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="feeAmount" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="fixedRate">
+                {{'Fee_rate' | translate}}
+                <p-sortIcon field="fixedRate"></p-sortIcon>
+                <p-columnFilter type="numeric" field="fixedRate" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="dayLeft">
+                {{'Day_left' | translate}}
+                <p-sortIcon field="dayLeft"></p-sortIcon>
+                <p-columnFilter type="numeric" field="dayLeft" display="menu"></p-columnFilter>
+            </th>
             <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
         </tr>
     </ng-template>
@@ -36,24 +80,24 @@
             <td pFrozenColumn style="max-width: 4rem; min-width: 4rem">
                 <p-tableCheckbox [value]="project"></p-tableCheckbox>
             </td>
-            <td pFrozenColumn>
+            <td style="max-width: 25rem; min-width: 15rem" pFrozenColumn>
                 {{project.projectName}}
             </td>
-            <td>{{project.customerName}}</td>
-            <td>{{project.hotline}}</td>
-            <td>{{project.category}}</td>
-            <td>
+            <td style="max-width: 25rem; min-width: 15rem">{{project.customerName}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.hotline}}</td>
+            <td style="max-width: 25rem; min-width: 12rem">{{project.category}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">
                 <div>
                     <div>{{project.performanceRate}}</div>
                     <div [ngStyle]="{'color': getColor(project.performanceString)}">{{project.performanceString}}</div>
                 </div>
             </td>
-            <td>{{project.transactionAmount | number}}</td>
-            <td>{{project.expenditureAmount | number}}</td>
-            <td>{{project.accountingAmount | number}}</td>
-            <td>{{project.feeAmount | number}}</td>
-            <td>{{project.fixedRate * 100}} %</td>
-            <td>{{project.dayLeft}}</td>
+            <td style="max-width: 25rem; min-width: 15rem">{{project.transactionAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.expenditureAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 11rem">{{project.accountingAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.feeAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.fixedRate * 100}} %</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.dayLeft}}</td>
             <td style="min-width: 100px; max-width: 120px;">
 
                 <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
@@ -90,6 +134,11 @@
             <div class="px-2">
                 <div class="text-center">{{total.totalFeeAmount | number}}</div>
                 <div class="font-italic">{{'Total_fee_amount' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalAnotherServiceFee | number}}</div>
+                <div class="font-italic">{{'Total_another_service' | translate}}</div>
             </div>
         </div>
     </ng-template>

@@ -21,23 +21,83 @@
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <th pFrozenColumn style="max-width: 7rem; min-width: 7rem">{{'Status' | translate}}</th>
-            <th pFrozenColumn style="max-width: 20rem; min-width: 10rem">{{'Campaign' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Project' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Customer' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Hotline' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Service' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Ad_account' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Performance' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Start_date' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'End_date' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Employees' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Target' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Description' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Fee' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Cost_per_result' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Result' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem">{{'Cost' | translate}}</th>
-            <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
+            <th pFrozenColumn style="max-width: 20rem; min-width: 15rem" pSortableColumn="name">
+                {{'Campaign' | translate}}
+                <p-sortIcon field="name"></p-sortIcon>
+                <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 15rem" pSortableColumn="project">
+                {{'Project' | translate}}
+                <p-sortIcon field="project"></p-sortIcon>
+                <p-columnFilter type="text" field="project" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 15rem" pSortableColumn="customerName">
+                {{'Customer' | translate}}
+                <p-sortIcon field="customerName"></p-sortIcon>
+                <p-columnFilter type="text" field="customerName" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="hotline">
+                {{'Hotline' | translate}}
+                <p-sortIcon field="hotline"></p-sortIcon>
+                <p-columnFilter type="text" field="hotline" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="serviceName">
+                {{'Service' | translate}}
+                <p-sortIcon field="serviceName"></p-sortIcon>
+                <p-columnFilter type="text" field="serviceName" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 12rem" pSortableColumn="adAccount">
+                {{'Ad_account' | translate}}
+                <p-sortIcon field="adAccount"></p-sortIcon>
+                <p-columnFilter type="text" field="adAccount" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="performanceString">
+                {{'Performance' | translate}}
+                <p-sortIcon field="performanceString"></p-sortIcon>
+                <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="startDate">
+                {{'Start_date' | translate}}
+                <p-sortIcon field="startDate"></p-sortIcon>
+                <p-columnFilter type="text" field="startDate" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="endDate">
+                {{'End_date' | translate}}
+                <p-sortIcon field="endDate"></p-sortIcon>
+                <p-columnFilter type="text" field="endDate" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 15rem">{{'Employees' | translate}}</th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="goal">
+                {{'Target' | translate}}
+                <p-sortIcon field="goal"></p-sortIcon>
+                <p-columnFilter type="numeric" field="goal" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="description">
+                {{'Description' | translate}}
+                <p-sortIcon field="description"></p-sortIcon>
+                <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="serviceFee">
+                {{'Fee' | translate}}
+                <p-sortIcon field="serviceFee"></p-sortIcon>
+                <p-columnFilter type="text" field="serviceFee" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="costPerResult">
+                {{'Cost_per_result' | translate}}
+                <p-sortIcon field="costPerResult"></p-sortIcon>
+                <p-columnFilter type="numeric" field="costPerResult" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="result">
+                {{'Result' | translate}}
+                <p-sortIcon field="result"></p-sortIcon>
+                <p-columnFilter type="numeric" field="result" display="menu"></p-columnFilter>
+            </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="amount">
+                {{'Cost' | translate}}
+                <p-sortIcon field="amount"></p-sortIcon>
+                <p-columnFilter type="numeric" field="amount" display="menu"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px; max-width: 120px;" pSortableColumn="name">{{'Action' | translate}}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-campaignAd>
@@ -49,7 +109,7 @@
                 <p-inputSwitch [(ngModel)]="campaignAd.isActive" (onChange)="toggleState(campaignAd, $event)">
                 </p-inputSwitch>
             </td>
-            <td pFrozenColumn style="max-width: 20rem; min-width: 10rem;">
+            <td pFrozenColumn style="max-width: 20rem; min-width: 15rem;">
                 <div>
                     <div>{{campaignAd.name}}</div>
                     <div>{{campaignAd.customerName}}</div>
@@ -57,15 +117,15 @@
                     <div>{{campaignAd.serviceName}}</div>
                 </div>
             </td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.project}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.customerName}}</td>
+            <td style="max-width: 20rem; min-width: 15rem">{{campaignAd.project}}</td>
+            <td style="max-width: 20rem; min-width: 15rem">{{campaignAd.customerName}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.hotline}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceName}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.adAccount}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaign.performanceString}}</td>
+            <td style="max-width: 20rem; min-width: 12rem">{{campaignAd.adAccount}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.performanceString}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.startDate}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.endDate}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">
+            <td style="max-width: 20rem; min-width: 15rem">
                 <div>
                     <div>{{campaignAd.adStaffName}}</div>
                     <div>{{campaignAd.planningStaffName}}</div>
@@ -75,9 +135,9 @@
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.goal | number}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.description}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceFee | number}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaignAdsIndex.cpr | number}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaignAdsIndex.result | number}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.campaignAdsIndex.amount | number}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.costPerResult | number}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.result | number}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.amount | number}}</td>
             <td style="min-width: 100px; max-width: 120px;">
                 <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
                     tooltipPosition="top" class="p-button-rounded p-button-text"
@@ -108,6 +168,11 @@
             <div class="px-2">
                 <div class="text-center">{{total.totalAmount | number}}</div>
                 <div class="font-italic">{{'Total_amount' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalAnotherServiceFee | number}}</div>
+                <div class="font-italic">{{'Total_another_service' | translate}}</div>
             </div>
         </div>
     </ng-template>

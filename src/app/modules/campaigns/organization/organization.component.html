@@ -3,8 +3,8 @@
     (selectionChange)="selectionChange()">
     <ng-template *ngIf="actions.includes(501)" pTemplate="caption">
         <div class="flex">
-            <p-button label="{{'Add_organization' | translate}}" icon="pi pi-plus"
-                styleClass="p-button-sm" (click)="openDialog()"></p-button>
+            <p-button label="{{'Add_organization' | translate}}" icon="pi pi-plus" styleClass="p-button-sm"
+                (click)="openDialog()"></p-button>
         </div>
     </ng-template>
 
@@ -13,11 +13,31 @@
             <th style="max-width: 4rem; min-width: 4rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th>{{'Organization' | translate}}</th>
-            <th>{{'Description' | translate}}</th>
-            <th>{{'Address' | translate}}</th>
-            <th>{{'Fanpage' | translate}}</th>
-            <th>{{'Website' | translate}}</th>
+            <th pSortableColumn="organizationName">
+                {{'Organization' | translate}}
+                <p-sortIcon field="organizationName"></p-sortIcon>
+                <p-columnFilter type="text" field="organizationName" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="description">
+                {{'Description' | translate}}
+                <p-sortIcon field="description"></p-sortIcon>
+                <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="address">
+                {{'Address' | translate}}
+                <p-sortIcon field="address"></p-sortIcon>
+                <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="fanpage">
+                {{'Fanpage' | translate}}
+                <p-sortIcon field="fanpage"></p-sortIcon>
+                <p-columnFilter type="text" field="fanpage" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="website">
+                {{'Website' | translate}}
+                <p-sortIcon field="website"></p-sortIcon>
+                <p-columnFilter type="text" field="website" display="menu"></p-columnFilter>
+            </th>
             <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
 
         </tr>

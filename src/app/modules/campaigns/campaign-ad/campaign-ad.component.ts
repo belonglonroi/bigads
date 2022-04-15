@@ -32,6 +32,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         avgAmountPer: 0,
         totalAmount: 0,
         totalResult: 0,
+        totalAnotherServiceFee: 0,
     }
     campaignFilter: CampaignFilter = {};
     constructor(
@@ -117,7 +118,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
             })
     }
 
-    transferData(data: CampaignAds[]) {
+    transferData(data: CampaignService[]) {
         this.campaignAds = data.map(e => {
             return {
                 ...e,
@@ -127,11 +128,13 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                 hotline: e.campaign.hotline,
                 startDate: moment(e.startDate).format('DD/MM/YYYY'),
                 endDate: e.endDate ? moment(e.endDate).format('DD/MM/YYYY') : '',
-                adStaffName: e.adStaff?.lastName + ' ' + e.adStaff?.firstName,
-                planningStaffName: e.planningStaff?.lastName + ' ' + e.planningStaff?.firstName,
-                contentStaffName: e.contentStaff?.lastName + ' ' + e.contentStaff?.firstName,
-                note: e.description,
-                costPerResult: e.result === 0 ? 0 : (e.amount / e.result),
+                adStaffName: e.adStaff ? (e.adStaff.lastName + ' ' + e.adStaff.firstName) : '',
+                planningStaffName: e.planningStaff ? (e.planningStaff.lastName + ' ' + e.planningStaff.firstName) : '',
+                contentStaffName: e.contentStaff ? (e.contentStaff.lastName + ' ' + e.contentStaff.firstName) : '',
+                costPerResult: e.campaignAdsIndex.cpr,
+                performanceString: e.campaign.performanceString,
+                result: e.campaignAdsIndex.result,
+                amount: e.campaignAdsIndex.amount
             }
         })
     }

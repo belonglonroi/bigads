@@ -39,6 +39,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
         totalExpenditureAmount: 0,
         totalFeeAmount: 0,
         totalTransactionAmount: 0,
+        totalAnotherServiceFee: 0,
     }
     dateFilter: Date[] = [];
     campaignFilter: CampaignFilter = {};
