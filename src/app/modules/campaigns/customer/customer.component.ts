@@ -62,7 +62,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
             this.selectedOrganizations = changes.organizationsInput.currentValue;
         }
 
-        if (changes['customerName']?.currentValue) {
+        if (changes['customerName']) {
             this.reportService.campaignFilter$.value.customerNameStr = changes['customerName'].currentValue;
             this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
         }

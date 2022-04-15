@@ -46,7 +46,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['customerName']?.currentValue) {
+        if (changes['customerName']) {
             this.reportService.campaignFilter$.value.customerNameStr = changes['customerName'].currentValue;
             this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
         }
