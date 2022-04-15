@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { forkJoin } from 'rxjs';
@@ -29,6 +29,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
     @Input() organizationsInput: Organization[];
     @Input() customersInput: User[];
     @Input() customerName: string;
+    @Output() tabIndex = new EventEmitter<number>();
     items: MenuItem[];
     customers: User[] = [];
     fetchingData: boolean = false;
@@ -309,5 +310,12 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
             color = 'green';
         }
         return color;
+    }
+
+    customerClicked(e: User) {
+        this.selectedCustomers = [];
+        this.selectedCustomers.push(e);
+        this.reportService.selectedCustomers$.next(this.selectedCustomers);
+        this.tabIndex.emit(2);
     }
 }

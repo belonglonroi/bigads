@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { Campaign } from 'src/app/core/models/campaign.model';
@@ -22,6 +22,7 @@ import { UserService } from 'src/app/core/services/user.service';
 export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
 
     @Input() customerName: string;
+    @Output() tabIndex = new EventEmitter<number>();
     projects: Campaign[] = [];
     fetchingData: boolean = false;
     selectedProjects: Campaign[] = [];
@@ -231,6 +232,13 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
             color = 'green';
         }
         return color;
+    }
+
+    projectClicked(e: Campaign) {
+        this.selectedProjects = [];
+        this.selectedProjects.push(e);
+        this.reportService.selectedProjects$.next(this.selectedProjects);
+        this.tabIndex.emit(3);
     }
 
 }

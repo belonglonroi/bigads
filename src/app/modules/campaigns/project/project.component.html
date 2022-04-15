@@ -81,7 +81,9 @@
                 <p-tableCheckbox [value]="project"></p-tableCheckbox>
             </td>
             <td style="max-width: 25rem; min-width: 15rem" pFrozenColumn>
-                {{project.projectName}}
+                <div class="cursor-pointer" (click)="projectClicked(project)">
+                    {{project.projectName}}
+                </div>
             </td>
             <td style="max-width: 25rem; min-width: 15rem">{{project.customerName}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.hotline}}</td>

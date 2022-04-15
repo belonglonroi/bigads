@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <p-tabView styleClass="w-full" [activeIndex]="activeIndex">
+    <p-tabView styleClass="w-full" [(activeIndex)]="activeIndex">
 
         <p-tabPanel *ngIf="actions.includes(500)" headerStyleClass="w-4" [cache]="false">
 
@@ -73,7 +73,8 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-customer [customerName]="customerName" [organizationsInput]="selectedOrganizations" [customersInput]="selectedCustomers">
+                <app-customer [customerName]="customerName" [organizationsInput]="selectedOrganizations"
+                    [customersInput]="selectedCustomers" (tabIndex)="receivedActiveIndex($event)">
                 </app-customer>
             </ng-template>
         </p-tabPanel>
@@ -87,7 +88,7 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-project [customerName]="customerName"></app-project>
+                <app-project [customerName]="customerName" (tabIndex)="receivedActiveIndex($event)"></app-project>
             </ng-template>
         </p-tabPanel>
 

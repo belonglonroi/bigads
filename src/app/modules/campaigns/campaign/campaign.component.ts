@@ -226,4 +226,8 @@ export class CampaignComponent extends BaseClass implements OnInit {
     searchByCustomer(e: string) {
         this.customerName = e;
     }
+
+    receivedActiveIndex(e: number) {
+        this.activeIndex = e;
+    }
 }
