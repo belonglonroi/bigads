@@ -35,7 +35,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
         description: '',
         startDate: '',
         endDate: '',
-        isActive: true
+        isActive: false
     }
     invalid: boolean = false;
     filterCampaigns: Campaign[] = [];
@@ -94,7 +94,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
                 description: this.config.data.description,
                 startDate: '',
                 endDate: '',
-                isActive: true
+                isActive: this.config.data.isActive
             }
             this.startDate = new Date(this.config.data.startDate);
             // this.dateRange = [
@@ -163,7 +163,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
         this.dialogData.startDate = moment(this.startDate).format('YYYY-MM-DD');
 
         for (const key in this.dialogData) {
-            if (!this.dialogData[key]) {
+            if (!this.dialogData[key] && key !== 'isActive') {
                 delete this.dialogData[key];
             }
         }
@@ -199,7 +199,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
         this.dialogData.startDate = moment(this.startDate).format('YYYY-MM-DD');
 
         for (const key in this.dialogData) {
-            if (!this.dialogData[key]) {
+            if (!this.dialogData[key] && key !== 'isActive') {
                 delete this.dialogData[key];
             }
         }

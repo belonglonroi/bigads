@@ -121,23 +121,23 @@ export class CampaignComponent extends BaseClass implements OnInit {
 
     selectedCustomersRemoved() {
         this.reportService.selectedCustomers$.next([]);
-        const storageCustomerTable = JSON.parse(this.customerService.storageTable);
-        storageCustomerTable.selection = [];
-        localStorage.setItem('customerRp', JSON.stringify(storageCustomerTable));
+        // const storageCustomerTable = JSON.parse(this.customerService.storageTable);
+        // storageCustomerTable.selection = [];
+        // localStorage.setItem('customerRp', JSON.stringify(storageCustomerTable));
     }
 
     selectedProjectsRemoved() {
         this.reportService.selectedProjects$.next([]);
-        const storageProjectTable = JSON.parse(this.tabProjectService.storageTable);
-        storageProjectTable.selection = [];
-        localStorage.setItem('projectRp', JSON.stringify(storageProjectTable));
+        // const storageProjectTable = JSON.parse(this.tabProjectService.storageTable);
+        // storageProjectTable.selection = [];
+        // localStorage.setItem('projectRp', JSON.stringify(storageProjectTable));
     }
 
     selectedCampaignAdsRemoved() {
         this.reportService.selectedCampaignAds$.next([]);
-        const storageProjectTable = JSON.parse(this.tabProjectService.storageTable);
-        storageProjectTable.selection = [];
-        localStorage.setItem('campaignAdsRp', JSON.stringify(storageProjectTable));
+        // const storageProjectTable = JSON.parse(this.tabProjectService.storageTable);
+        // storageProjectTable.selection = [];
+        // localStorage.setItem('campaignAdsRp', JSON.stringify(storageProjectTable));
     }
 
     selectDate(e: number) {

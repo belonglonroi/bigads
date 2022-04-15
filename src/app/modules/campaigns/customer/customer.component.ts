@@ -58,8 +58,12 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if ('organizationsInput' in changes) {
+        if (changes['organizationsInput']) {
             this.selectedOrganizations = changes.organizationsInput.currentValue;
+        }
+
+        if (changes['customersInput']) {
+            this.selectedCustomers = changes.customersInput.currentValue;
         }
 
         if (changes['customerName']) {
@@ -98,14 +102,6 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
                 }
             })
 
-        this.reportService.selectedCustomers$.asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.selectedCustomers = res;
-                }
-            });
-
         this.reportService.campaignFilter$.asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
@@ -124,6 +120,8 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
         this.campaignFilter.page = this.page;
         this.campaignFilter.limit = this.limit;
         delete this.campaignFilter.customerIds;
+        delete this.campaignFilter.projectIds;
+
         this.reportService.getCustomers(this.campaignFilter)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
