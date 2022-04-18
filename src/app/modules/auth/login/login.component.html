@@ -11,30 +11,34 @@
                 </div>
 
                 <div class="w-full md:w-10 mx-auto">
-                    <label for="email1" class="block text-900 text-xl font-medium mb-2">{{ 'Phone' | translate
-                        }}</label>
-                    <input id="email1" type="text" pInputText class="w-full p-3"
-                        [ngClass]="{'ng-invalid ng-dirty': !formLogin.phone}" [(ngModel)]="formLogin.phone"
-                        autocomplete="off">
-                    <small class="p-error" *ngIf="!formLogin.phone && invalid">{{'Phone_required' | translate}}</small>
+                    <form (ngSubmit)="loginHandler()">
+                        <label for="phone" class="block text-900 text-xl font-medium mb-2">{{ 'Phone' | translate
+                            }}</label>
+                        <input id="phone" name="phone" type="text" pInputText class="w-full p-3"
+                            [ngClass]="{'ng-invalid ng-dirty': !formLogin.phone}" [(ngModel)]="formLogin.phone"
+                            autocomplete="off">
+                        <small class="p-error" *ngIf="!formLogin.phone && invalid">{{'Phone_required' |
+                            translate}}</small>
 
-                    <label for="password1" class="block text-900 font-medium text-xl mb-2">{{ 'Password' | translate
-                        }}</label>
-                    <input id="password1" type="password" pInputText class="w-full p-3"
-                        [(ngModel)]="formLogin.password" autocomplete="off">
-                    <small class="p-error" *ngIf="!formLogin.password && invalid">{{'Password_required' | translate}}</small>
+                        <label for="password" class="block text-900 font-medium text-xl mb-2">{{ 'Password' | translate
+                            }}</label>
+                        <input id="password" name="password" type="password" pInputText class="w-full p-3"
+                            [(ngModel)]="formLogin.password" autocomplete="off">
+                        <small class="p-error" *ngIf="!formLogin.password && invalid">{{'Password_required' |
+                            translate}}</small>
 
-                    <div class="flex align-items-center justify-content-between my-5">
-                        <div class="flex align-items-center">
-                            <p-checkbox id="rememberme1" [(ngModel)]="formLogin.remember" styleClass="mr-2">
-                            </p-checkbox>
-                            <label for="rememberme1">{{ 'Remember_me' | translate }}</label>
+                        <div class="flex align-items-center justify-content-between my-5">
+                            <div class="flex align-items-center">
+                                <p-checkbox id="rememberme" name="remember" [(ngModel)]="formLogin.remember" styleClass="mr-2">
+                                </p-checkbox>
+                                <label for="rememberme">{{ 'Remember_me' | translate }}</label>
+                            </div>
+                            <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">{{
+                                'Forgot_password' | translate }}</a>
                         </div>
-                        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">{{
-                            'Forgot_password' | translate }}</a>
-                    </div>
-                    <button pButton pRipple label="{{ 'Sign_in' | translate }}" class="w-full p-3 text-xl" [disabled]="loading"
-                        (click)="loginHandler()"></button>
+                        <button type="submit" pButton pRipple label="{{ 'Sign_in' | translate }}"
+                            class="w-full p-3 text-xl" [disabled]="loading"></button>
+                    </form>
                 </div>
             </div>
         </div>

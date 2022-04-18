@@ -1,29 +1,64 @@
-<form>
-    <div class="field">
-        <label for="phone" class="block">{{'Phone' | translate}}</label>
-        <input id="phone" type="text" pInputText [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.phone}"
-            class="w-full" [(ngModel)]="formCreate.phone" name="phone" autocomplete="off" />
-        <small *ngIf="invalid && !formCreate.phone" class="p-error">{{'Phone_required' | translate}}</small>
-    </div>
+<div class="field">
+    <label for="lastname" class="block">{{'Last_name' | translate}}</label>
+    <input id="lastname" type="text" pInputText [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.lastName}"
+        class="w-full" [(ngModel)]="formCreate.lastName" name="phone" autocomplete="off" />
+    <small *ngIf="invalid && !formCreate.lastName" class="p-error">{{'Lastname_required' | translate}}</small>
+</div>
 
-    <div class="field">
-        <label for="password" class="block">{{'Password' | translate}}</label>
-        <input id="password" type="password" pInputText
-            [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.password}" class="w-full"
-            [(ngModel)]="formCreate.password" name="password" autocomplete="off" />
-        <small *ngIf="invalid && !formCreate.password" class="p-error">{{'Password_required' |
-            translate}}</small>
-    </div>
+<div class="field">
+    <label for="firstname" class="block">{{'First_name' | translate}}</label>
+    <input id="firstname" type="text" pInputText [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.firstName}"
+        class="w-full" [(ngModel)]="formCreate.firstName" name="phone" autocomplete="off" />
+    <small *ngIf="invalid && !formCreate.firstName" class="p-error">{{'Firstname_required' | translate}}</small>
+</div>
 
-    <div class="field">
-        <label for="confirm" class="block">{{'Confirm_password' | translate}}</label>
-        <input id="confirm" type="password" pInputText
-            [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.confirmPassword}" class="w-full"
-            [(ngModel)]="formCreate.confirmPassword" name="confirmPassword" autocomplete="off" />
-        <small *ngIf="invalid && !formCreate.confirmPassword" class="p-error">{{'Confirm_password_required' |
-            translate}}</small>
-    </div>
-</form>
+<div class="field">
+    <label for="phone" class="block">{{'Phone' | translate}}</label>
+    <input id="phone" type="text" pInputText [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.phone}"
+        class="w-full" [(ngModel)]="formCreate.phone" name="phone" autocomplete="off" />
+    <small *ngIf="invalid && !formCreate.phone" class="p-error">{{'Phone_required' | translate}}</small>
+</div>
+
+<div class="field">
+    <label for="email" class="block">{{'Email' | translate}}</label>
+    <input id="email" type="text" pInputText class="w-full" [(ngModel)]="formCreate.email" name="phone"
+        autocomplete="off" />
+</div>
+
+<div class="field">
+    <label for="password" class="block">{{'Password' | translate}}</label>
+    <input id="password" type="password" pInputText [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.password}"
+        class="w-full" [(ngModel)]="formCreate.password" name="password" autocomplete="off" />
+    <small *ngIf="invalid && !formCreate.password" class="p-error">{{'Password_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="confirm" class="block">{{'Confirm_password' | translate}}</label>
+    <input id="confirm" type="password" pInputText
+        [ngClass]="{'ng-invalid ng-dirty': invalid && !formCreate.confirmPassword}" class="w-full"
+        [(ngModel)]="formCreate.confirmPassword" name="confirmPassword" autocomplete="off" />
+    <small *ngIf="invalid && !formCreate.confirmPassword" class="p-error">{{'Confirm_password_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="gender" class="block">{{'Gender' | translate}}</label>
+    <p-dropdown [options]="gender" styleClass="w-full" [(ngModel)]="formCreate.genderId" optionLabel="label"
+        placeholder="{{'Select_gender' | translate}}" appendTo="body" optionValue="genderId">
+    </p-dropdown>
+    <small *ngIf="!formCreate.genderId && invalid" class="p-error">{{'Gender_required' |
+        translate}}</small>
+</div>
+
+<div class="field">
+    <label for="department" class="block">{{'Department' | translate}}</label>
+    <p-dropdown [options]="departments" styleClass="w-full" [(ngModel)]="formCreate.departmentId" optionLabel="name"
+        placeholder="{{'Select_department' | translate}}" appendTo="body" optionValue="departmentId">
+    </p-dropdown>
+    <small *ngIf="!formCreate.departmentId && invalid" class="p-error">{{'Gender_required' |
+        translate}}</small>
+</div>
 
 <div class="flex justify-content-end">
     <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"

@@ -9,4 +9,5 @@ export class Department {
     modifiedUtcDate: string;
     name: string;
     users: User[];
+    childDepartments?: Department[]
 }

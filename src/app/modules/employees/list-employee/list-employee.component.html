@@ -73,6 +73,10 @@
                 <td>{{employee.gender}}</td>
                 <td>{{employee.lastLogin | date:'dd/MM/yyyy HH:mm'}}</td>
                 <td>
+                    <button [disabled]="!actions.includes(103)" pButton pRipple type="button" icon="pi pi-key"
+                        pTooltip="{{'Change_password' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text p-button-danger"
+                        (click)="openDialogChangPassword(employee)"></button>
+
                     <button [disabled]="!actions.includes(103)" pButton pRipple type="button" icon="pi pi-sliders-v"
                         pTooltip="{{'Role' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
                         (click)="openDialogPromoteRole(employee)"></button>

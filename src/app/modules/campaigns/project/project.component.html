@@ -99,7 +99,17 @@
             <td style="max-width: 25rem; min-width: 11rem">{{project.accountingAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.feeAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.fixedRate * 100}} %</td>
-            <td style="max-width: 25rem; min-width: 10rem">{{project.dayLeft}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">
+                <ng-container *ngIf="project.isExpired; else dayLeft">
+                    <span class="red">{{'Expired' | translate}}</span>
+                    <button pButton pRipple type="button" icon="pi pi-history" pTooltip="{{'Extend' | translate}}"
+                        tooltipPosition="top" class="p-button-rounded p-button-text"
+                        (click)="openDialogExtend(project)"></button>
+                </ng-container>
+                <ng-template #dayLeft>
+                    {{project.dayLeft}}
+                </ng-template>
+            </td>
             <td style="min-width: 100px; max-width: 120px;">
 
                 <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"

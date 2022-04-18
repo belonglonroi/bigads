@@ -12,4 +12,5 @@ export class Project {
     createdDate?: string;
     modifiedDate?: string;
     createdName?: string;
+    childProjects?: Project[];
 }

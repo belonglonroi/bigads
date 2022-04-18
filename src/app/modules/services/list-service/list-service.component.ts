@@ -45,33 +45,31 @@ export class ListServiceComponent extends BaseClass implements OnInit {
             .subscribe({
                 next: (res: ApiPagingResult<AdService[]>) => {
                     this.totalRecords = res.data.total;
-                    this.services = res.data.records.map(e => {
-                        return {
-                            data: {
-                                ...e,
-                                createdName: e.createdBy.lastName + ' ' + e.createdBy.firstName,
-                                createdDate: moment(e.createdUtcDate).format('DD/MM/YYYY'),
-                                modifiedDate: moment(e.modifiedUtcDate).format('DD/MM/YYYY')
-                            },
-                            children: e.childrenService.map(x => {
-                                return {
-                                    data: {
-                                        ...x,
-                                        createdName: x.createdBy.lastName + ' ' + x.createdBy.firstName,
-                                        createdDate: moment(x.createdUtcDate).format('DD/MM/YYYY'),
-                                        modifiedDate: moment(x.modifiedUtcDate).format('DD/MM/YYYY')
-                                    },
-                                    children: x.childrenService,
-                                }
-                            })
-                        }
-                    });
+                    this.services = this.transformData(res.data.records);
                     this.fetchingData = false;
                 },
                 error: (err) => {
-
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    })
                 }
             });
+    }
+
+    transformData(data: AdService[]) {
+        return data.map(e => {
+            return {
+                data: {
+                    ...e,
+                    createdName: e.createdBy.lastName + ' ' + e.createdBy.firstName,
+                    createdDate: moment(e.createdUtcDate).format('DD/MM/YYYY'),
+                    modifiedDate: moment(e.modifiedUtcDate).format('DD/MM/YYYY')
+                },
+                children: this.transformData(e.childrenService),
+            }
+        })
     }
 
     changePage(e) {

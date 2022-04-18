@@ -17,6 +17,10 @@ export class DeparmentService extends BaseService {
         return this.http.get(`${this.departmentUrl}/departments?name=${x.name}&page=${x.page}&limit=${x.limit}`);
     }
 
+    getDepartmentsTree(x) {
+        return this.http.get(`${this.departmentUrl}/root-departments?name=${x.name}&page=${x.page}&limit=${x.limit}`);
+    }
+
     createDepartment(param) {
         return this.http.post(`${this.departmentUrl}/create`, param);
     }

@@ -10,6 +10,15 @@
         autocomplete="off"></textarea>
 </div>
 
+<div class="field">
+    <label for="department" class="block">{{'Department' | translate}}</label>
+    <p-dropdown [options]="departments" styleClass="w-full" [(ngModel)]="dialogData.parentId" optionLabel="name"
+        placeholder="{{'Select_department' | translate}}" appendTo="body" optionValue="departmentId">
+    </p-dropdown>
+    <small *ngIf="!dialogData.parentId && invalid" class="p-error">{{'Gender_required' |
+        translate}}</small>
+</div>
+
 <div class="flex justify-content-end mt-3">
     <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
         (click)="dialogRef.close()"></p-button>

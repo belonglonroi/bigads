@@ -31,8 +31,12 @@
                     </p-inputSwitch>
                 </td>
                 <td>
-                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                    {{rowData.serviceName}}
+                    <div class="flex">
+                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                        <div>
+                            {{rowData.serviceName}}
+                        </div>
+                    </div>
                 </td>
                 <td>{{rowData.description}}</td>
                 <td>{{rowData.createdName}}</td>

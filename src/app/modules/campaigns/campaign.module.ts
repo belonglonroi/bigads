@@ -20,6 +20,7 @@ import { DialogOrganizationComponent } from './dialog-organization/dialog-organi
 import { DialogUserOrganizationComponent } from './dialog-user-organization/dialog-user-organization.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DialogOrtherServiceComponent } from './dialog-orther-service/dialog-orther-service.component';
+import { DialogExtendComponent } from './dialog-extend/dialog-extend.component';
 
 const campaignRoutes: Routes = [
     { path: '', component: CampaignComponent },
@@ -38,7 +39,8 @@ const campaignRoutes: Routes = [
         OrganizationComponent,
         DialogOrganizationComponent,
         DialogUserOrganizationComponent,
-        DialogOrtherServiceComponent
+        DialogOrtherServiceComponent,
+        DialogExtendComponent
     ],
     imports: [
         CommonModule,

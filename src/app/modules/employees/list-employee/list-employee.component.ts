@@ -14,6 +14,7 @@ import * as XLSX from 'xlsx';
 import { MenuItem } from 'primeng/api';
 import { RoleService } from 'src/app/core/services/role.service';
 import { Role } from 'src/app/core/models/role.model';
+import { DialogChangePasswordComponent } from '../dialog-change-password/dialog-change-password.component';
 type AOA = any[][];
 
 @Component({
@@ -171,6 +172,14 @@ export class ListEmployeeComponent extends BaseClass implements OnInit {
                     }
                 }
             );
+    }
+
+    openDialogChangPassword(e: TableUser) {
+        const dialogRef = this.dialogService.open(DialogChangePasswordComponent, {
+            header: e.fullname,
+            data: e,
+            width: '350px'
+        })
     }
 
     changeStateHandler(e: TableUser) {

@@ -44,15 +44,26 @@ export class ListDepartmentComponent extends BaseClass implements OnInit {
 
     getDepartments() {
         this.fetchingData = true;
-        this.departmentService.getDepartments(this.filter)
+        this.departmentService.getDepartmentsTree(this.filter)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: ApiPagingResult<Department[]>) => {
                     this.fetchingData = false;
-                    this.departments = res.data.records;
+                    this.departments = this.transformData(res.data.records);
                     this.totalRecords = res.data.total;
                 }
             })
+    }
+
+    transformData(data: Department[]) {
+        return data.map(e => {
+            return {
+                data: {
+                    ...e,
+                },
+                children: this.transformData(e.childDepartments)
+            }
+        })
     }
 
     openDialog(e?) {

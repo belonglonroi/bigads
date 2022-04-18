@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { ApiPagingResult } from 'src/app/core/models/api-result.model';
 import { CampaignService } from 'src/app/core/models/campaign-services.model';
@@ -16,7 +17,7 @@ import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const'
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    providers: [DialogService]
+    providers: [DialogService, ConfirmationService]
 })
 export class ListComponent extends BaseClass implements OnInit {
 
@@ -36,8 +37,24 @@ export class ListComponent extends BaseClass implements OnInit {
         private translate: TranslateService,
         private messageConfig: MessageConfigService,
         private campaignAdsService: CampaignAdsService,
+        private confirmationService: ConfirmationService,
     ) {
         super();
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    beforeunloadHandler(event) {
+        if (!this.recordsHasChanged.length) {
+            return true;
+        } else {
+            this.confirmationService.confirm({
+                message: 'Are you sure that you want to perform this action?',
+                accept: () => {
+                    this.recordsHasChanged = [];
+                }
+            });
+        }
+        return false;
     }
 
     ngOnInit(): void {

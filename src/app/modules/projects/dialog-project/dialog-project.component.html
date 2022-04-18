@@ -11,6 +11,21 @@
     <small *ngIf="!dialogData.description && invalid" class="p-error">{{'Description_required' | translate}}</small>
 </div>
 
+<div class="field">
+    <label for="parent" class="block">{{'Parent_project' | translate}}</label>
+    <p-dropdown inputId="parent" [options]="projects" [(ngModel)]="dialogData.parentId" optionLabel="name"
+        showClear="true" placeholder="{{'Select_parent_project' | translate}}" optionValue="projectId"
+        styleClass="w-full" filter="true" appendTo="body"></p-dropdown>
+</div>
+
+<div class="field">
+    <label for="category" class="block">{{'Category' | translate}}</label>
+    <p-dropdown inputId="category" [options]="categories" [(ngModel)]="dialogData.categoryId" optionLabel="name"
+        showClear="true" placeholder="{{'Select_category' | translate}}" optionValue="categoryId" styleClass="w-full"
+        filter="true" appendTo="body">
+    </p-dropdown>
+</div>
+
 
 <div class="flex justify-content-end mt-3">
     <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"

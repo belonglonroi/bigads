@@ -50,6 +50,10 @@ export class UserService extends BaseService {
         return this.http.post(`${this.userUrl}/register`, param);
     }
 
+    createStaff(param) {
+        return this.http.post(`${this.userUrl}/create-staff`, param);
+    }
+
     updateProfile(param) {
         return this.http.post(`${this.userUrl}/profile`, param);
     }
@@ -72,6 +76,10 @@ export class UserService extends BaseService {
 
     changePassword(param) {
         return this.http.post(`${this.userUrl}/change-password`, param);
+    }
+
+    adminChangePassword(param) {
+        return this.http.post(`${this.userUrl}/admin/change-password`, param);
     }
 
     bulkCreateUser(param) {

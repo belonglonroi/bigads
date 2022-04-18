@@ -10,6 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
 import { MessageConfigService } from 'src/app/service/message.config.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { CategoryService } from 'src/app/core/services/category.service';
+import { Category } from 'src/app/core/models/category.model';
 
 @Component({
     selector: 'app-list-project',
@@ -24,37 +26,66 @@ export class ListProjectComponent extends BaseClass implements OnInit {
     actions: number[] = [];
     filter = {
         name: '',
+        categoryIds: [],
+        categoryName: '',
         page: this.page,
         limit: this.limit
-    }
+    };
+    categories: Category[] = [];
+
     constructor(
         private projectService: ProjectService,
         public dialogService: DialogService,
         private translate: TranslateService,
         private messageConfig: MessageConfigService,
         private userService: UserService,
+        private categoryService: CategoryService,
     ) {
         super();
     }
 
     ngOnInit(): void {
         this.actions = this.userService.action;
+
+        this.categoryService.getCategories({ page: 1, limit: 9999, name: '' })
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (res: ApiPagingResult<Category[]>) => {
+                    this.categories = res.data.records;
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    })
+                }
+            })
         this.getProjects();
     }
 
     getProjects() {
         this.fetchingData = true;
+        const params = {
+            ...this.filter,
+            categoryIds: this.filter.categoryIds.toString()
+        }
 
-        this.projectService.getProjects(this.filter)
+        this.projectService.getProjectsTree(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: ApiPagingResult<Project[]>) => {
                     this.totalRecords = res.data.total;
-                    this.transformData(res.data.records);
+                    this.projects = this.transformData(res.data.records);
+                    console.log(this.projects);
                     this.fetchingData = false;
                 },
-                error: () => {
-
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    })
                 }
             });
     }
@@ -64,13 +95,21 @@ export class ListProjectComponent extends BaseClass implements OnInit {
         this.getProjects();
     }
 
+    searchByCategoryName(e: string) {
+        this.filter.categoryName = e;
+        this.getProjects();
+    }
+
     transformData(data: Project[]) {
-        this.projects = data.map(e => {
+        return data.map(e => {
             return {
-                ...e,
-                createdDate: moment(e.createdUtcDate).format('DD/MM/YYYY'),
-                modifiedDate: moment(e.mofifiedUtcDate).format('DD/MM/YYYY'),
-                createdName: e.createdBy.lastName + ' ' + e.createdBy.firstName,
+                data: {
+                    ...e,
+                    createdDate: moment(e.createdUtcDate).format('DD/MM/YYYY'),
+                    modifiedDate: moment(e.mofifiedUtcDate).format('DD/MM/YYYY'),
+                    createdName: e.createdBy?.lastName + ' ' + e.createdBy?.firstName,
+                },
+                children: this.transformData(e.childProjects)
             }
         })
     }

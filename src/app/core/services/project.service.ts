@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseService } from '../base/base.service';
-import { ApiResult } from '../models/api-result.model';
+import { ApiPagingResult, ApiResult } from '../models/api-result.model';
 import { Project } from '../models/project.model';
 
 @Injectable({
@@ -16,8 +16,12 @@ export class ProjectService extends BaseService {
         super();
     }
 
-    getProjects(param?): Observable<ApiResult<Project[]>> {
-        return this.http.post<ApiResult<Project[]>>(`${this.projectUrl}/projects`, param ?? {});
+    getProjects(param?): Observable<ApiPagingResult<Project[]>> {
+        return this.http.post<ApiPagingResult<Project[]>>(`${this.projectUrl}/projects`, param ?? {});
+    }
+
+    getProjectsTree(param?): Observable<ApiPagingResult<Project[]>> {
+        return this.http.post<ApiPagingResult<Project[]>>(`${this.projectUrl}/root-projects`, param ?? {});
     }
 
     createProject(param) {

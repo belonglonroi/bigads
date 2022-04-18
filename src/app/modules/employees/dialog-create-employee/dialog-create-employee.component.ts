@@ -3,7 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { BaseClass } from 'src/app/core/base/base.class';
+import { GENDER_SELECT } from 'src/app/core/consts/gender.const';
 import { MESSAGE_TYPE, MESSAGE_SUMARY, MESSAGE_CONTENT } from 'src/app/core/consts/message.const';
+import { ApiPagingResult } from 'src/app/core/models/api-result.model';
+import { Department } from 'src/app/core/models/department.model';
+import { DeparmentService } from 'src/app/core/services/department.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MessageConfigService } from 'src/app/service/message.config.service';
 
@@ -15,11 +19,23 @@ import { MessageConfigService } from 'src/app/service/message.config.service';
 export class DialogCreateEmployeeComponent extends BaseClass implements OnInit {
 
     invalid: boolean = false;
+    gender = GENDER_SELECT.map(e => {
+        return {
+            ...e,
+            label: this.translate.instant(e.label)
+        }
+    });
     formCreate = {
         phone: '',
+        lastName: '',
+        firstName: '',
+        email: '',
+        genderId: 0,
+        departmentId: 0,
         password: '',
         confirmPassword: ''
     }
+    departments: Department[] = []
 
     constructor(
         public dialogRef: DynamicDialogRef,
@@ -28,20 +44,37 @@ export class DialogCreateEmployeeComponent extends BaseClass implements OnInit {
         private fb: FormBuilder,
         private messageConfig: MessageConfigService,
         private translate: TranslateService,
+        private deparmentService: DeparmentService,
     ) {
         super();
     }
 
     ngOnInit(): void {
+        this.deparmentService.getDepartments({ page: this.page, limit: 9999, name: '' })
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (res: ApiPagingResult<Department[]>) => {
+                    this.departments = res.data.records;
+                },
+                error: (err) => { }
+            })
     }
 
     submitHandler() {
-        if (!this.formCreate.phone || !this.formCreate.password || !this.formCreate.confirmPassword) {
-            this.invalid = true;
-            return;
+        console.log(this.formCreate)
+        for (const key in this.formCreate) {
+            if (!this.formCreate[key] && key !== 'email') {
+                this.invalid = true;
+                return;
+            }
         }
 
-        this.userService.register(this.formCreate)
+        // if (!this.formCreate.phone || !this.formCreate.password || !this.formCreate.confirmPassword) {
+        //     this.invalid = true;
+        //     return;
+        // }
+
+        this.userService.createStaff(this.formCreate)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {

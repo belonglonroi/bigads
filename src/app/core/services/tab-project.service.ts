@@ -31,4 +31,8 @@ export class TabProjectService extends BaseService {
     changeStatus(param) {
         return this.http.post(`${this.campaignUrl}/active`, param);
     }
+
+    extendProject(param) {
+        return this.http.post(`${this.campaignUrl}/renewal`, param);
+    }
 }

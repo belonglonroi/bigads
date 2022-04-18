@@ -1,3 +1,4 @@
+import { DialogExtendComponent } from './../dialog-extend/dialog-extend.component';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { BaseClass } from 'src/app/core/base/base.class';
@@ -239,6 +240,22 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
         this.selectedProjects.push(e);
         this.reportService.selectedProjects$.next(this.selectedProjects);
         this.tabIndex.emit(3);
+    }
+
+    openDialogExtend(e: Campaign) {
+        const dialogRef = this.dialogService.open(DialogExtendComponent, {
+            header: this.translate.instant('Extend'),
+            data: e,
+            width: '350px'
+        });
+
+        dialogRef.onClose.subscribe({
+            next: (res) => {
+                if (res) {
+                    this.getProjects();
+                }
+            }
+        })
     }
 
 }
