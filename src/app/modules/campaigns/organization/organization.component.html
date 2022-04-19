@@ -28,10 +28,10 @@
                 <p-sortIcon field="address"></p-sortIcon>
                 <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
             </th>
-            <th pSortableColumn="fanpage">
-                {{'Fanpage' | translate}}
-                <p-sortIcon field="fanpage"></p-sortIcon>
-                <p-columnFilter type="text" field="fanpage" display="menu"></p-columnFilter>
+            <th pSortableColumn="quantity">
+                {{'Quantity' | translate}}
+                <p-sortIcon field="quantity"></p-sortIcon>
+                <p-columnFilter type="numeric" field="quantity" display="menu"></p-columnFilter>
             </th>
             <th pSortableColumn="website">
                 {{'Website' | translate}}
@@ -50,7 +50,7 @@
             <td>{{organization.organizationName}}</td>
             <td>{{organization.description}}</td>
             <td>{{organization.address}}</td>
-            <td>{{organization.fanpage}}</td>
+            <td>{{organization.quantity}}</td>
             <td>{{organization.website}}</td>
             <td style="min-width: 100px; max-width: 120px;">
                 <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"

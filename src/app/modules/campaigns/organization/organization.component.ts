@@ -55,7 +55,12 @@ export class OrganizationComponent extends BaseClass implements OnInit, OnChange
             .subscribe({
                 next: (res: ApiPagingResult<Organization[]>) => {
                     this.fetchingData = false;
-                    this.organizations = res.data.records;
+                    this.organizations = res.data.records.map(e => {
+                        return {
+                            ...e,
+                            quantity: e.users.length,
+                        }
+                    });
                     this.totalRecords = res.data.total;
                 }
             })
