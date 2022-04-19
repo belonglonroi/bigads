@@ -83,7 +83,7 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
                 description: this.dialogConfig.data.description,
                 // dailyPayment: 0,
                 feeType: this.dialogConfig.data.feeType,
-                fixedRate: this.dialogConfig.data.fixedRate,
+                fixedRate: this.dialogConfig.data.fixedRate * 100,
                 fixedAmount: this.dialogConfig.data.fixedAmount,
                 customRate: this.dialogConfig.data.customRate,
                 startDate: moment(this.startDate).format('YYYY-MM-DD')

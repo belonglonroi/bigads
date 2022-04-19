@@ -98,7 +98,7 @@
             <td style="max-width: 25rem; min-width: 10rem">{{project.expenditureAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 11rem">{{project.accountingAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.feeAmount | number}}</td>
-            <td style="max-width: 25rem; min-width: 10rem">{{project.fixedRate * 100}} %</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.feeType === 2 ? ('Package_fee' | translate) : project.fixedRate * 100 + ' %'}}</td>
             <td style="max-width: 25rem; min-width: 10rem">
                 <ng-container *ngIf="project.isExpired; else dayLeft">
                     <span class="red">{{'Expired' | translate}}</span>

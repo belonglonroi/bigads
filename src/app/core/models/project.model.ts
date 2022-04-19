@@ -1,3 +1,4 @@
+import { Category } from "./category.model";
 import { User } from "./user.model";
 
 export class Project {
@@ -13,4 +14,5 @@ export class Project {
     modifiedDate?: string;
     createdName?: string;
     childProjects?: Project[];
+    category?: Category;
 }

@@ -124,6 +124,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
                 ...e,
                 projectName: e.project.name,
                 customerName: e.customer.lastName + ' ' + e.customer.firstName,
+                category: e.project.category?.name
             }
         });
     }

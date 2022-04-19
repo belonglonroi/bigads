@@ -87,7 +87,13 @@ export class DialogDepartmentComponent extends BaseClass implements OnInit {
 
     update() {
         if (this.dialogData.name) {
-            this.departmentService.updateDepartment(this.dialogData)
+            const params = {
+                departmentId: this.config.data?.departmentId,
+                name: this.dialogData.name,
+                description: this.dialogData.description,
+                parentId: this.dialogData.parentId,
+            }
+            this.departmentService.updateDepartment(params)
                 .pipe(this.unsubsribeOnDestroy)
                 .subscribe({
                     next: (res) => {

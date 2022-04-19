@@ -37,7 +37,7 @@ export class Campaign {
     performanceRate: any;
     performanceString: string;
     planningStaff: User;
-    project: Project
+    project: Project;
     rateAmount: number;
     roi: number;
     search: number;
