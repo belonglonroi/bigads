@@ -44,7 +44,7 @@ export class DialogOrganizationComponent extends BaseClass implements OnInit {
 
             if (this.dialogConfig.data.method) {
                 const owner = this.dialogConfig.data.users.find(e => e.isOwner);
-                this.dialogData.owner = `${owner.lastName} ${owner.firstName}`;
+                this.dialogData.owner = owner ? `${owner?.lastName} ${owner?.firstName}` : '';
                 this.dialogData.member = this.dialogConfig.data.users.map(e => `${e.lastName} ${e.firstName}`);
             }
         }
