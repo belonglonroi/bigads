@@ -132,7 +132,6 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                 planningStaffName: e.planningStaff ? (e.planningStaff.lastName + ' ' + e.planningStaff.firstName) : '',
                 contentStaffName: e.contentStaff ? (e.contentStaff.lastName + ' ' + e.contentStaff.firstName) : '',
                 costPerResult: e.campaignAdsIndex.cpr,
-                performanceString: e.campaign.performanceString,
                 result: e.campaignAdsIndex.result,
                 amount: e.campaignAdsIndex.amount
             }
@@ -290,6 +289,18 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                     })
                 }
             })
+    }
+
+    getColor(e: string) {
+        let color = 'unset';
+        if (e === 'Kém' || e === 'Rất kém') {
+            color = 'red'
+        } else if (e === 'Đạt yêu cầu') {
+            color = 'blue'
+        } else if (e === 'Tốt' || e === 'Xuất sắc') {
+            color = 'green';
+        }
+        return color;
     }
 
 }

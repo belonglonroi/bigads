@@ -19,6 +19,13 @@
         translate}}</small>
 </div>
 
+<div class="field">
+    <label for="department" class="block">{{'Role' | translate}}</label>
+    <p-dropdown appendTo="body" [options]="roles" [(ngModel)]="dialogData.roleId" optionLabel="roleName"
+        optionValue="roleId" [filter]="true" filterBy="roleName" placeholder="{{'Select_role' | translate}}"
+        styleClass="w-full"></p-dropdown>
+</div>
+
 <div class="flex justify-content-end mt-3">
     <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
         (click)="dialogRef.close()"></p-button>

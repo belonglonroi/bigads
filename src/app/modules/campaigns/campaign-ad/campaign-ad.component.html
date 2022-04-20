@@ -122,7 +122,9 @@
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.hotline}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceName}}</td>
             <td style="max-width: 20rem; min-width: 12rem">{{campaignAd.adAccount}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.performanceString}}</td>
+            <td style="max-width: 20rem; min-width: 10rem">
+                <span [ngStyle]="{'color': getColor(campaignAd.performanceString)}">{{campaignAd.performanceString}}</span>
+            </td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.startDate}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.endDate}}</td>
             <td style="max-width: 20rem; min-width: 15rem">

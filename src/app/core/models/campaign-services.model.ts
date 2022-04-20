@@ -33,5 +33,6 @@ export class CampaignService {
     planningStaffName?: string;
     name?: string;
     campaignAdsIndex?: CampaignAds;
-    description?: string
+    description?: string;
+    performanceString?: string;
 }
