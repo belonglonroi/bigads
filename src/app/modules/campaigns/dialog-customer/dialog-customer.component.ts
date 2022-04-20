@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { CUSTOMER_TYPE } from 'src/app/core/consts/customer-type.const';
 import { GENDER_SELECT } from 'src/app/core/consts/gender.const';
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
-import { ApiResult } from 'src/app/core/models/api-result.model';
+import { ApiPagingResult, ApiResult } from 'src/app/core/models/api-result.model';
+import { Organization } from 'src/app/core/models/organization.model';
 import { ListUserResult, User } from 'src/app/core/models/user.model';
 import { CustomerService } from 'src/app/core/services/customer.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MessageConfigService } from 'src/app/service/message.config.service';
 
@@ -25,6 +28,7 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
         email: '',
         genderId: 0,
         customerType: 0,
+        oraginzationId: 0,
         feeRate: null,
         businessStaffId: 0
     }
@@ -36,6 +40,7 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
             label: this.translate.instant(e.label)
         }
     });
+    organizations: Organization[] = [];
     customerType = CUSTOMER_TYPE.map(e => {
         return {
             ...e,
@@ -50,6 +55,7 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
         public dialogConfig: DynamicDialogConfig,
         private customerService: CustomerService,
         private messageConfig: MessageConfigService,
+        private organizationService: OrganizationService,
     ) {
         super();
     }
@@ -62,11 +68,30 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
                 phone: this.dialogConfig.data.phone,
                 email: this.dialogConfig.data.email,
                 genderId: this.dialogConfig.data.genderId,
+                oraginzationId: this.dialogConfig.data.organization?.organizationId,
                 customerType: this.dialogConfig.data.customerType,
                 feeRate: this.dialogConfig.data.feeRate * 100,
                 businessStaffId: this.dialogConfig.data.businessStaff?.userId
             }
         }
+
+        const getListUser = this.userService.getListUser({ limit: 9999, page: 1 });
+        const getListOrganization = this.organizationService.getOrganizations({ page: 1, limit: 9999 });
+
+        forkJoin([getListUser, getListOrganization])
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (res: [ApiResult<ListUserResult>, ApiPagingResult<Organization[]>]) => {
+                    this.employees = res[0].data.records.map((e: User) => {
+                        return {
+                            ...e,
+                            fullname: e.lastName + ' ' + e.firstName
+                        }
+                    });
+
+                    this.organizations = res[1].data.records;
+                }
+            });
         this.userService.getListUser({ limit: 9999, page: 1 })
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({

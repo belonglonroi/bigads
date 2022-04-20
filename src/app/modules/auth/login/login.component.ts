@@ -17,7 +17,7 @@ export class LoginComponent extends BaseClass implements OnInit {
     formLogin = {
         phone: '',
         password: '',
-        remember: false,
+        remember: localStorage.getItem('remember') ? true : false,
     }
     invalid: boolean = false;
     themeElement: any;
@@ -47,7 +47,15 @@ export class LoginComponent extends BaseClass implements OnInit {
             this.invalid = true;
             return;
         }
+
         this.loading = true;
+
+        if (this.formLogin.remember) {
+            localStorage.setItem('remember', 'true');
+        } else {
+            localStorage.removeItem('remember');
+        }
+
         this.authService.login(this.formLogin)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({

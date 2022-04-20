@@ -13,6 +13,7 @@ import { UserService } from '../services/user.service';
 export class AuthService extends BaseService {
 
     isAuthenticated: boolean = false;
+    token: string = '';
 
     constructor(
         private http: HttpClient,
@@ -21,12 +22,12 @@ export class AuthService extends BaseService {
         super();
     }
 
-    set accessToken(token: string) {
-        localStorage.setItem('accessToken', token);
-    }
+    // set accessToken(token: string) {
+    //     sessionStorage.getItem('accessToken') ?? localStorage.getItem('accessToken');
+    // }
 
     get accessToken() {
-        return localStorage.getItem('accessToken');
+        return sessionStorage.getItem('accessToken') ?? localStorage.getItem('accessToken');
     }
 
     login(param: LoginParam): Observable<any> {
@@ -37,7 +38,13 @@ export class AuthService extends BaseService {
         return this.http.post<ApiResult<LoginResult>>(`${this.authUrl}/login`, param).pipe(
             switchMap((response) => {
 
-                this.accessToken = response.data.accessToken;
+                if (param.remember) {
+                    localStorage.setItem('accessToken', response.data.accessToken);
+                    // this.accessToken = localStorage.getItem('accessToken');
+                } else {
+                    sessionStorage.setItem('accessToken', response.data.accessToken);
+                    // this.accessToken = sessionStorage.getItem('accessToken');
+                }
 
                 this.isAuthenticated = true;
 
@@ -51,6 +58,7 @@ export class AuthService extends BaseService {
 
 
     logout(): Observable<any> {
+        sessionStorage.removeItem('accessToken');
         localStorage.removeItem('accessToken');
 
         this.isAuthenticated = false;
@@ -59,6 +67,7 @@ export class AuthService extends BaseService {
     }
 
     check(): Observable<boolean> {
+        const accessToken = sessionStorage.getItem('accessToken') ?? localStorage.getItem('accessToken');
         if (this.isAuthenticated) {
             return of(true);
         }

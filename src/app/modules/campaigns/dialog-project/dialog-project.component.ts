@@ -26,7 +26,7 @@ import { ReportService } from 'src/app/core/services/report.service';
 })
 export class DialogProjectComponent extends BaseClass implements OnInit {
 
-    organizations: Organization[] = [];
+    // organizations: Organization[] = [];
     customers: User[] = [];
     projects: Project[] = [];
     services: AdService[] = [];
@@ -34,7 +34,7 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
     rangeDates: Date[] = [];
     startDate: Date = new Date();
     dialogData = {
-        oraginzationId: 0,
+        // oraginzationId: 0,
         customerId: 0,
         projectId: 0,
         hotline: '',
@@ -75,7 +75,7 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
         if (this.dialogConfig.data?.campaignId) {
             this.startDate = new Date(this.dialogConfig.data.startDate);
             this.dialogData = {
-                oraginzationId: this.dialogConfig.data.oraginzation?.organizationId,
+                // oraginzationId: this.dialogConfig.data.oraginzation?.organizationId,
                 customerId: this.dialogConfig.data.customer?.userId,
                 projectId: this.dialogConfig.data.project?.projectId,
                 hotline: this.dialogConfig.data.hotline,
@@ -104,24 +104,24 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
     }
 
     getInitData() {
-        const getOrganization = this.organizationService.getOrganizations({ page: 1, limit: 9999 });
+        // const getOrganization = this.organizationService.getOrganizations({ page: 1, limit: 9999 });
         const getCustomers = this.customerService.getCustomers({ page: 1, limit: 9999 });
         const getProjects = this.projectService.getProjects({ page: 1, limit: 9999 });
         const getEmployees = this.userService.getListUser({ limit: 99999, page: 1 });
 
-        forkJoin([getOrganization, getCustomers, getProjects, getEmployees])
+        forkJoin([getCustomers, getProjects, getEmployees])
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
-                    this.organizations = res[0].data.records;
-                    this.customers = res[1].data.records.map((e: User) => {
+                    // this.organizations = res[0].data.records;
+                    this.customers = res[0].data.records.map((e: User) => {
                         return {
                             ...e,
                             fullname: `${e.lastName} ${e.firstName} - ${e.phone}`,
                         }
                     });
-                    this.projects = res[2].data.records;
-                    this.employees = res[3].data.records.map((e: User) => {
+                    this.projects = res[1].data.records;
+                    this.employees = res[2].data.records.map((e: User) => {
                         return {
                             ...e,
                             fullname: e.lastName + ' ' + e.firstName,
@@ -132,25 +132,25 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
             })
     }
 
-    organizationChange(e: number) {
-        const param = {
-            limit: 99999,
-            page: 1,
-            organizationIds: e.toString(),
-        }
-        this.customerService.getCustomers(param)
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.customers = res.data.records.map((e: User) => {
-                        return {
-                            ...e,
-                            fullname: e.lastName + ' ' + e.firstName,
-                        }
-                    });;
-                }
-            })
-    }
+    // organizationChange(e: number) {
+    //     const param = {
+    //         limit: 99999,
+    //         page: 1,
+    //         organizationIds: e.toString(),
+    //     }
+    //     this.customerService.getCustomers(param)
+    //         .pipe(this.unsubsribeOnDestroy)
+    //         .subscribe({
+    //             next: (res) => {
+    //                 this.customers = res.data.records.map((e: User) => {
+    //                     return {
+    //                         ...e,
+    //                         fullname: e.lastName + ' ' + e.firstName,
+    //                     }
+    //                 });;
+    //             }
+    //         })
+    // }
 
     create() {
         if (!this.dialogData.projectId || !this.dialogData.customerId || !this.dialogData.hotline) {

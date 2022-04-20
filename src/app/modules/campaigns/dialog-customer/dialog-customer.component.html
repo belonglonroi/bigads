@@ -36,6 +36,15 @@
 </div>
 
 <div class="field">
+    <label for="organization" class="block">{{'Organization' | translate}}</label>
+    <p-dropdown inputId="organization" [options]="organizations" styleClass="w-full" [filter]="true"
+        filterValue="fullname" placeholder="{{'Select_organization' | translate}}"
+        [disabled]="dialogConfig?.data?.method" [(ngModel)]="dialogData.oraginzationId" optionLabel="organizationName"
+        appendTo="body" optionValue="organizationId">
+    </p-dropdown>
+</div>
+
+<div class="field">
     <label for="customerType" class="block">{{'Customer_type' | translate}}</label>
     <p-dropdown inputId="customerType" [options]="customerType" styleClass="w-full"
         [disabled]="dialogConfig?.data?.method" placeholder="{{'Select_customer_type' | translate}}"
@@ -47,8 +56,8 @@
 
 <div class="field">
     <label for="feeRate" class="block">{{'Fee' | translate}}</label>
-    <p-inputNumber [(ngModel)]="dialogData.feeRate" class="w-full" styleClass="w-full"
-        inputId="feeRate" suffix=" %" [disabled]="dialogConfig?.data?.method" autocomplete="off"></p-inputNumber>
+    <p-inputNumber [(ngModel)]="dialogData.feeRate" class="w-full" styleClass="w-full" inputId="feeRate" suffix=" %"
+        [disabled]="dialogConfig?.data?.method" autocomplete="off"></p-inputNumber>
     <!-- <small *ngIf="!dialogData.feeRate && invalid" class="p-error">{{'Fee_required' | translate}}</small> -->
 </div>
 
@@ -67,11 +76,11 @@
 <div class="flex justify-content-end mt-3" *ngIf="!dialogConfig?.data?.method">
     <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
         (click)="dialogRef.close()"></p-button>
-    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" *ngIf="!dialogConfig.data?.userId" styleClass="p-button-text"
-        (click)="create()">
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" *ngIf="!dialogConfig.data?.userId"
+        styleClass="p-button-text" (click)="create()">
     </p-button>
 
-    <p-button icon="pi pi-check" label="{{'Update' | translate}}" *ngIf="dialogConfig.data?.userId" styleClass="p-button-text"
-        (click)="update()">
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" *ngIf="dialogConfig.data?.userId"
+        styleClass="p-button-text" (click)="update()">
     </p-button>
 </div>

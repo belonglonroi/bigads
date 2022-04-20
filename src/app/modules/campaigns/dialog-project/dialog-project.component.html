@@ -1,13 +1,4 @@
 <div class="field">
-    <label for="organization" class="block">{{'Organization' | translate}}</label>
-    <p-dropdown inputId="organization" [options]="organizations" styleClass="w-full" [filter]="true"
-        filterValue="fullname" placeholder="{{'Select_organization' | translate}}" [disabled]="dialogConfig?.data?.method"
-        [(ngModel)]="dialogData.oraginzationId" (ngModelChange)="organizationChange($event)"
-        optionLabel="organizationName" appendTo="body" optionValue="organizationId">
-    </p-dropdown>
-</div>
-
-<div class="field">
     <label for="customer" class="block">{{'Customer' | translate}}</label>
     <p-dropdown inputId="customer" [options]="customers" styleClass="w-full" [filter]="true" filterValue="fullname" [disabled]="dialogConfig?.data?.method"
         placeholder="{{'Select_customer' | translate}}" [(ngModel)]="dialogData.customerId" optionLabel="fullname"

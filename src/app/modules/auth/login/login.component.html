@@ -29,7 +29,7 @@
 
                         <div class="flex align-items-center justify-content-between my-5">
                             <div class="flex align-items-center">
-                                <p-checkbox id="rememberme" name="remember" [(ngModel)]="formLogin.remember" styleClass="mr-2">
+                                <p-checkbox id="rememberme" name="remember" [binary]="true" [(ngModel)]="formLogin.remember" styleClass="mr-2">
                                 </p-checkbox>
                                 <label for="rememberme">{{ 'Remember_me' | translate }}</label>
                             </div>

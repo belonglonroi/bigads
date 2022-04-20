@@ -122,7 +122,7 @@ export class DialogUserOrganizationComponent extends BaseClass implements OnInit
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
                             summary: this.translate.instant(MESSAGE_SUMARY.success),
-                            detail: this.translate.instant('Delete_customer_from_organization_successfully'),
+                            detail: this.translate.instant(res.data.message),
                         });
                         this.reloadDetail();
                     },
