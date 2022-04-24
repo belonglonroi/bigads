@@ -37,11 +37,11 @@
 
 <div class="field">
     <label for="organization" class="block">{{'Organization' | translate}}</label>
-    <p-dropdown inputId="organization" [options]="organizations" styleClass="w-full" [filter]="true"
-        filterValue="fullname" placeholder="{{'Select_organization' | translate}}"
-        [disabled]="dialogConfig?.data?.method" [(ngModel)]="dialogData.oraginzationId" optionLabel="organizationName"
-        appendTo="body" optionValue="organizationId">
-    </p-dropdown>
+    <p-multiSelect inputId="organization" [options]="organizations" styleClass="w-full" [filter]="true"
+        placeholder="{{'Select_organization' | translate}}" [disabled]="dialogConfig?.data?.method" display="chip"
+        [(ngModel)]="dialogData.orgainzationIds" optionLabel="organizationName" appendTo="body"
+        optionValue="organizationId">
+    </p-multiSelect>
 </div>
 
 <div class="field">

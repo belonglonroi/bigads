@@ -37,28 +37,11 @@
 </div>
 
 <div class="field">
-    <label for="adStaff" class="block">{{'Ad_staff' | translate}}</label>
-    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.adStaffId" optionLabel="fullname"
-        optionValue="userId" appendTo="body" placeholder="{{ 'Select_ad_staff' | translate }}" [filter]="true"
-        [disabled]="config.data?.method" filterBy="fullname">
-    </p-dropdown>
-</div>
-
-<div class="field">
-    <label for="contentStaff" class="block">{{'Content_staff' | translate}}</label>
-    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.contentStaffId" optionLabel="fullname"
-        [disabled]="config.data?.method" optionValue="userId" appendTo="body"
-        placeholder="{{ 'Select_content_staff' | translate }}" [filter]="true" filterBy="fullname">
-    </p-dropdown>
-</div>
-
-
-<div class="field">
-    <label for="planningStaff" class="block">{{'Planning_staff' | translate}}</label>
-    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.planningStaffId"
-        optionLabel="fullname" optionValue="userId" appendTo="body" [disabled]="config.data?.method"
-        placeholder="{{ 'Select_planning_staff' | translate }}" [filter]="true" filterBy="fullname">
-    </p-dropdown>
+    <label for="staff" class="block">{{'Ad_staff' | translate}}</label>
+    <p-multiSelect inputId="staff" [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.staffIds"
+        optionLabel="fullname" optionValue="userId" appendTo="body" placeholder="{{ 'Select_staff' | translate }}"
+        [filter]="true" [disabled]="config.data?.method" filterBy="fullname" display="chip">
+    </p-multiSelect>
 </div>
 
 <div class="field">

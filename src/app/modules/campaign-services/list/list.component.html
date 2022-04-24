@@ -28,7 +28,7 @@
                 <th>{{'Hotline' | translate}}</th>
                 <th>{{'Performance' | translate}}</th>
                 <th>{{'Account' | translate}}</th>
-                <th>{{'Ad_staff' | translate}}</th>
+                <th>{{'Employees' | translate}}</th>
                 <th>{{'Cost_per_result' | translate}}</th>
                 <th>{{'Result' | translate}}</th>
                 <th>{{'Cost' | translate}}</th>
@@ -52,7 +52,11 @@
                 <td>{{campaignService.hotline}}</td>
                 <td>{{campaignService.campaign.performanceString}}</td>
                 <td>{{campaignService.adAccount}}</td>
-                <td>{{campaignService.adStaffName}}</td>
+                <td>
+                    <div *ngFor="let staff of campaignService.staffs">
+                        {{staff.lastName + ' ' + staff.firstName}}
+                    </div>
+                </td>
                 <td>{{campaignService.campaignAdsIndex.cpr | number}}</td>
                 <td pEditableColumn>
                     <p-cellEditor>
@@ -95,4 +99,5 @@
     <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
         [rowsPerPageOptions]="[10, 20, 50, 100]"></p-paginator>
 </div>
-<p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>

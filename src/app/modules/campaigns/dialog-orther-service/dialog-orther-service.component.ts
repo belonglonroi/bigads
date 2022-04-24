@@ -28,9 +28,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
         customerId: 0,
         campaignId: 0,
         serviceId: 0,
-        adStaffId: 0,
-        contentStaffId: 0,
-        planningStaffId: 0,
+        staffIds: [],
         serviceFee: null,
         description: '',
         startDate: '',
@@ -81,22 +79,20 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
 
         this.getInitialData();
 
-        if (this.config.data) {
+        if (this.config.data?.campaignServiceId) {
             this.dialogData = {
                 name: this.config.data.name,
                 customerId: this.config.data.campaign.customer.userId,
                 campaignId: this.config.data.campaign.campaignId,
                 serviceId: this.config.data.service.serviceId,
-                adStaffId: this.config.data.adStaff?.userId,
-                contentStaffId: this.config.data.contentStaff?.userId,
-                planningStaffId: this.config.data.planningStaff?.userId,
+                staffIds: this.config.data.staffs.map((e: User) => e?.userId),
                 serviceFee: this.config.data.serviceFee,
                 description: this.config.data.description,
                 startDate: '',
                 endDate: '',
                 isActive: this.config.data.isActive
             }
-            this.startDate = new Date(this.config.data.startDate);
+            this.startDate = new Date(moment(this.config.data.startDate, 'DD/MM/YYYY').format('MM/DD/YYYY'));
             // this.dateRange = [
             //     new Date(moment(this.config.data.startDate, 'DD/MM/YYYY').format('MM/DD/YYYY')),
             //     new Date(moment(this.config.data.endDate, 'DD/MM/YYYY').format('MM/DD/YYYY'))
@@ -132,7 +128,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
                     this.employees = res[2].data.records.map((e: User) => {
                         return {
                             ...e,
-                            fullname: e.lastName + ' ' + e.firstName,
+                            fullname: `${e.lastName} ${e.firstName} - ${e.department.name}`,
                         }
                     });
                     this.customers = res[3].data.records.map((e: User) => {
@@ -168,7 +164,12 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
             }
         }
 
-        this.campaignServicesService.createCampaignService(this.dialogData)
+        const params = {
+            ...this.dialogData,
+            staffIds: this.dialogData.staffIds.toString(),
+        }
+
+        this.campaignServicesService.createCampaignService(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
@@ -206,7 +207,8 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
 
         const param = {
             ...this.dialogData,
-            campaignServiceId: this.config.data.campaignServiceId
+            campaignServiceId: this.config.data.campaignServiceId,
+            staffIds: this.dialogData.staffIds.toString(),
         }
 
         this.campaignServicesService.updateCampaignService(param)

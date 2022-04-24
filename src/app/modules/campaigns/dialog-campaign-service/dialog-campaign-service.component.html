@@ -44,28 +44,11 @@
 </div>
 
 <div class="field">
-    <label for="adStaff" class="block">{{'Ad_staff' | translate}}</label>
-    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.adStaffId" optionLabel="fullname"
-        optionValue="userId" appendTo="body" placeholder="{{ 'Select_ad_staff' | translate }}" [filter]="true"
-        [disabled]="config.data?.method" filterBy="fullname">
-    </p-dropdown>
-</div>
-
-<div class="field">
-    <label for="contentStaff" class="block">{{'Content_staff' | translate}}</label>
-    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.contentStaffId" optionLabel="fullname"
-        [disabled]="config.data?.method" optionValue="userId" appendTo="body"
-        placeholder="{{ 'Select_content_staff' | translate }}" [filter]="true" filterBy="fullname">
-    </p-dropdown>
-</div>
-
-
-<div class="field">
-    <label for="planningStaff" class="block">{{'Planning_staff' | translate}}</label>
-    <p-dropdown [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.planningStaffId"
-        optionLabel="fullname" optionValue="userId" appendTo="body" [disabled]="config.data?.method"
-        placeholder="{{ 'Select_planning_staff' | translate }}" [filter]="true" filterBy="fullname">
-    </p-dropdown>
+    <label for="staff" class="block">{{'Ad_staff' | translate}}</label>
+    <p-multiSelect inputId="staff" [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.staffIds"
+        optionLabel="fullname" optionValue="userId" appendTo="body" placeholder="{{ 'Select_staff' | translate }}"
+        [filter]="true" [disabled]="config.data?.method" filterBy="fullname" display="chip">
+    </p-multiSelect>
 </div>
 
 <div class="field">
@@ -93,8 +76,8 @@
 <div class="flex justify-content-end mt-3" *ngIf="!config.data?.method">
     <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
         (click)="dialogRef.close()"></p-button>
-    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" *ngIf="!config.data?.campaignServiceId"
-        (click)="create()"></p-button>
-    <p-button icon="pi pi-check" label="{{'Update' | translate}}" styleClass="p-button-text" *ngIf="config.data?.campaignServiceId"
-        (click)="update()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text"
+        *ngIf="!config.data?.campaignServiceId" (click)="create()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" styleClass="p-button-text"
+        *ngIf="config.data?.campaignServiceId" (click)="update()"></p-button>
 </div>

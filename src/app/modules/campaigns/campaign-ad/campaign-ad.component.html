@@ -123,15 +123,16 @@
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceName}}</td>
             <td style="max-width: 20rem; min-width: 12rem">{{campaignAd.adAccount}}</td>
             <td style="max-width: 20rem; min-width: 10rem">
-                <span [ngStyle]="{'color': getColor(campaignAd.performanceString)}">{{campaignAd.performanceString}}</span>
+                <span
+                    [ngStyle]="{'color': getColor(campaignAd.performanceString)}">{{campaignAd.performanceString}}</span>
             </td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.startDate}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.endDate}}</td>
             <td style="max-width: 20rem; min-width: 15rem">
                 <div>
-                    <div>{{campaignAd.adStaffName}}</div>
-                    <div>{{campaignAd.planningStaffName}}</div>
-                    <div>{{campaignAd.contentStaffName}}</div>
+                    <div *ngFor="let staff of campaignAd.staffs">
+                        {{staff.lastName + ' ' + staff.firstName}}
+                    </div>
                 </div>
             </td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.goal | number}}</td>

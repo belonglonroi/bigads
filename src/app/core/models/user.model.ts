@@ -1,3 +1,5 @@
+import { Department } from "./department.model";
+import { Organization } from "./organization.model";
 import { Role } from "./role.model";
 
 export class User {
@@ -23,6 +25,8 @@ export class User {
     transactionAmount?: number;
     fullname?: string;
     lastLogin?: string;
+    department?: Department;
+    organizations: Organization[];
 }
 
 export class ListUserResult {

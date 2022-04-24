@@ -28,7 +28,7 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
         email: '',
         genderId: 0,
         customerType: 0,
-        oraginzationId: 0,
+        orgainzationIds: [],
         feeRate: null,
         businessStaffId: 0
     }
@@ -68,7 +68,7 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
                 phone: this.dialogConfig.data.phone,
                 email: this.dialogConfig.data.email,
                 genderId: this.dialogConfig.data.genderId,
-                oraginzationId: this.dialogConfig.data.organization?.organizationId,
+                orgainzationIds: this.dialogConfig.data.organizations.map((e: Organization) => e?.organizationId ),
                 customerType: this.dialogConfig.data.customerType,
                 feeRate: this.dialogConfig.data.feeRate * 100,
                 businessStaffId: this.dialogConfig.data.businessStaff?.userId
@@ -114,7 +114,12 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
             }
         }
         this.dialogData.feeRate = this.dialogData.feeRate / 100;
-        this.customerService.createCustomer(this.dialogData)
+        const params = {
+            ...this.dialogData,
+            organizationIds: this.dialogData.orgainzationIds.toString(),
+        }
+
+        this.customerService.createCustomer(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
@@ -149,6 +154,7 @@ export class DialogCustomerComponent extends BaseClass implements OnInit {
         const param = {
             ...this.dialogData,
             customerId: this.dialogConfig.data.userId,
+            organizationIds: this.dialogData.orgainzationIds.toString(),
             feeRate: this.dialogData.feeRate / 100,
         }
 

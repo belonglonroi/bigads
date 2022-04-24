@@ -69,10 +69,7 @@ export class DialogCreateEmployeeComponent extends BaseClass implements OnInit {
             }
         }
 
-        // if (!this.formCreate.phone || !this.formCreate.password || !this.formCreate.confirmPassword) {
-        //     this.invalid = true;
-        //     return;
-        // }
+        this.formCreate.phone.trim();
 
         this.userService.createStaff(this.formCreate)
             .pipe(this.unsubsribeOnDestroy)
