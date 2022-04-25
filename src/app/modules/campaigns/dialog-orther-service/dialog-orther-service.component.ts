@@ -128,7 +128,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
                     this.employees = res[2].data.records.map((e: User) => {
                         return {
                             ...e,
-                            fullname: `${e.lastName} ${e.firstName} - ${e.department.name}`,
+                            fullname: `${e.lastName} ${e.firstName} - ${e.department?.name}`,
                         }
                     });
                     this.customers = res[3].data.records.map((e: User) => {

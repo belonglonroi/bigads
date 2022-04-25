@@ -42,20 +42,20 @@ export class ListComponent extends BaseClass implements OnInit {
         super();
     }
 
-    @HostListener('window:beforeunload', ['$event'])
-    beforeunloadHandler(event) {
-        if (!this.recordsHasChanged.length) {
-            return true;
-        } else {
-            this.confirmationService.confirm({
-                message: 'Are you sure that you want to perform this action?',
-                accept: () => {
-                    this.recordsHasChanged = [];
-                }
-            });
-        }
-        return false;
-    }
+    // @HostListener('window:beforeunload', ['$event'])
+    // beforeunloadHandler(event) {
+    //     // if (!this.recordsHasChanged.length) {
+    //     //     return true;
+    //     // } else {
+    //     this.confirmationService.confirm({
+    //         message: 'Are you sure that you want to perform this action?',
+    //         accept: () => {
+    //             this.recordsHasChanged = [];
+    //         }
+    //     });
+    //     // }
+    //     return false;
+    // }
 
     ngOnInit(): void {
         this.getCampaignServices();
