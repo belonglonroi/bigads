@@ -354,5 +354,6 @@
     "Select_department": "Chọn phòng ban",
     "Expired": "Hết hạn",
     "Extend": "Gia hạn",
-    "Quantity": "Số lượng"
+    "Quantity": "Số lượng",
+    "Assign_to_staffs": "Nhân viên phụ trách"
 }

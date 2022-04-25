@@ -44,7 +44,7 @@
 </div>
 
 <div class="field">
-    <label for="staff" class="block">{{'Ad_staff' | translate}}</label>
+    <label for="staff" class="block">{{'Assign_to_staffs' | translate}}</label>
     <p-multiSelect inputId="staff" [options]="employees" styleClass="w-full" [(ngModel)]="dialogData.staffIds"
         optionLabel="fullname" optionValue="userId" appendTo="body" placeholder="{{ 'Select_staff' | translate }}"
         [filter]="true" [disabled]="config.data?.method" filterBy="fullname" display="chip">
