@@ -131,7 +131,7 @@ export class DialogCampaignServiceComponent extends BaseClass implements OnInit 
                     this.employees = res[2].data.records.map((e: User) => {
                         return {
                             ...e,
-                            fullname: `${e.lastName} ${e.firstName} - ${e.department?.name}`,
+                            fullname: `${e.lastName} ${e.firstName} ${e.department ? '- ' + e.department?.name : ''}`,
                         }
                     });
                     console.log(this.employees);
