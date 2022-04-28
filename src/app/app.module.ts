@@ -18,11 +18,15 @@ import { ConfigService } from './service/app.config.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { httpTranslateLoader } from 'src/assets/i18n/util';
-import { SharedPrimeModule } from './shared/primeng.module';
+
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { CampaignServicesModule } from './modules/campaign-services/campaign-ad.module';
 import { DepartmentModule } from './modules/department/department.module';
+import { SharedModule } from './shared/shared.module';
+import { LicenseManager } from 'ag-grid-enterprise';
+
+LicenseManager.setLicenseKey('CompanyName=EVNICT,LicensedGroup=EVNICT,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=1,LicensedProductionInstancesCount=1,AssetReference=AG-021810,ExpiryDate=2_November_2022_[v2]_MTY2NzM0NzIwMDAwMA==8164e6648439d13f314f12022058ac62');
 
 @NgModule({
     imports: [
@@ -32,7 +36,7 @@ import { DepartmentModule } from './modules/department/department.module';
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        SharedPrimeModule,
+        SharedModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

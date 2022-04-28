@@ -5,10 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { SharedPrimeModule } from 'src/app/shared/primeng.module';
+
 import { httpTranslateLoader } from 'src/assets/i18n/util';
 import { ListServiceComponent } from './list-service/list-service.component';
 import { DialogServiceComponent } from './dialog-service/dialog-service.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const serviceRoutes: Routes = [
     { path: '', component: ListServiceComponent }
@@ -23,8 +24,8 @@ const serviceRoutes: Routes = [
         CommonModule,
         PerfectScrollbarModule,
         RouterModule.forChild(serviceRoutes),
-        SharedPrimeModule,
         ReactiveFormsModule,
+        SharedModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,

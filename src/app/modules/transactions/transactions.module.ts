@@ -6,10 +6,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { SharedPrimeModule } from 'src/app/shared/primeng.module';
+
 import { httpTranslateLoader } from 'src/assets/i18n/util';
 import { DialogTransactionComponent } from './dialog-transaction/dialog-transaction.component';
-import { NgModelChangeDebouncedDirective } from 'src/app/shared/directive/ngModel-change-debounced.directive';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 const transactionRoutes: Routes = [
@@ -25,7 +24,6 @@ const transactionRoutes: Routes = [
         CommonModule,
         PerfectScrollbarModule,
         RouterModule.forChild(transactionRoutes),
-        SharedPrimeModule,
         ReactiveFormsModule,
         SharedModule,
         TranslateModule.forChild({

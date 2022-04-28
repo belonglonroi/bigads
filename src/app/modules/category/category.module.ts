@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { SharedPrimeModule } from 'src/app/shared/primeng.module';
+
 import { httpTranslateLoader } from 'src/assets/i18n/util';
 import { DialogCategoryComponent } from './dialog-category/dialog-category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -24,7 +24,6 @@ const categoryRoutes: Routes = [
         CommonModule,
         PerfectScrollbarModule,
         RouterModule.forChild(categoryRoutes),
-        SharedPrimeModule,
         SharedModule,
         ReactiveFormsModule,
         TranslateModule.forChild({

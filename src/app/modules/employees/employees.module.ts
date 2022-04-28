@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ListEmployeeComponent } from './list-employee/list-employee.component';
-import { SharedPrimeModule } from 'src/app/shared/primeng.module';
+
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { httpTranslateLoader } from 'src/assets/i18n/util';
@@ -34,7 +34,6 @@ const employeesRoutes: Routes = [
         PerfectScrollbarModule,
         CommonModule,
         RouterModule.forChild(employeesRoutes),
-        SharedPrimeModule,
         SharedModule,
         ReactiveFormsModule,
         TranslateModule.forChild({

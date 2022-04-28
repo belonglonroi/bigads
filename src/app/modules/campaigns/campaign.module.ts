@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { SharedPrimeModule } from 'src/app/shared/primeng.module';
+
 import { httpTranslateLoader } from 'src/assets/i18n/util';
 import { CampaignFilterComponent } from './campaign-filter/campaign-filter.component';
 import { DialogCustomerComponent } from './dialog-customer/dialog-customer.component';
@@ -46,7 +46,6 @@ const campaignRoutes: Routes = [
         CommonModule,
         PerfectScrollbarModule,
         RouterModule.forChild(campaignRoutes),
-        SharedPrimeModule,
         SharedModule,
         ReactiveFormsModule,
         TranslateModule.forChild({

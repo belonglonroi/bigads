@@ -355,5 +355,6 @@
     "Expired": "Hết hạn",
     "Extend": "Gia hạn",
     "Quantity": "Số lượng",
-    "Assign_to_staffs": "Nhân viên phụ trách"
+    "Assign_to_staffs": "Nhân viên phụ trách",
+    "Staff_name": "Nhân viên"
 }

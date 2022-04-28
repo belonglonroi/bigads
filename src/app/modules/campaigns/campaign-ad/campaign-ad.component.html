@@ -41,6 +41,11 @@
                 <p-sortIcon field="hotline"></p-sortIcon>
                 <p-columnFilter type="text" field="hotline" display="menu"></p-columnFilter>
             </th>
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="performanceString">
+                {{'Performance' | translate}}
+                <p-sortIcon field="performanceString"></p-sortIcon>
+                <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
+            </th>
             <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="serviceName">
                 {{'Service' | translate}}
                 <p-sortIcon field="serviceName"></p-sortIcon>
@@ -50,11 +55,6 @@
                 {{'Ad_account' | translate}}
                 <p-sortIcon field="adAccount"></p-sortIcon>
                 <p-columnFilter type="text" field="adAccount" display="menu"></p-columnFilter>
-            </th>
-            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="performanceString">
-                {{'Performance' | translate}}
-                <p-sortIcon field="performanceString"></p-sortIcon>
-                <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="startDate">
                 {{'Start_date' | translate}}
@@ -120,12 +120,12 @@
             <td style="max-width: 20rem; min-width: 15rem">{{campaignAd.project}}</td>
             <td style="max-width: 20rem; min-width: 15rem">{{campaignAd.customerName}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.hotline}}</td>
-            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceName}}</td>
-            <td style="max-width: 20rem; min-width: 12rem">{{campaignAd.adAccount}}</td>
             <td style="max-width: 20rem; min-width: 10rem">
                 <span
                     [ngStyle]="{'color': getColor(campaignAd.performanceString)}">{{campaignAd.performanceString}}</span>
             </td>
+            <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceName}}</td>
+            <td style="max-width: 20rem; min-width: 12rem">{{campaignAd.adAccount}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.startDate}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.endDate}}</td>
             <td style="max-width: 20rem; min-width: 15rem">

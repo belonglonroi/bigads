@@ -7,17 +7,6 @@
         optionLabel="label" optionValue="value" [filter]="true" filterBy="label"
         placeholder="{{'Select_compare_option' | translate}}" styleClass="w-full mb-3"></p-dropdown>
 
-    <input
-        *ngIf="filterForm.filterOption && filterForm.compareOption && !(filterForm.filterOption === 'adStaffName' || filterForm.filterOption === 'businesssStaffName' || filterForm.filterOption === 'contentStaffName' || filterForm.filterOption === 'planningStaffName' || filterForm.filterOption === 'serviceName' || filterForm.filterOption === 'projectName')"
-        type="text" pInputText class="w-full mb-3" placeholder="{{'Filter_value' | translate}}"
-        [(ngModel)]="filterForm.value">
-
-    <p-dropdown
-        *ngIf="filterForm.filterOption === 'adStaffName' || filterForm.filterOption === 'businesssStaffName' || filterForm.filterOption === 'contentStaffName' || filterForm.filterOption === 'planningStaffName'"
-        appendTo="body" [options]="employees" [(ngModel)]="filterForm.value" optionLabel="fullname"
-        optionValue="fullname" [filter]="true" filterBy="fullname" placeholder="{{'Select_employee' | translate}}"
-        styleClass="w-full mb-3"></p-dropdown>
-
     <p-dropdown *ngIf="filterForm.filterOption === 'serviceName'" appendTo="body" [options]="adServices"
         [(ngModel)]="filterForm.value" optionLabel="serviceName" optionValue="serviceName" [filter]="true"
         filterBy="serviceName" placeholder="{{'Select_service' | translate}}" styleClass="w-full mb-3"></p-dropdown>

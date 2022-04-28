@@ -5,10 +5,10 @@ export const CAMPAIGN_FILTER_OPTIONS = [
     { value: 'projectName', label: 'Project_name' },
     { value: 'serviceName', label: 'Service_name' },
     { value: 'adAccount', label: 'Ad_account' },
-    { value: 'adStaffName', label: 'Ad_staff_name' },
-    { value: 'businesssStaffName', label: 'Business_staff_name' },
-    { value: 'contentStaffName', label: 'Content_staff_name' },
-    { value: 'planningStaffName', label: 'Planning_staff_name' }
+    { value: 'staffName', label: 'Staff_name' },
+    // { value: 'businesssStaffName', label: 'Business_staff_name' },
+    // { value: 'contentStaffName', label: 'Content_staff_name' },
+    // { value: 'planningStaffName', label: 'Planning_staff_name' }
 ]
 
 export const COMPARE_OPTIONS = [
