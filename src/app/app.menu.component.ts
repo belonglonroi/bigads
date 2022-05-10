@@ -83,6 +83,12 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/category'],
                         show: this.roleActions.includes(1303)
                     },
+                    {
+                        label: 'Code',
+                        icon: 'pi pi-fw pi-code',
+                        routerLink: ['/code'],
+                        show: this.roleActions.includes(1303)
+                    },
                 ]
             },
             {

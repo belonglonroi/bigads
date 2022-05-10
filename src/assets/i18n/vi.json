@@ -356,5 +356,12 @@
     "Extend": "Gia hạn",
     "Quantity": "Số lượng",
     "Assign_to_staffs": "Nhân viên phụ trách",
-    "Staff_name": "Nhân viên"
+    "Staff_name": "Nhân viên",
+    "Code": "Mã",
+    "Add_code": "Thêm mã",
+    "Update_code": "Cập nhật mã",
+    "Expires_in": "Hết hạn sau",
+    "Create_code_successfully": "Thêm mã thành công!",
+    "Update_code_successfully": "Cập nhật mã thành công!",
+    "Copy_successfully": "Sao chép thành công!"
 }

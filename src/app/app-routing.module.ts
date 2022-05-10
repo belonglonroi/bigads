@@ -27,6 +27,7 @@ import { InitialDataResolver } from './app.resolve';
                     { path: 'campaign-services', loadChildren: () => import('./modules/campaign-services/campaign-ad.module').then(m => m.CampaignServicesModule) },
                     { path: 'department', loadChildren: () => import('./modules/department/department.module').then(m => m.DepartmentModule) },
                     { path: 'category', loadChildren: () => import('./modules/category/category.module').then(m => m.CategoryModule) },
+                    { path: 'code', loadChildren: () => import('./modules/code/code.module').then(m => m.CodeModule) },
                 ],
             },
             { path: '**', redirectTo: 'pages/notfound' },

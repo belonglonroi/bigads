@@ -1,30 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListCategoryComponent } from './list-category/list-category.component';
+import { ListCodeComponent } from './list-code/list-code.component';
+import { GenCodeComponent } from './gen-code/gen-code.component';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-
 import { httpTranslateLoader } from 'src/assets/i18n/util';
-import { DialogCategoryComponent } from './dialog-category/dialog-category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
-const categoryRoutes: Routes = [
-    { path: '', component: ListCategoryComponent },
+const codeRoutes: Routes = [
+    { path: '', component: ListCodeComponent },
 ]
 
 @NgModule({
     declarations: [
-        ListCategoryComponent,
-        DialogCategoryComponent,
+        ListCodeComponent,
+        GenCodeComponent
     ],
     imports: [
         CommonModule,
         PerfectScrollbarModule,
-        RouterModule.forChild(categoryRoutes),
+        RouterModule.forChild(codeRoutes),
         SharedModule,
+        ClipboardModule,
         ReactiveFormsModule,
         TranslateModule.forChild({
             loader: {
@@ -33,6 +34,6 @@ const categoryRoutes: Routes = [
                 deps: [HttpClient]
             }
         })
-    ],
+    ]
 })
-export class CategoryModule { }
+export class CodeModule { }

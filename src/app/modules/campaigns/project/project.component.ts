@@ -135,6 +135,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
 
     changePage(e) {
         this.page = e.page + 1;
+        this.limit = e.rows;
         this.getProjects();
     }
 

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { CAMPAIGN_FILTER_OPTIONS, COMPARE_OPTIONS } from 'src/app/core/consts/campaign-filter.const';
@@ -121,6 +122,15 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
                     value: e.value
                 }
             })
+
+            this.reportService.dateFilter$.asObservable()
+                .pipe(this.unsubsribeOnDestroy)
+                .subscribe({
+                    next: (res) => {
+                        this.filter['fromDate'] = res[0] ? moment(res[0]).format('YYYY-MM-DD') : '';
+                        this.filter['toDate'] = res[1] ? moment(res[1]).format('YYYY-MM-DD') : '';
+                    }
+                })
 
             this.reportService.campaignFilter$.next(this.filter);
         }
