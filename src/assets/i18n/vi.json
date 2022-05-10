@@ -199,12 +199,12 @@
     "Performance": "Hiệu suất",
     "Customer_transaction": "Khách chuyển khoản",
     "Expenditure": "Chi tiêu",
-    "Accounting": "Hoạch toán",
+    "Accounting": "Hạch toán",
     "Fee": "Thu phí",
     "Add_customer": "Thêm khách hàng",
     "Total_transaction_amount": "Tổng khách chuyển khoản",
     "Total_expenditure_amount": "Tổng chi tiêu",
-    "Total_accounting_amount": "Tổng hoạch toán",
+    "Total_accounting_amount": "Tổng hạch toán",
     "Total_fee_amount": "Tổng thu phí",
     "Are_you_sure_that_you_want_to_proceed": "Bạn có chắc chắn muốn tiếp tục không?",
     "Selected_item": "Đã chọn",
@@ -363,5 +363,10 @@
     "Expires_in": "Hết hạn sau",
     "Create_code_successfully": "Thêm mã thành công!",
     "Update_code_successfully": "Cập nhật mã thành công!",
-    "Copy_successfully": "Sao chép thành công!"
+    "Copy_successfully": "Sao chép thành công!",
+    "Copy": "Sao chép",
+    "One_month": "1 tháng",
+    "Three_month": "3 tháng",
+    "Six_month": "6 tháng",
+    "Twelve_month": "12 tháng"
 }

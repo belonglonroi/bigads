@@ -26,7 +26,7 @@ export class GenCodeComponent extends BaseClass implements OnInit {
         campaignServiceIds: [],
         expiresIn: 0
     }
-    datePicker = new Date();
+    datePicker = new Date(new Date().setHours(0, 0, 0, 0));
     customers: User[] = [];
     projects: Campaign[] = [];
     campaigns: CampaignService[] = [];
@@ -172,6 +172,26 @@ export class GenCodeComponent extends BaseClass implements OnInit {
                     })
                 }
             })
+    }
+
+    selectDate(e: number) {
+        const now = new Date();
+        switch (e) {
+            case 1:
+                this.datePicker = new Date(new Date(now.getFullYear(), now.getMonth() + 1, now.getDate()).setHours(23, 59, 59, 99));
+                break;
+            case 3:
+                this.datePicker = new Date(new Date(now.getFullYear(), now.getMonth() + 3, now.getDate()).setHours(23, 59, 59, 99));
+                break;
+            case 6:
+                this.datePicker = new Date(new Date(now.getFullYear(), now.getMonth() + 6, now.getDate()).setHours(23, 59, 59, 99));
+                break;
+            case 12:
+                this.datePicker = new Date(new Date(now.getFullYear(), now.getMonth() + 12, now.getDate()).setHours(23, 59, 59, 99));
+                break;
+            default:
+                break;
+        }
     }
 
 }

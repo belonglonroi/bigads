@@ -1,3 +1,10 @@
+<!-- <div class="field">
+    <label for="organization">{{'Organization' | translate}}</label>
+    <p-multiSelect inputId="organization" [options]="customers" [(ngModel)]="data.organizationIds"
+        (ngModelChange)="getCustomers()" appendTo="body" optionLabel="fullname" filter="true" styleClass="w-full"
+        optionValue="userId" display="chip"></p-multiSelect>
+</div> -->
+
 <div class="field">
     <label for="customers">{{'Customer' | translate}}</label>
     <p-multiSelect inputId="customers" [options]="customers" [(ngModel)]="data.customerIds"
@@ -27,7 +34,19 @@
 
 <div class="field">
     <label for="time">{{'Expires_in' | translate}}</label>
-    <p-calendar styleClass="w-full" appendTo="body" [(ngModel)]="datePicker" [showTime]="true" [showSeconds]="true" inputId="time"></p-calendar>
+    <p-calendar #calendar styleClass="w-full" appendTo="body" [(ngModel)]="datePicker" [showTime]="true"
+        [showSeconds]="true" inputId="time">
+        <p-footer>
+            <button type="text" pButton label="{{'One_month' | translate}}" class="p-button-text"
+                (click)="selectDate(1); calendar.toggle()"></button>
+            <button type="text" pButton label="{{'Three_month' | translate}}" class="p-button-text"
+                (click)="selectDate(3); calendar.toggle()"></button>
+            <button type="text" pButton label="{{'Six_month' | translate}}" class="p-button-text"
+                (click)="selectDate(6); calendar.toggle()"></button>
+            <button type="text" pButton label="{{'Twelve_month' | translate}}" class="p-button-text"
+                (click)="selectDate(12); calendar.toggle()"></button>
+        </p-footer>
+    </p-calendar>
 </div>
 
 <div class="flex justify-content-end mt-3">

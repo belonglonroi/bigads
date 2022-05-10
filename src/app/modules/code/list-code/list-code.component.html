@@ -32,7 +32,7 @@
                 <td>{{code.createdUtdDate | date:'dd/MM/yyyy'}}</td>
                 <td>{{code.expireAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
                 <td style="min-width: 100px; max-width: 120px;">
-                    <button pButton pRipple type="button" icon="pi pi-copy" pTooltip="{{'Update' | translate}}"
+                    <button pButton pRipple type="button" icon="pi pi-copy" pTooltip="{{'Copy' | translate}}"
                         tooltipPosition="top" class="p-button-rounded p-button-text"
                         [cdkCopyToClipboard]="copyCode(code)"></button>
                     <button pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Update' | translate}}"
