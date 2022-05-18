@@ -1,7 +1,8 @@
 <div style="width: 300px">
     <p-dropdown appendTo="body" [options]="campaignFilterOptions" [(ngModel)]="filterForm.filterOption"
         [disabled]="filterUpdate" optionLabel="label" optionValue="value" [filter]="true" filterBy="label"
-        (onChange)="compare.show()" placeholder="{{'Select_filter_option' | translate}}" styleClass="w-full mb-3">
+        (onChange)="changeFilterOption($event)" placeholder="{{'Select_filter_option' | translate}}"
+        styleClass="w-full mb-3">
     </p-dropdown>
 
     <p-dropdown appendTo="body" [options]="compareOptions" #compare [(ngModel)]="filterForm.compareOption"
@@ -9,7 +10,7 @@
         placeholder="{{'Select_compare_option' | translate}}" styleClass="w-full mb-3"></p-dropdown>
 
     <input
-        *ngIf="filterForm.filterOption && filterForm.compareOption && !(filterForm.filterOption === 'staffName' || filterForm.filterOption === 'serviceName' || filterForm.filterOption === 'projectName')"
+        *ngIf="filterForm.filterOption && filterForm.compareOption !== 4 && !(filterForm.filterOption === 'staffName' || filterForm.filterOption === 'serviceName' || filterForm.filterOption === 'projectName' || filterForm.filterOption === 'campaignServiceIsActive')"
         type="text" pInputText class="w-full mb-3" placeholder="{{'Filter_value' | translate}}"
         [(ngModel)]="filterForm.value">
 
@@ -25,10 +26,13 @@
         [(ngModel)]="filterForm.value" optionLabel="name" optionValue="name" [filter]="true" filterBy="name"
         placeholder="{{'Select_project' | translate}}" styleClass="w-full mb-3"></p-dropdown>
 
+    <p-dropdown *ngIf="filterForm.filterOption === 'campaignServiceIsActive'" appendTo="body"
+        [options]="isActiveOptions" [(ngModel)]="filterForm.value" optionLabel="label" optionValue="value"
+        placeholder="{{'Status' | translate}}" styleClass="w-full mb-3"></p-dropdown>
+
     <div class="flex justify-content-end mt-3">
         <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text"
-            [disabled]="!this.filterForm.compareOption || !this.filterForm.filterOption || !this.filterForm.value"
-            (click)="submitHandler()">
+            [disabled]="!this.filterForm.compareOption || !this.filterForm.filterOption" (click)="submitHandler()">
         </p-button>
     </div>
 </div>

@@ -1,4 +1,6 @@
 export const CAMPAIGN_FILTER_OPTIONS = [
+    { value: 'campaignServiceAmount', label: 'Cost' },
+    { value: 'campaignServiceIsActive', label: 'Status' },
     { value: 'customerName', label: 'Customer_name' },
     { value: 'customerPhone', label: 'Customer_phone' },
     { value: 'campaignHotline', label: 'Campaign_hotline' },
@@ -6,8 +8,6 @@ export const CAMPAIGN_FILTER_OPTIONS = [
     { value: 'serviceName', label: 'Service_name' },
     { value: 'adAccount', label: 'Ad_account' },
     { value: 'staffName', label: 'Staff_name' },
-    // { value: 'businesssStaffName', label: 'Business_staff_name' },
-    // { value: 'contentStaffName', label: 'Content_staff_name' },
     // { value: 'planningStaffName', label: 'Planning_staff_name' }
 ]
 

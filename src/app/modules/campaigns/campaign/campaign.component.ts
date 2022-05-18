@@ -202,7 +202,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
     getFilterItem(e) {
         const option = this.campaignFilterOptions.find(x => x.value === e.filterOption);
         const compare = this.compareOptions.find(x => x.value === e.compareOption);
-        return option.label + ' ' + compare.label.toLowerCase() + ' \'' + e.value + '\'';
+        return option.label + ' ' + compare.label.toLowerCase() + (e.value === '' ? '' : ` '${e.value}'`);
     }
 
     filterChange() {

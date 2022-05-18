@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { Dropdown } from 'primeng/dropdown';
 import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { CAMPAIGN_FILTER_OPTIONS, COMPARE_OPTIONS } from 'src/app/core/consts/campaign-filter.const';
@@ -19,6 +20,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class CampaignFilterComponent extends BaseClass implements OnInit {
 
+    @ViewChild('compare') compareDropdown: Dropdown;
     @Input() filterUpdate;
     @Output() updated = new EventEmitter();
     campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map(e => {
@@ -35,9 +37,14 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         }
     });
 
+    isActiveOptions = [
+        { value: true, label: this.translate.instant('Active') },
+        { value: false, label: this.translate.instant('Deactive') }
+    ]
+
     filterForm = {
         filterOption: '',
-        compareOption: '',
+        compareOption: 0,
         value: ''
     }
 
@@ -90,13 +97,27 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
                 }
             })
     }
+    changeFilterOption(e) {
+        if (e.value === 'campaignServiceAmount') {
+            this.filterForm.compareOption = 4;
+            this.compareDropdown.disabled = true;
+            return;
+        }
+
+        if (e.value === 'campaignServiceIsActive') {
+            this.filterForm.compareOption = 1;
+            this.compareDropdown.disabled = true;
+            return;
+        }
+        this.compareDropdown.show();
+    }
 
     submitHandler() {
         if (this.filterUpdate) {
             this.update();
             return;
         }
-        if (!this.filterForm.compareOption || !this.filterForm.filterOption || !this.filterForm.value) {
+        if (!this.filterForm.compareOption || !this.filterForm.filterOption) {
             return;
         }
 
@@ -105,7 +126,7 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
 
         this.filterForm = {
             filterOption: '',
-            compareOption: '',
+            compareOption: 0,
             value: ''
         }
 
@@ -117,9 +138,13 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
             this.reportService.campaignFilter$.next({});
         } else {
             this.filterBinding.forEach(e => {
-                this.filter[e.filterOption] = {
-                    compareId: e.compareOption,
-                    value: e.value
+                if (e.filterOption !== 'campaignServiceIsActive') {
+                    this.filter[e.filterOption] = {
+                        compareId: e.compareOption,
+                        value: e.value
+                    }
+                } else {
+                    this.filter[e.filterOption] = e.value;
                 }
             })
 
