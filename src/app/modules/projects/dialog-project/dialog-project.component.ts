@@ -45,8 +45,9 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
         if (this.config.data) {
             this.dialogData = {
                 ...this.config.data,
-                categoryId: this.config.data.category.categoryId
+                categoryId: this.config.data.category?.categoryId
             }
+            console.log(this.dialogData)
         }
 
         this.getInitialData();

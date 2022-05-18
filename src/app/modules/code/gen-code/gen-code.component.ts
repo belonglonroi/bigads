@@ -4,9 +4,10 @@ import * as moment from 'moment';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
-import { ApiPagingResult } from 'src/app/core/models/api-result.model';
+import { ApiPagingResult, ApiResult } from 'src/app/core/models/api-result.model';
 import { CampaignService } from 'src/app/core/models/campaign-services.model';
 import { Campaign } from 'src/app/core/models/campaign.model';
+import { Code } from 'src/app/core/models/code.model';
 import { User } from 'src/app/core/models/user.model';
 import { CodeService } from 'src/app/core/services/code.service';
 import { CustomerService } from 'src/app/core/services/customer.service';
@@ -21,7 +22,6 @@ import { MessageConfigService } from 'src/app/service/message.config.service';
 export class GenCodeComponent extends BaseClass implements OnInit {
     data = {
         customerIds: [],
-        projectIds: [],
         campaignIds: [],
         campaignServiceIds: [],
         expiresIn: 0
@@ -30,7 +30,7 @@ export class GenCodeComponent extends BaseClass implements OnInit {
     customers: User[] = [];
     projects: Campaign[] = [];
     campaigns: CampaignService[] = [];
-
+    isLoading: boolean = true;
 
     constructor(
         private customerService: CustomerService,
@@ -52,16 +52,32 @@ export class GenCodeComponent extends BaseClass implements OnInit {
     }
 
     getDetails() {
+        this.isLoading = true;
         this.codeService.getDetails(this.config.data.codeId)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
-                next: (rs) => {
-                    console.log(rs);
+                next: (rs: ApiResult<Code>) => {
+                    this.data = {
+                        customerIds: rs.data.customers.map(e => e.userId),
+                        campaignIds: rs.data.campaigns.map(e => e.campaignId),
+                        campaignServiceIds: rs.data.campaignServices.map(e => e.campaignServiceId),
+                        expiresIn: rs.data.expireAt
+                    };
+                    this.datePicker = new Date(rs.data.expireAt);
+                    this.isLoading = false;
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    });
                 }
             })
     }
 
     getCustomer() {
+        this.isLoading = true;
         this.customerService.getCustomers({ limit: 9999, page: 1 })
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
@@ -72,6 +88,11 @@ export class GenCodeComponent extends BaseClass implements OnInit {
                             fullname: e.lastName + ' ' + e.firstName,
                         }
                     });
+                    if (this.data.customerIds.length) {
+                        this.getProjects();
+                    } else {
+                        this.isLoading = false;
+                    }
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
@@ -86,8 +107,10 @@ export class GenCodeComponent extends BaseClass implements OnInit {
     getProjects() {
         if (!this.data.customerIds.length) {
             this.projects = [];
+            this.data.campaignIds = [];
             return;
         }
+        this.isLoading = true;
         const params = {
             limit: 9999,
             page: 1,
@@ -103,6 +126,11 @@ export class GenCodeComponent extends BaseClass implements OnInit {
                             projectName: e.project.name + ' - ' + e.hotline
                         }
                     });
+                    if (this.data.campaignIds.length) {
+                        this.getCampaigns();
+                    } else {
+                        this.isLoading = false;
+                    }
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
@@ -115,21 +143,24 @@ export class GenCodeComponent extends BaseClass implements OnInit {
     }
 
     getCampaigns() {
-        if (!this.data.projectIds.length) {
+        if (!this.data.campaignIds.length) {
             this.campaigns = [];
+            this.data.campaignServiceIds = [];
             return;
         }
+        this.isLoading = true;
         const params = {
             limit: 9999,
             page: 1,
-            projectIds: this.data.projectIds.toString(),
+            projectIds: this.data.campaignIds.toString(),
         }
 
         this.reportService.getCampaignAds(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (rs: ApiPagingResult<CampaignService[]>) => {
-                    this.campaigns = rs.data.records
+                    this.campaigns = rs.data.records;
+                    this.isLoading = false;
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
@@ -143,8 +174,8 @@ export class GenCodeComponent extends BaseClass implements OnInit {
 
     create() {
         const params = {
-            customerIds: this.data.campaignIds.toString(),
-            projectIds: this.data.projectIds.toString(),
+            customerIds: this.data.customerIds.toString(),
+            projectIds: '',
             campaignIds: this.data.campaignIds.toString(),
             campaignServiceIds: this.data.campaignServiceIds.toString(),
             expiresIn: moment(this.datePicker).valueOf() - moment(new Date()).valueOf(),
@@ -159,6 +190,40 @@ export class GenCodeComponent extends BaseClass implements OnInit {
                             severity: MESSAGE_TYPE.success,
                             summary: this.translate.instant(MESSAGE_SUMARY.success),
                             detail: this.translate.instant('Create_code_successfully'),
+                        });
+
+                        this.dialogRef.close(true);
+                    }
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
+                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
+                    })
+                }
+            })
+    }
+
+    update() {
+        const params = {
+            codeId: this.config.data.codeId,
+            customerIds: this.data.customerIds.toString(),
+            projectIds: '',
+            campaignIds: this.data.campaignIds.toString(),
+            campaignServiceIds: this.data.campaignServiceIds.toString(),
+            expiresIn: moment(this.datePicker).valueOf() - moment(new Date()).valueOf(),
+        }
+
+        this.codeService.updateCode(params)
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (rs) => {
+                    if (rs.data) {
+                        this.messageConfig.messageConfig.next({
+                            severity: MESSAGE_TYPE.success,
+                            summary: this.translate.instant(MESSAGE_SUMARY.success),
+                            detail: this.translate.instant('Update_code_successfully'),
                         });
 
                         this.dialogRef.close(true);

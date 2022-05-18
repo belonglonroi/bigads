@@ -21,6 +21,10 @@ export class CodeService extends BaseService {
         return this.http.post(`${this.codeUrl}`, params);
     }
 
+    updateCode(params) {
+        return this.http.post(`${this.codeUrl}/update`, params);
+    }
+
     getListCode(params) {
         return this.http.get(`${this.codeUrl}/codes`, { params: params });
     }

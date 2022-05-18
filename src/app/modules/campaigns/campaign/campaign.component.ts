@@ -79,6 +79,11 @@ export class CampaignComponent extends BaseClass implements OnInit {
             .subscribe({
                 next: (res) => {
                     this.campaignFilter = res;
+                    if(res.fromDate && res.toDate) {
+                        const fromDate = new Date(new Date(res.fromDate).setHours(0, 0, 0, 0));
+                        const toDate = new Date(new Date(res.toDate).setHours(0, 0, 0, 0));
+                        this.dateFilter = [fromDate, toDate];
+                    }
                 }
             })
 
