@@ -136,9 +136,9 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
                 error: (err) => {
                     this.fetchingData = false;
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
                     })
                 }
             })

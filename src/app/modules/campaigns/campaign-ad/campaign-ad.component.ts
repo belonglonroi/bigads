@@ -114,6 +114,13 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                     this.total = { ...res.data.statistical };
                     this.totalRecords = res.data.total;
                     this.transferData(res.data.records);
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    })
                 }
             })
     }
