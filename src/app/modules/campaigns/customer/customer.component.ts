@@ -1,10 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, SortEvent } from 'primeng/api';
 import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
-import { CampaignFilter } from 'src/app/core/models/campaign-filter.model';
+import { CampaignFilter, CampaignSort } from 'src/app/core/models/campaign-filter.model';
 import { User } from 'src/app/core/models/user.model';
 import { CustomerService } from 'src/app/core/services/customer.service';
 import { ReportService } from 'src/app/core/services/report.service';
@@ -45,7 +45,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
     dateFilter: Date[] = [];
     campaignFilter: CampaignFilter = {};
     actions: number[] = [];
-
+    sort: CampaignSort = {};
     constructor(
         private reportService: ReportService,
         private customerService: CustomerService,
@@ -124,7 +124,12 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
         delete this.campaignFilter.customerIds;
         delete this.campaignFilter.projectIds;
 
-        this.reportService.getCustomers(this.campaignFilter)
+        const params = {
+            ...this.campaignFilter,
+            sort: { ...this.sort },
+        }
+
+        this.reportService.getCustomers(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
@@ -317,5 +322,15 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
         this.selectedCustomers.push(e);
         this.reportService.selectedCustomers$.next(this.selectedCustomers);
         this.tabIndex.emit(2);
+    }
+
+    sortCustomer(e: SortEvent) {
+        this.sort = {};
+        if (e.order === 1) {
+            this.sort[e.field] = 'ASC';
+        } else {
+            this.sort[e.field] = 'DESC';
+        }
+        this.getCustomers();
     }
 }

@@ -1,12 +1,12 @@
 import { DialogExtendComponent } from './../dialog-extend/dialog-extend.component';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, SortEvent } from 'primeng/api';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { Campaign } from 'src/app/core/models/campaign.model';
 import { User } from 'src/app/core/models/user.model';
 import { ReportService } from 'src/app/core/services/report.service';
 import * as moment from 'moment';
-import { CampaignFilter } from 'src/app/core/models/campaign-filter.model';
+import { CampaignFilter, CampaignSort } from 'src/app/core/models/campaign-filter.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageConfigService } from 'src/app/service/message.config.service';
@@ -36,7 +36,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
     };
     campaignFilter: CampaignFilter = {};
     actions: number[] = [];
-
+    sort: CampaignSort = {};
     constructor(
         private reportService: ReportService,
         private confirmationService: ConfirmationService,
@@ -103,7 +103,12 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
         this.campaignFilter.limit = this.limit;
         delete this.campaignFilter.projectIds;
 
-        this.reportService.getProjects(this.campaignFilter)
+        const params = {
+            ...this.campaignFilter,
+            sort: { ...this.sort },
+        }
+
+        this.reportService.getProjects(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
@@ -258,6 +263,16 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
                 }
             }
         })
+    }
+
+    sortCustomer(e: SortEvent) {
+        this.sort = {};
+        if (e.order === 1) {
+            this.sort[e.field] = 'ASC';
+        } else {
+            this.sort[e.field] = 'DESC';
+        }
+        this.getProjects();
     }
 
 }

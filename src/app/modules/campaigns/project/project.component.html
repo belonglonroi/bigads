@@ -1,6 +1,7 @@
-<p-table #projectData [value]="projects" dataKey="campaignId" styleClass="p-datatable-sm" responsiveLayout="scroll"
-    scrollHeight="calc(100vh - 433px)" [loading]="fetchingData" [(selection)]="selectedProjects" [scrollable]="true"
-    (selectionChange)="selectionChange()">
+<p-table [lazy]="true" #projectData [value]="projects" dataKey="campaignId" styleClass="p-datatable-sm"
+    responsiveLayout="scroll" scrollHeight="calc(100vh - 433px)" [loading]="fetchingData"
+    [(selection)]="selectedProjects" [scrollable]="true" (selectionChange)="selectionChange()"
+    (onSort)="sortCustomer($event)">
     <ng-template *ngIf="actions.includes(602) || actions.includes(604)" pTemplate="caption">
         <div class="flex">
             <p-button *ngIf="actions.includes(602)" label="{{'Add_project' | translate}}" icon="pi pi-plus"
@@ -34,12 +35,12 @@
             </th>
             <th style="max-width: 25rem; min-width: 12rem" pSortableColumn="category">
                 {{'Category' | translate}}
-                <p-sortIcon field="category"></p-sortIcon>
+                <!-- <p-sortIcon field="category"></p-sortIcon> -->
                 <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="performanceString">
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="performance">
                 {{'Performance' | translate}}
-                <p-sortIcon field="performanceString"></p-sortIcon>
+                <p-sortIcon field="performance"></p-sortIcon>
                 <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 25rem; min-width: 15rem" pSortableColumn="transactionAmount">
@@ -62,9 +63,9 @@
                 <p-sortIcon field="feeAmount"></p-sortIcon>
                 <p-columnFilter type="numeric" field="feeAmount" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="fixedRate">
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="customerFeeRate">
                 {{'Fee_rate' | translate}}
-                <p-sortIcon field="fixedRate"></p-sortIcon>
+                <p-sortIcon field="customerFeeRate"></p-sortIcon>
                 <p-columnFilter type="numeric" field="fixedRate" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="dayLeft">
@@ -98,7 +99,8 @@
             <td style="max-width: 25rem; min-width: 10rem">{{project.expenditureAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 11rem">{{project.accountingAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.feeAmount | number}}</td>
-            <td style="max-width: 25rem; min-width: 10rem">{{project.feeType === 2 ? ('Package_fee' | translate) : project.fixedRate * 100 + ' %'}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.feeType === 2 ? ('Package_fee' | translate) :
+                project.fixedRate * 100 + ' %'}}</td>
             <td style="max-width: 25rem; min-width: 10rem">
                 <ng-container *ngIf="project.isExpired; else dayLeft">
                     <span class="red">{{'Expired' | translate}}</span>

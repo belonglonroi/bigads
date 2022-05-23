@@ -1,6 +1,6 @@
-<p-table #customerData [value]="customers" dataKey="userId" styleClass="p-datatable-sm" responsiveLayout="scroll"
+<p-table [lazy]="true" #customerData [value]="customers" dataKey="userId" styleClass="p-datatable-sm" responsiveLayout="scroll"
     scrollHeight="calc(100vh - 433px)" [loading]="fetchingData" [(selection)]="selectedCustomers"
-    (selectionChange)="selectionChange()" [scrollable]="true">
+    (selectionChange)="selectionChange()" (onSort)="sortCustomer($event)" [scrollable]="true">
     <ng-template *ngIf="actions.includes(105) || actions.includes(107)" pTemplate="caption">
         <div class="flex">
             <p-button *ngIf="actions.includes(105)" label="{{'Add_customer' | translate}}" icon="pi pi-plus"
@@ -28,14 +28,14 @@
                 <p-sortIcon field="customerName"></p-sortIcon>
                 <p-columnFilter type="text" field="customerName" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 12rem" pSortableColumn="phone">
+            <th style="max-width: 25rem; min-width: 12rem" pSortableColumn="customerPhone">
                 {{'Phone' | translate}}
-                <p-sortIcon field="phone"></p-sortIcon>
+                <p-sortIcon field="customerPhone"></p-sortIcon>
                 <p-columnFilter type="text" field="phone" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="performanceString">
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="performance">
                 {{'Performance' | translate}}
-                <p-sortIcon field="performanceString"></p-sortIcon>
+                <p-sortIcon field="performance"></p-sortIcon>
                 <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 25rem; min-width: 15rem" pSortableColumn="transactionAmount">
@@ -58,9 +58,9 @@
                 <p-sortIcon field="feeAmount"></p-sortIcon>
                 <p-columnFilter type="numeric" field="feeAmount" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="feeRate">
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="customerFeeRate">
                 {{'Fee_rate' | translate}}
-                <p-sortIcon field="feeRate"></p-sortIcon>
+                <p-sortIcon field="customerFeeRate"></p-sortIcon>
                 <p-columnFilter type="numeric" field="feeRate" display="menu"></p-columnFilter>
             </th>
             <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>

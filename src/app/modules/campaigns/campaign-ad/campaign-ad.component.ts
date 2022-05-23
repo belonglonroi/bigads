@@ -1,12 +1,12 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, SortEvent } from 'primeng/api';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { CampaignAds } from 'src/app/core/models/campaign-ads.model';
 import { ReportService } from 'src/app/core/services/report.service';
 import * as moment from 'moment';
 import { User } from 'src/app/core/models/user.model';
 import { Campaign } from 'src/app/core/models/campaign.model';
-import { CampaignFilter } from 'src/app/core/models/campaign-filter.model';
+import { CampaignFilter, CampaignSort } from 'src/app/core/models/campaign-filter.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageConfigService } from 'src/app/service/message.config.service';
@@ -35,6 +35,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         totalAnotherServiceFee: 0,
     }
     campaignFilter: CampaignFilter = {};
+    sort: CampaignSort = {};
     constructor(
         private reportService: ReportService,
         private confirmationService: ConfirmationService,
@@ -106,7 +107,12 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         this.campaignFilter.page = this.page;
         this.campaignFilter.limit = this.limit;
 
-        this.reportService.getCampaignAds(this.campaignFilter)
+        const params = {
+            ...this.campaignFilter,
+            sort: { ...this.sort },
+        }
+
+        this.reportService.getCampaignAds(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
@@ -309,6 +315,16 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
             color = 'green';
         }
         return color;
+    }
+
+    sortCustomer(e: SortEvent) {
+        this.sort = {};
+        if (e.order === 1) {
+            this.sort[e.field] = 'ASC';
+        } else {
+            this.sort[e.field] = 'DESC';
+        }
+        this.getCampaignAds();
     }
 
 }

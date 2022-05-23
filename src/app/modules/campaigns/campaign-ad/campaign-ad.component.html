@@ -1,6 +1,6 @@
-<p-table #campaignAdsData [value]="campaignAds" dataKey="campaignServiceId" styleClass="p-datatable-sm"
+<p-table [lazy]="true" #campaignAdsData [value]="campaignAds" dataKey="campaignServiceId" styleClass="p-datatable-sm"
     scrollHeight="calc(100vh - 433px)" [loading]="fetchingData" [(selection)]="selectedCampaignAds" [scrollable]="true"
-    (selectionChange)="selectionChange()" responsiveLayout="scroll">
+    (selectionChange)="selectionChange()" (onSort)="sortCustomer($event)" responsiveLayout="scroll">
     <ng-template pTemplate="caption">
         <div class="flex">
             <p-button label="{{'Add_campaign' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"
@@ -21,14 +21,14 @@
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <th pFrozenColumn style="max-width: 7rem; min-width: 7rem">{{'Status' | translate}}</th>
-            <th pFrozenColumn style="max-width: 20rem; min-width: 15rem" pSortableColumn="name">
+            <th pFrozenColumn style="max-width: 20rem; min-width: 15rem" pSortableColumn="campaignServiceName">
                 {{'Campaign' | translate}}
-                <p-sortIcon field="name"></p-sortIcon>
+                <p-sortIcon field="campaignServiceName"></p-sortIcon>
                 <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 20rem; min-width: 15rem" pSortableColumn="project">
+            <th style="max-width: 20rem; min-width: 15rem" pSortableColumn="projectName">
                 {{'Project' | translate}}
-                <p-sortIcon field="project"></p-sortIcon>
+                <p-sortIcon field="projectName"></p-sortIcon>
                 <p-columnFilter type="text" field="project" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 20rem; min-width: 15rem" pSortableColumn="customerName">
@@ -41,9 +41,9 @@
                 <p-sortIcon field="hotline"></p-sortIcon>
                 <p-columnFilter type="text" field="hotline" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="performanceString">
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="performance">
                 {{'Performance' | translate}}
-                <p-sortIcon field="performanceString"></p-sortIcon>
+                <p-sortIcon field="performance"></p-sortIcon>
                 <p-columnFilter type="text" field="performanceString" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="serviceName">
@@ -67,34 +67,34 @@
                 <p-columnFilter type="text" field="endDate" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 20rem; min-width: 15rem">{{'Employees' | translate}}</th>
-            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="goal">
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="campaignServiceGoal">
                 {{'Target' | translate}}
-                <p-sortIcon field="goal"></p-sortIcon>
+                <p-sortIcon field="campaignServiceGoal"></p-sortIcon>
                 <p-columnFilter type="numeric" field="goal" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="description">
                 {{'Description' | translate}}
-                <p-sortIcon field="description"></p-sortIcon>
+                <!-- <p-sortIcon field="description"></p-sortIcon> -->
                 <p-columnFilter type="text" field="description" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="serviceFee">
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="feeAmount">
                 {{'Fee' | translate}}
-                <p-sortIcon field="serviceFee"></p-sortIcon>
+                <p-sortIcon field="feeAmount"></p-sortIcon>
                 <p-columnFilter type="text" field="serviceFee" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="costPerResult">
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="campaignServiceCPR">
                 {{'Cost_per_result' | translate}}
-                <p-sortIcon field="costPerResult"></p-sortIcon>
+                <p-sortIcon field="campaignServiceCPR"></p-sortIcon>
                 <p-columnFilter type="numeric" field="costPerResult" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="result">
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="campaignServiceResult">
                 {{'Result' | translate}}
-                <p-sortIcon field="result"></p-sortIcon>
+                <p-sortIcon field="campaignServiceResult"></p-sortIcon>
                 <p-columnFilter type="numeric" field="result" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="amount">
+            <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="campaignServiceAmount">
                 {{'Cost' | translate}}
-                <p-sortIcon field="amount"></p-sortIcon>
+                <p-sortIcon field="campaignServiceAmount"></p-sortIcon>
                 <p-columnFilter type="numeric" field="amount" display="menu"></p-columnFilter>
             </th>
             <th style="min-width: 100px; max-width: 120px;" pSortableColumn="name">{{'Action' | translate}}</th>
