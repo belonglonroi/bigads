@@ -78,7 +78,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: Campaign[]) => {
-                    this.reportService.campaignFilter$.value.campaignIds = res.map(e => e.project.projectId).toString();
+                    this.reportService.campaignFilter$.value.campaignIds = res.map(e => e.campaignId).toString();
                     this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
                 }
             })
