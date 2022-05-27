@@ -78,7 +78,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: Campaign[]) => {
-                    this.reportService.campaignFilter$.value.projectIds = res.map(e => e.project.projectId).toString();
+                    this.reportService.campaignFilter$.value.campaignIds = res.map(e => e.project.projectId).toString();
                     this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
                 }
             })
@@ -320,9 +320,9 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     sortCustomer(e: SortEvent) {
         this.sort = {};
         if (e.order === 1) {
-            this.sort[e.field] = 'ASC';
-        } else {
             this.sort[e.field] = 'DESC';
+        } else {
+            this.sort[e.field] = 'ASC';
         }
         this.getCampaignAds();
     }

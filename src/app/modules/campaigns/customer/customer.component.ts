@@ -327,9 +327,9 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
     sortCustomer(e: SortEvent) {
         this.sort = {};
         if (e.order === 1) {
-            this.sort[e.field] = 'ASC';
-        } else {
             this.sort[e.field] = 'DESC';
+        } else {
+            this.sort[e.field] = 'ASC';
         }
         this.getCustomers();
     }

@@ -101,7 +101,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
         this.fetchingData = true;
         this.campaignFilter.page = this.page;
         this.campaignFilter.limit = this.limit;
-        delete this.campaignFilter.projectIds;
+        delete this.campaignFilter.campaignIds;
 
         const params = {
             ...this.campaignFilter,
@@ -268,9 +268,9 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
     sortCustomer(e: SortEvent) {
         this.sort = {};
         if (e.order === 1) {
-            this.sort[e.field] = 'ASC';
-        } else {
             this.sort[e.field] = 'DESC';
+        } else {
+            this.sort[e.field] = 'ASC';
         }
         this.getProjects();
     }
