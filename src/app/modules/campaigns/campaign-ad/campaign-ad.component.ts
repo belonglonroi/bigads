@@ -36,6 +36,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     }
     campaignFilter: CampaignFilter = {};
     sort: CampaignSort = {};
+    code: string = '';
     constructor(
         private reportService: ReportService,
         private confirmationService: ConfirmationService,
@@ -45,6 +46,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         private campaignServicesService: CampaignServicesService,
     ) {
         super();
+        this.code = reportService.code;
     }
 
     ngOnChanges(changes: SimpleChanges): void {

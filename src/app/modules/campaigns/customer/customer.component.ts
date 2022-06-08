@@ -46,6 +46,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
     campaignFilter: CampaignFilter = {};
     actions: number[] = [];
     sort: CampaignSort = {};
+    code: string = '';
     constructor(
         private reportService: ReportService,
         private customerService: CustomerService,
@@ -57,6 +58,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
         private userService: UserService
     ) {
         super();
+        this.code = reportService.code;
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -75,7 +77,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.actions = this.userService.action;
+        this.actions = this.userService.action ?? [];
 
         this.items = [
             {

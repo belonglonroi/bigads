@@ -1,6 +1,6 @@
 <p-table [lazy]="true" #projectData [value]="projects" dataKey="campaignId" styleClass="p-datatable-sm"
-    responsiveLayout="scroll" scrollHeight="calc(100vh - 433px)" [loading]="fetchingData"
-    [(selection)]="selectedProjects" [scrollable]="true" (selectionChange)="selectionChange()"
+    responsiveLayout="scroll" [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'"
+    [loading]="fetchingData" [(selection)]="selectedProjects" [scrollable]="true" (selectionChange)="selectionChange()"
     (onSort)="sortCustomer($event)">
     <ng-template *ngIf="actions.includes(602) || actions.includes(604)" pTemplate="caption">
         <div class="flex">

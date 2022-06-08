@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://devapi.bigads.vn',
-  baseUrl: 'https://bigads.netlify.app'
+  baseUrl: 'http://localhost:4200/#/'
 };
 
 /*

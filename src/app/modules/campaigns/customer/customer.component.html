@@ -1,5 +1,5 @@
 <p-table [lazy]="true" #customerData [value]="customers" dataKey="userId" styleClass="p-datatable-sm" responsiveLayout="scroll"
-    scrollHeight="calc(100vh - 433px)" [loading]="fetchingData" [(selection)]="selectedCustomers"
+    [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'" [loading]="fetchingData" [(selection)]="selectedCustomers"
     (selectionChange)="selectionChange()" (onSort)="sortCustomer($event)" [scrollable]="true">
     <ng-template *ngIf="actions.includes(105) || actions.includes(107)" pTemplate="caption">
         <div class="flex">

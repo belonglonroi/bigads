@@ -31,15 +31,23 @@ export class ReportService extends BaseService {
         return this.selectedCustomers$.value;
     }
 
+    get code() {
+        return sessionStorage.getItem('code');
+    }
+
     getCustomers(param) {
-        return this.http.post(`${this.reportUrl}/customers`, param);
+        const path = this.code ? `${this.reportUrl}/customers?code=${this.code}` : `${this.reportUrl}/customers`;
+        return this.http.post(path, param);
     }
 
     getProjects(param) {
-        return this.http.post(`${this.reportUrl}/campaigns`, param);
+        const path = this.code ? `${this.reportUrl}/campaigns?code=${this.code}` : `${this.reportUrl}/campaigns`;
+
+        return this.http.post(path, param);
     }
 
     getCampaignAds(param) {
-        return this.http.post(`${this.reportUrl}/campaign-ads`, param);
+        const path = this.code ? `${this.reportUrl}/campaign-ads?code=${this.code}` : `${this.reportUrl}/campaign-ads`;
+        return this.http.post(path, param);
     }
 }

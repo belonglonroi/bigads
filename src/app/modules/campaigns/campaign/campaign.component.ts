@@ -46,6 +46,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
     filterUpdate = undefined;
     actions: number[] = [];
     customerName: string = '';
+    code: string = '';
     constructor(
         private reportService: ReportService,
         private translate: TranslateService,
@@ -58,12 +59,13 @@ export class CampaignComponent extends BaseClass implements OnInit {
     }
 
     ngOnInit(): void {
-        this.actions = this.userService.action;
+        this.actions = this.userService.action ?? [];
 
         this.route.queryParams
             .pipe(this.unsubsribeOnDestroy)
             .subscribe(params => {
-                this.activeIndex = params.tab
+                this.code = params.code;
+                sessionStorage.setItem('code', this.code);
             });
 
         this.reportService.filterBinding$.asObservable()

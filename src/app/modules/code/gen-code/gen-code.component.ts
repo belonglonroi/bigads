@@ -152,7 +152,7 @@ export class GenCodeComponent extends BaseClass implements OnInit {
         const params = {
             limit: 9999,
             page: 1,
-            projectIds: this.data.campaignIds.toString(),
+            campaignIds: this.data.campaignIds.toString(),
         }
 
         this.reportService.getCampaignAds(params)

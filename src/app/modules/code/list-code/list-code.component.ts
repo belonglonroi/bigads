@@ -87,12 +87,7 @@ export class ListCodeComponent extends BaseClass implements OnInit {
     }
 
     copyCode(e: Code) {
-        // this.messageConfig.messageConfig.next({
-        //     severity: MESSAGE_TYPE.success,
-        //     summary: this.translate.instant(MESSAGE_SUMARY.success),
-        //     detail: this.translate.instant('Copy_successfully'),
-        // });
-        return `${environment.baseUrl}/?code=${e.code}`;
+        return `${environment.baseUrl}/customer-view?code=${e.code}`;
     }
 
     delete(e: Code) {

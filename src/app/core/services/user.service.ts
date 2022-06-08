@@ -27,7 +27,7 @@ export class UserService extends BaseService {
     }
 
     get action() {
-        return this.user.getValue().userRole.roleActions.map(e => e.actionId);
+        return this.user.getValue()?.userRole.roleActions.map(e => e.actionId);
     }
 
     get() {

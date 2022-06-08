@@ -9,6 +9,7 @@ import { InitialDataResolver } from './app.resolve';
     imports: [
         RouterModule.forRoot([
             { path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) },
+            { path: 'customer-view', loadChildren: () => import('./modules/campaigns/campaign.module').then(m => m.CampaignModule) },
             {
                 path: '', component: AppMainComponent,
                 canActivate: [AuthGuard],
@@ -17,7 +18,7 @@ import { InitialDataResolver } from './app.resolve';
                     initialData: InitialDataResolver,
                 },
                 children: [
-                    { path: '', redirectTo: 'employees/profile', pathMatch: 'full' },
+                    // { path: '', redirectTo: 'employees/profile', pathMatch: 'full' },
                     { path: 'employees', loadChildren: () => import('./modules/employees/employees.module').then(m => m.EmployeesModule) },
                     { path: 'permissions', loadChildren: () => import('./modules/permissions/permissions.module').then(m => m.PermissionsModule) },
                     { path: 'projects', loadChildren: () => import('./modules/projects/projects.module').then(m => m.ProjectsModule) },

@@ -37,6 +37,8 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
     campaignFilter: CampaignFilter = {};
     actions: number[] = [];
     sort: CampaignSort = {};
+    code: string = '';
+
     constructor(
         private reportService: ReportService,
         private confirmationService: ConfirmationService,
@@ -47,6 +49,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
         private userService: UserService,
     ) {
         super();
+        this.code = reportService.code;
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -57,7 +60,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.actions = this.userService.action;
+        this.actions = this.userService.action ?? [];
 
         this.reportService.selectedProjects$.asObservable()
             .pipe(this.unsubsribeOnDestroy)
