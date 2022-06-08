@@ -15,6 +15,7 @@ import { CampaignServicesService } from 'src/app/core/services/campaign-services
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
 import { CampaignService } from 'src/app/core/models/campaign-services.model';
 import { DialogOrtherServiceComponent } from '../dialog-orther-service/dialog-orther-service.component';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
     selector: 'app-campaign-ad',
@@ -37,6 +38,8 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     campaignFilter: CampaignFilter = {};
     sort: CampaignSort = {};
     code: string = '';
+    actions: number[] = [];
+
     constructor(
         private reportService: ReportService,
         private confirmationService: ConfirmationService,
@@ -44,6 +47,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         private messageConfig: MessageConfigService,
         private dialogService: DialogService,
         private campaignServicesService: CampaignServicesService,
+        private userService: UserService
     ) {
         super();
         this.code = reportService.code;
@@ -57,6 +61,8 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     }
 
     ngOnInit(): void {
+        this.actions = this.userService.action ?? [];
+
         this.reportService.dateFilter$.asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({

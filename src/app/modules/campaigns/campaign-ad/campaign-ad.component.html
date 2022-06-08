@@ -2,7 +2,7 @@
     [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'" [loading]="fetchingData"
     [(selection)]="selectedCampaignAds" [scrollable]="true" (selectionChange)="selectionChange()"
     (onSort)="sortCustomer($event)" responsiveLayout="scroll">
-    <ng-template pTemplate="caption">
+    <ng-template *ngIf="actions.includes(702) || actions.includes(703)" pTemplate="caption">
         <div class="flex">
             <p-button label="{{'Add_campaign' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"
                 (click)="openDialog()"></p-button>
@@ -143,15 +143,15 @@
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.result | number}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.amount | number}}</td>
             <td style="min-width: 100px; max-width: 120px;">
-                <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
+                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
                     tooltipPosition="top" class="p-button-rounded p-button-text"
                     (click)="openDialog(campaignAd, 'VIEW')"></button>
 
-                <button pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Edit' | translate}}"
+                <button [disabled]="!actions.includes(704) || !actions.includes(705)" pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Edit' | translate}}"
                     tooltipPosition="top" class="p-button-rounded p-button-text"
                     (click)="openDialogHandler(campaignAd)"></button>
 
-                <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="{{'Delete' | translate}}"
+                <button [disabled]="!actions.includes(706) || !actions.includes(707)" pButton pRipple type="button" icon="pi pi-trash" pTooltip="{{'Delete' | translate}}"
                     tooltipPosition="top" class="p-button-rounded p-button-text p-button-danger"
                     (click)="delete(campaignAd)"></button>
             </td>
