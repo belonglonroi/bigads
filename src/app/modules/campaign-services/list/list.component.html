@@ -97,7 +97,7 @@
     </p-table>
 
     <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
-        [rowsPerPageOptions]="[10, 20, 50, 100]"></p-paginator>
+        [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
 </div>
 <p-confirmDialog [style]="{width: '50vw'}" key="positionDialog" [baseZIndex]="10000"
     rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
