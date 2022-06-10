@@ -104,7 +104,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Campaign_services',
                         icon: 'pi pi-fw pi-money-bill',
                         routerLink: ['/campaign-services'],
-                        show: this.roleActions.includes(600)
+                        show: this.roleActions.includes(700) || this.roleActions.includes(701)
                     },
                 ]
             },
