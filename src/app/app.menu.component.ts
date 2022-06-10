@@ -38,12 +38,12 @@ export class AppMenuComponent implements OnInit {
         });
 
         this.model = [
-            {
-                label: 'Home',
-                items: [
-                    { label: 'Analysis', icon: 'pi pi-fw pi-chart-pie', routerLink: ['/'] }
-                ]
-            },
+            // {
+            //     label: 'Home',
+            //     items: [
+            //         { label: 'Analysis', icon: 'pi pi-fw pi-chart-pie', routerLink: ['/'] }
+            //     ]
+            // },
             {
                 label: 'Administrator',
                 items: [
