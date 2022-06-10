@@ -87,7 +87,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Code',
                         icon: 'pi pi-fw pi-code',
                         routerLink: ['/code'],
-                        show: this.roleActions.includes(1303)
+                        show: this.roleActions.includes(1403)
                     },
                 ]
             },
