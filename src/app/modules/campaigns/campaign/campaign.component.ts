@@ -64,8 +64,10 @@ export class CampaignComponent extends BaseClass implements OnInit {
         this.route.queryParams
             .pipe(this.unsubsribeOnDestroy)
             .subscribe(params => {
-                this.code = params.code;
-                sessionStorage.setItem('code', this.code);
+                if(params.hasOwnProperty('code')) {
+                    this.code = params.code;
+                    sessionStorage.setItem('code', this.code);
+                }
             });
 
         this.reportService.filterBinding$.asObservable()
