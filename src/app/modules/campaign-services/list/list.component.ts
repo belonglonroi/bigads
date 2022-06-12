@@ -75,6 +75,7 @@ export class ListComponent extends BaseClass implements OnInit {
         const param = {
             page: this.page,
             limit: this.limit,
+            isActive: true,
             inputDate: moment(this.dateFilter).format('YYYY-MM-DD')
         }
         this.campaignServicesService.getCampaignServices(param)

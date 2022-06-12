@@ -35,7 +35,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-campaignService let-editing="editing" let-ri="rowIndex">
-            <tr [pEditableRow]="campaignService" *ngIf="campaignService.isActive">
+            <tr [pEditableRow]="campaignService">
                 <td>
                     <p-inputSwitch (onChange)="changeState($event, campaignService)"
                         [(ngModel)]="campaignService.isActive"></p-inputSwitch>
