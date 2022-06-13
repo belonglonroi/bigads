@@ -2,7 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseClass } from 'src/app/core/base/base.class';
-import { CAMPAIGN_FILTER_OPTIONS, COMPARE_OPTIONS } from 'src/app/core/consts/campaign-filter.const';
+import {
+    CAMPAIGN_FILTER_OPTIONS,
+    COMPARE_OPTIONS,
+} from 'src/app/core/consts/campaign-filter.const';
 import { CampaignAds } from 'src/app/core/models/campaign-ads.model';
 import { CampaignFilter } from 'src/app/core/models/campaign-filter.model';
 import { Campaign } from 'src/app/core/models/campaign.model';
@@ -16,22 +19,21 @@ import { UserService } from 'src/app/core/services/user.service';
 @Component({
     selector: 'app-campaign',
     templateUrl: './campaign.component.html',
-    styleUrls: ['./campaign.component.scss']
+    styleUrls: ['./campaign.component.scss'],
 })
 export class CampaignComponent extends BaseClass implements OnInit {
-
-    campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map(e => {
+    campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map((e) => {
         return {
             value: e.value,
             label: this.translate.instant(e.label),
-        }
+        };
     });
 
-    compareOptions = COMPARE_OPTIONS.map(e => {
+    compareOptions = COMPARE_OPTIONS.map((e) => {
         return {
             value: e.value,
             label: this.translate.instant(e.label),
-        }
+        };
     });
 
     selectedOrganizations: Organization[] = [];
@@ -53,7 +55,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
         private customerService: CustomerService,
         private tabProjectService: TabProjectService,
         private route: ActivatedRoute,
-        private userService: UserService,
+        private userService: UserService
     ) {
         super();
     }
@@ -63,65 +65,75 @@ export class CampaignComponent extends BaseClass implements OnInit {
 
         this.route.queryParams
             .pipe(this.unsubsribeOnDestroy)
-            .subscribe(params => {
-                if(params.hasOwnProperty('code')) {
+            .subscribe((params) => {
+                if (params.hasOwnProperty('code')) {
                     this.code = params.code;
                     sessionStorage.setItem('code', this.code);
                 }
             });
 
-        this.reportService.filterBinding$.asObservable()
+        this.reportService.filterBinding$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.filterBinding = res;
-                }
-            })
+                },
+            });
 
-        this.reportService.campaignFilter$.asObservable()
+        this.reportService.campaignFilter$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.campaignFilter = res;
-                    if(res.fromDate && res.toDate) {
-                        const fromDate = new Date(new Date(res.fromDate).setHours(0, 0, 0, 0));
-                        const toDate = new Date(new Date(res.toDate).setHours(0, 0, 0, 0));
+                    if (res.fromDate && res.toDate) {
+                        const fromDate = new Date(
+                            new Date(res.fromDate).setHours(0, 0, 0, 0)
+                        );
+                        const toDate = new Date(
+                            new Date(res.toDate).setHours(0, 0, 0, 0)
+                        );
                         this.dateFilter = [fromDate, toDate];
                     }
-                }
-            })
+                },
+            });
 
-        this.reportService.selectedOrganization$.asObservable()
+        this.reportService.selectedOrganization$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.selectedOrganizations = res;
-                }
-            })
+                },
+            });
 
-        this.reportService.selectedCustomers$.asObservable()
+        this.reportService.selectedCustomers$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.selectedCustomers = res;
-                }
-            })
+                },
+            });
 
-        this.reportService.selectedProjects$.asObservable()
+        this.reportService.selectedProjects$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.selectedProjects = res;
-                }
-            })
+                },
+            });
 
-        this.reportService.selectedCampaignAds$.asObservable()
+        this.reportService.selectedCampaignAds$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.selectedCampaignAds = res;
-                }
-            })
+                },
+            });
     }
 
     selectedOrganizationsRemoved() {
@@ -157,21 +169,45 @@ export class CampaignComponent extends BaseClass implements OnInit {
                 this.dateFilter = [startDate, endDate];
                 break;
             case 2:
-                startDate = new Date(new Date(new Date().setDate(startDate.getDate() - 1)).setHours(0, 0, 0, 0));
-                endDate = new Date(new Date(new Date().setDate(endDate.getDate() - 1)).setHours(23, 59, 59, 0));
+                startDate = new Date(
+                    new Date(
+                        new Date().setDate(startDate.getDate() - 1)
+                    ).setHours(0, 0, 0, 0)
+                );
+                endDate = new Date(
+                    new Date(
+                        new Date().setDate(endDate.getDate() - 1)
+                    ).setHours(23, 59, 59, 0)
+                );
                 this.dateFilter = [startDate, endDate];
                 break;
             case 3:
-                startDate = new Date(new Date(new Date().setDate(startDate.getDate() - 6)).setHours(0, 0, 0, 0));
+                startDate = new Date(
+                    new Date(
+                        new Date().setDate(startDate.getDate() - 6)
+                    ).setHours(0, 0, 0, 0)
+                );
                 this.dateFilter = [startDate, endDate];
                 break;
             case 4:
-                startDate = new Date(new Date(new Date().setDate(startDate.getDate() - 29)).setHours(0, 0, 0, 0));
+                startDate = new Date(
+                    new Date(
+                        new Date().setDate(startDate.getDate() - 29)
+                    ).setHours(0, 0, 0, 0)
+                );
                 this.dateFilter = [startDate, endDate];
                 break;
             case 5:
-                startDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-                endDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
+                startDate = new Date(
+                    new Date().getFullYear(),
+                    new Date().getMonth(),
+                    1
+                );
+                endDate = new Date(
+                    new Date().getFullYear(),
+                    new Date().getMonth() + 1,
+                    0
+                );
                 this.dateFilter = [startDate, endDate];
                 break;
             case 6:
@@ -179,8 +215,16 @@ export class CampaignComponent extends BaseClass implements OnInit {
                     startDate = new Date(new Date().getFullYear() - 1, 11, 1);
                     endDate = new Date(new Date().getFullYear() - 1, 11, 31);
                 } else {
-                    startDate = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1);
-                    endDate = new Date(new Date().getFullYear(), new Date().getMonth(), 0);
+                    startDate = new Date(
+                        new Date().getFullYear(),
+                        new Date().getMonth() - 1,
+                        1
+                    );
+                    endDate = new Date(
+                        new Date().getFullYear(),
+                        new Date().getMonth(),
+                        0
+                    );
                 }
                 this.dateFilter = [startDate, endDate];
                 break;
@@ -189,7 +233,9 @@ export class CampaignComponent extends BaseClass implements OnInit {
         }
 
         this.reportService.dateFilter$.next(this.dateFilter);
-        this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
+        this.reportService.campaignFilter$.next(
+            this.reportService.campaignFilter$.value
+        );
     }
 
     dateFilterChange(e: Date[]) {
@@ -204,21 +250,32 @@ export class CampaignComponent extends BaseClass implements OnInit {
     }
 
     getFilterItem(e) {
-        const option = this.campaignFilterOptions.find(x => x.value === e.filterOption);
-        const compare = this.compareOptions.find(x => x.value === e.compareOption);
-        return option.label + ' ' + compare.label.toLowerCase() + (e.value === '' ? '' : ` '${e.value}'`);
+        const option = this.campaignFilterOptions.find(
+            (x) => x.value === e.filterOption
+        );
+        const compare = this.compareOptions.find(
+            (x) => x.value === e.compareOption
+        );
+        return (
+            option.label +
+            ' ' +
+            compare.label.toLowerCase() +
+            (e.value === '' ? '' : ` '${e.value}'`)
+        );
     }
 
-    filterChange() {
+    filterChange(removed?: string) {
         if (this.filterBinding.length === 0) {
-            this.reportService.campaignFilter$.next({});
+            const filter = this.reportService.campaignFilter$.value;
+            delete filter[removed];
+            this.reportService.campaignFilter$.next(filter);
         } else {
-            this.filterBinding.forEach(e => {
+            this.filterBinding.forEach((e) => {
                 this.filter[e.filterOption] = {
                     compareId: e.compareOption,
-                    value: e.value
-                }
-            })
+                    value: e.value,
+                };
+            });
 
             this.reportService.campaignFilter$.next(this.filter);
         }
@@ -227,9 +284,12 @@ export class CampaignComponent extends BaseClass implements OnInit {
     removeFilter(e) {
         const index = this.filterBinding.indexOf(e);
         this.filterBinding.splice(index, 1);
-        sessionStorage.setItem('campaignFilter', JSON.stringify(this.filterBinding));
+        sessionStorage.setItem(
+            'campaignFilter',
+            JSON.stringify(this.filterBinding)
+        );
         this.reportService.filterBinding$.next(this.filterBinding);
-        this.filterChange();
+        this.filterChange(e.filterOption);
     }
 
     searchByCustomer(e: string) {
