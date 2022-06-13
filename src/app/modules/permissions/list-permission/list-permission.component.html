@@ -40,9 +40,13 @@
                 <td>{{role.createdDate}}</td>
                 <td>{{role.modifiedDate}}</td>
                 <td>
+                    <button [disabled]="!actions.includes(801)" pButton pRipple type="button" icon="pi pi-copy"
+                        pTooltip="{{'Copy' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                        (click)="openDialog(role, 'COPY')"></button>
+
                     <button [disabled]="!actions.includes(802)" pButton pRipple type="button" icon="pi pi-pencil"
                         pTooltip="{{'Update' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
-                        (click)="openDialog(role)"></button>
+                        (click)="openDialog(role, 'UPDATE')"></button>
 
                     <button [disabled]="!actions.includes(804)" pButton pRipple type="button" icon="pi pi-trash"
                         pTooltip="{{'Delete' | translate}}" tooltipPosition="top"

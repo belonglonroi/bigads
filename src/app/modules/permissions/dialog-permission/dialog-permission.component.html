@@ -31,8 +31,10 @@
 <div class="flex justify-content-end mt-3">
     <p-button icon="pi pi-times" label="{{'Cancel' | translate}}" styleClass="p-button-text"
         (click)="dialogRef.close()"></p-button>
-    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" *ngIf="!config.data"
+    <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" *ngIf="!config.data.action"
         (click)="create()"></p-button>
-    <p-button icon="pi pi-check" label="{{'Update' | translate}}" styleClass="p-button-text" *ngIf="config.data"
-        (click)="update()"></p-button>
+    <p-button icon="pi pi-check" label="{{'Update' | translate}}" styleClass="p-button-text"
+        *ngIf="config.data.action === 'UPDATE'" (click)="update()"></p-button>
+    <p-button icon="pi pi-copy" label="{{'Copy' | translate}}" styleClass="p-button-text"
+        *ngIf="config.data.action === 'COPY'" (click)="copy()"></p-button>
 </div>

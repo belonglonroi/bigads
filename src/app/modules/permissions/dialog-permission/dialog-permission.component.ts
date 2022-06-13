@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { BaseClass } from 'src/app/core/base/base.class';
-import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
+import {
+    MESSAGE_TYPE,
+    MESSAGE_SUMARY,
+} from 'src/app/core/consts/message.const';
 import { ApiResult } from 'src/app/core/models/api-result.model';
 import { GroupAction, Role, RoleAction } from 'src/app/core/models/role.model';
 import { RoleService } from 'src/app/core/services/role.service';
@@ -11,18 +14,17 @@ import { MessageConfigService } from 'src/app/service/message.config.service';
 @Component({
     selector: 'app-dialog-permission',
     templateUrl: './dialog-permission.component.html',
-    styleUrls: ['./dialog-permission.component.scss']
+    styleUrls: ['./dialog-permission.component.scss'],
 })
 export class DialogPermissionComponent extends BaseClass implements OnInit {
-
     actions: any = [];
     selectedActions: RoleAction[] = [];
-    invalid: boolean = false
+    invalid: boolean = false;
     dialogData = {
         roleName: '',
         description: '',
         roleActionIds: [],
-    }
+    };
 
     constructor(
         public dialogRef: DynamicDialogRef,
@@ -35,19 +37,21 @@ export class DialogPermissionComponent extends BaseClass implements OnInit {
     }
 
     ngOnInit(): void {
-
-        if (this.config.data) {
+        if (this.config.data?.item) {
             this.dialogData = {
-                ...this.config.data,
-                roleActionIds: this.config.data.roleActions.map(e => e.actionId)
-            }
+                ...this.config.data.item,
+                roleActionIds: this.config.data.item.roleActions.map(
+                    (e) => e.actionId
+                ),
+            };
         }
 
         this.getActions();
     }
 
     getActions() {
-        this.roleService.getListActions()
+        this.roleService
+            .getListActions()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: ApiResult<GroupAction[]>) => {
@@ -60,34 +64,41 @@ export class DialogPermissionComponent extends BaseClass implements OnInit {
                                 return {
                                     ...x,
                                     value: x.actionId,
-                                    label: x.description
-                                }
-                            })
-                        }
+                                    label: x.description,
+                                };
+                            }),
+                        };
                     });
-                    console.log(this.actions)
+                    console.log(this.actions);
                 },
-                error: (err) => {
-
-                }
-            })
+                error: (err) => {},
+            });
     }
 
     create() {
-        if (!this.dialogData.roleName || !this.dialogData.description || this.dialogData?.roleActionIds.length === 0) {
-            this.invalid = true
+        if (
+            !this.dialogData.roleName ||
+            !this.dialogData.description ||
+            this.dialogData?.roleActionIds.length === 0
+        ) {
+            this.invalid = true;
             return;
         }
         this.invalid = false;
-        this.roleService.createRole(this.dialogData)
+        this.roleService
+            .createRole(this.dialogData)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: ApiResult<Role>) => {
                     if (res.data) {
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
-                            summary: this.translate.instant(MESSAGE_SUMARY.success),
-                            detail: this.translate.instant('Create_role_successfully'),
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
+                            detail: this.translate.instant(
+                                'Create_role_successfully'
+                            ),
                         });
 
                         this.dialogRef.close(true);
@@ -95,35 +106,52 @@ export class DialogPermissionComponent extends BaseClass implements OnInit {
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
             });
     }
 
     update() {
-        if (!this.dialogData.roleName || !this.dialogData.description || this.dialogData?.roleActionIds.length === 0) {
-            this.invalid = true
+        if (
+            !this.dialogData.roleName ||
+            !this.dialogData.description ||
+            this.dialogData?.roleActionIds.length === 0
+        ) {
+            this.invalid = true;
             return;
         }
         this.invalid = false;
 
         const params = {
             ...this.dialogData,
-            roleId: this.config.data.roleId
-        }
+            roleId: this.config.data.item.roleId,
+        };
 
-        this.roleService.updateRole(params)
+        this.roleService
+            .updateRole(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: ApiResult<Role>) => {
                     if (res.data) {
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
-                            summary: this.translate.instant(MESSAGE_SUMARY.success),
-                            detail: this.translate.instant('Update_role_successfully'),
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
+                            detail: this.translate.instant(
+                                'Update_role_successfully'
+                            ),
                         });
 
                         this.dialogRef.close(true);
@@ -131,12 +159,71 @@ export class DialogPermissionComponent extends BaseClass implements OnInit {
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
             });
     }
 
+    copy() {
+        if (
+            !this.dialogData.roleName ||
+            !this.dialogData.description ||
+            this.dialogData?.roleActionIds.length === 0
+        ) {
+            this.invalid = true;
+            return;
+        }
+        this.invalid = false;
+
+        const params = {
+            ...this.dialogData,
+        };
+
+        this.roleService
+            .createRole(params)
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (res: ApiResult<Role>) => {
+                    if (res.data) {
+                        this.messageConfig.messageConfig.next({
+                            severity: MESSAGE_TYPE.success,
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
+                            detail: this.translate.instant(
+                                'Create_role_successfully'
+                            ),
+                        });
+
+                        this.dialogRef.close(true);
+                    }
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
+            });
+    }
 }

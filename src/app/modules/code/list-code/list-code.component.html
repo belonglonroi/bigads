@@ -3,7 +3,7 @@
         [loading]="fetchingData">
         <ng-template pTemplate="caption">
             <div class="flex">
-                <div class="flex">
+                <div class="flex" *ngIf="actions.includes(1400)">
                     <p-button label="{{'Add_code' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"
                         (click)="openDialog()"></p-button>
                 </div>
@@ -35,10 +35,10 @@
                     <button pButton pRipple type="button" icon="pi pi-copy" pTooltip="{{'Copy' | translate}}"
                         tooltipPosition="top" class="p-button-rounded p-button-text"
                         [cdkCopyToClipboard]="copyCode(code)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Update' | translate}}"
+                    <button [disabled]="!actions.includes(1401)" pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Update' | translate}}"
                         tooltipPosition="top" class="p-button-rounded p-button-text"
                         (click)="openDialog(code)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="{{'Delete' | translate}}"
+                    <button [disabled]="!actions.includes(1402)" pButton pRipple type="button" icon="pi pi-trash" pTooltip="{{'Delete' | translate}}"
                         tooltipPosition="top" class="p-button-rounded p-button-text p-button-danger"
                         (click)="delete(code)"></button>
                 </td>

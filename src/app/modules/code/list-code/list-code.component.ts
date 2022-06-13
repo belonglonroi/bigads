@@ -11,6 +11,7 @@ import { CodeService } from 'src/app/core/services/code.service';
 import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
 import { Code } from 'src/app/core/models/code.model';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
     selector: 'app-list-code',
@@ -23,17 +24,20 @@ export class ListCodeComponent extends BaseClass implements OnInit {
     name: string = '';
     codes: Code[] = [];
     fetchingData: boolean = false;
+    actions: number[] = [];
     constructor(
         private dialog: DialogService,
         private translate: TranslateService,
         private messageConfig: MessageConfigService,
         private customerService: CustomerService,
-        private codeService: CodeService
+        private codeService: CodeService,
+        private userService: UserService,
     ) {
         super();
     }
 
     ngOnInit(): void {
+        this.actions = this.userService.action ?? [];
         this.getListCode();
     }
 

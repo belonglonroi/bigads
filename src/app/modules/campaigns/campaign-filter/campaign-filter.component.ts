@@ -1,10 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { Dropdown } from 'primeng/dropdown';
 import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
-import { CAMPAIGN_FILTER_OPTIONS, COMPARE_OPTIONS } from 'src/app/core/consts/campaign-filter.const';
+import {
+    CAMPAIGN_FILTER_OPTIONS,
+    COMPARE_OPTIONS,
+} from 'src/app/core/consts/campaign-filter.const';
 import { AdService } from 'src/app/core/models/ad-service.model';
 import { Project } from 'src/app/core/models/project.model';
 import { User } from 'src/app/core/models/user.model';
@@ -16,37 +26,36 @@ import { UserService } from 'src/app/core/services/user.service';
 @Component({
     selector: 'app-campaign-filter',
     templateUrl: './campaign-filter.component.html',
-    styleUrls: ['./campaign-filter.component.scss']
+    styleUrls: ['./campaign-filter.component.scss'],
 })
 export class CampaignFilterComponent extends BaseClass implements OnInit {
-
     @ViewChild('compare') compareDropdown: Dropdown;
     @Input() filterUpdate;
     @Output() updated = new EventEmitter();
-    campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map(e => {
+    campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map((e) => {
         return {
             value: e.value,
             label: this.translate.instant(e.label),
-        }
+        };
     });
 
-    compareOptions = COMPARE_OPTIONS.map(e => {
+    compareOptions = COMPARE_OPTIONS.map((e) => {
         return {
             value: e.value,
             label: this.translate.instant(e.label),
-        }
+        };
     });
 
     isActiveOptions = [
         { value: true, label: this.translate.instant('Active') },
-        { value: false, label: this.translate.instant('Deactive') }
-    ]
+        { value: false, label: this.translate.instant('Deactive') },
+    ];
 
     filterForm = {
         filterOption: '',
         compareOption: 0,
-        value: ''
-    }
+        value: '',
+    };
 
     filterBinding = [];
 
@@ -61,7 +70,7 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         private reportService: ReportService,
         private UserService: UserService,
         private AdServiceService: AdServiceService,
-        private ProjectService: ProjectService,
+        private ProjectService: ProjectService
     ) {
         super();
     }
@@ -70,18 +79,28 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         if (this.filterUpdate) {
             this.filterForm = {
                 ...this.filterUpdate,
-            }
+            };
         }
-        this.reportService.filterBinding$.asObservable()
+        this.reportService.filterBinding$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.filterBinding = res;
-                }
-            })
-        const getEmployees = this.UserService.getListUser({ page: 1, limit: 9999 });
-        const getServices = this.AdServiceService.getService({ page: 1, limit: 9999 });
-        const getProjects = this.ProjectService.getProjects({ page: 1, limit: 9999 });
+                },
+            });
+        const getEmployees = this.UserService.getListUser({
+            page: 1,
+            limit: 9999,
+        });
+        const getServices = this.AdServiceService.getService({
+            page: 1,
+            limit: 9999,
+        });
+        const getProjects = this.ProjectService.getProjects({
+            page: 1,
+            limit: 9999,
+        });
         forkJoin([getEmployees, getServices, getProjects])
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
@@ -89,13 +108,13 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
                     this.employees = res[0].data.records.map((e: User) => {
                         return {
                             ...e,
-                            fullname: e.lastName + ' ' + e.firstName
-                        }
+                            fullname: e.lastName + ' ' + e.firstName,
+                        };
                     });
                     this.adServices = res[1].data.records;
                     this.projects = res[2].data.records;
-                }
-            })
+                },
+            });
     }
     changeFilterOption(e) {
         if (e.value === 'campaignServiceAmount') {
@@ -127,8 +146,8 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         this.filterForm = {
             filterOption: '',
             compareOption: 0,
-            value: ''
-        }
+            value: '',
+        };
 
         this.filterChange();
     }
@@ -137,27 +156,36 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         if (this.filterBinding.length === 0) {
             this.reportService.campaignFilter$.next({});
         } else {
-            this.filterBinding.forEach(e => {
+            this.filterBinding.forEach((e) => {
                 if (e.filterOption !== 'campaignServiceIsActive') {
                     this.filter[e.filterOption] = {
                         compareId: e.compareOption,
-                        value: e.value
-                    }
+                        value: e.value,
+                    };
                 } else {
                     this.filter[e.filterOption] = e.value;
                 }
-            })
+            });
 
-            this.reportService.dateFilter$.asObservable()
+            this.reportService.dateFilter$
+                .asObservable()
                 .pipe(this.unsubsribeOnDestroy)
                 .subscribe({
                     next: (res) => {
-                        this.filter['fromDate'] = res[0] ? moment(res[0]).format('YYYY-MM-DD') : '';
-                        this.filter['toDate'] = res[1] ? moment(res[1]).format('YYYY-MM-DD') : '';
-                    }
-                })
+                        this.filter['fromDate'] = res[0]
+                            ? moment(res[0]).format('YYYY-MM-DD')
+                            : '';
+                        this.filter['toDate'] = res[1]
+                            ? moment(res[1]).format('YYYY-MM-DD')
+                            : '';
+                    },
+                });
+            const filter = {
+                ...this.reportService.campaignFilter$.value,
+                ...this.filter
+            };
 
-            this.reportService.campaignFilter$.next(this.filter);
+            this.reportService.campaignFilter$.next(filter);
         }
 
         if (this.filterUpdate) {
@@ -166,15 +194,30 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
     }
 
     update() {
-        this.filterBinding.find(e => e.filterOption === this.filterUpdate.filterOption).compareOption = this.filterForm.compareOption;
-        this.filterBinding.find(e => e.filterOption === this.filterUpdate.filterOption).value = this.filterForm.value;
+        this.filterBinding.find(
+            (e) => e.filterOption === this.filterUpdate.filterOption
+        ).compareOption = this.filterForm.compareOption;
+        this.filterBinding.find(
+            (e) => e.filterOption === this.filterUpdate.filterOption
+        ).value = this.filterForm.value;
         this.filterChange();
     }
 
     getFilterItem(e) {
-        const option = this.campaignFilterOptions.find(x => x.value === e.filterOption);
-        const compare = this.compareOptions.find(x => x.value === e.compareOption);
-        return option.label + ' ' + compare.label.toLowerCase() + ' \'' + e.value + '\'';
+        const option = this.campaignFilterOptions.find(
+            (x) => x.value === e.filterOption
+        );
+        const compare = this.compareOptions.find(
+            (x) => x.value === e.compareOption
+        );
+        return (
+            option.label +
+            ' ' +
+            compare.label.toLowerCase() +
+            " '" +
+            e.value +
+            "'"
+        );
     }
 
     removeFilter(e) {
@@ -184,5 +227,4 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         this.reportService.filterBinding$.next(this.filterBinding);
         this.filterChange();
     }
-
 }
