@@ -57,7 +57,7 @@ LicenseManager.setLicenseKey('CompanyName=EVNICT,LicensedGroup=EVNICT,LicenseTyp
         AppMenuitemComponent,
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        // { provide: LocationStrategy, useClass: HashLocationStrategy },
         MenuService,
         ConfigService,
         {
