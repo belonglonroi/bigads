@@ -96,7 +96,7 @@ export class ListComponent extends BaseClass implements OnInit {
         this.campaignAds = data.map(e => {
             return {
                 ...e,
-                customerName: e.campaign.customer.lastName + ' ' + e.campaign.customer.firstName,
+                customerName: `${e.campaign.customer?.lastName ?? ''} ${e.campaign.customer?.firstName ?? ''}`,
                 project: e.campaign.project?.name,
                 serviceName: e.service.serviceName,
                 hotline: e.campaign.hotline,
@@ -114,6 +114,7 @@ export class ListComponent extends BaseClass implements OnInit {
                 // costPerResult: e.result === 0 ? 0 : (e.amount / e.result),
             }
         });
+        console.log(this.campaignAds)
     }
 
     changeState(e, item: CampaignService) {
