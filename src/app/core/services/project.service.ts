@@ -6,22 +6,30 @@ import { ApiPagingResult, ApiResult } from '../models/api-result.model';
 import { Project } from '../models/project.model';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ProjectService extends BaseService {
+    get code() {
+        return sessionStorage.getItem('code');
+    }
 
-    constructor(
-        private http: HttpClient
-    ) {
+    constructor(private http: HttpClient) {
         super();
     }
 
     getProjects(param?): Observable<ApiPagingResult<Project[]>> {
-        return this.http.post<ApiPagingResult<Project[]>>(`${this.projectUrl}/projects`, param ?? {});
+        const code = this.code ? `?code=${this.code}` : '';
+        return this.http.post<ApiPagingResult<Project[]>>(
+            `${this.projectUrl}/projects${code}`,
+            param ?? {}
+        );
     }
 
     getProjectsTree(param?): Observable<ApiPagingResult<Project[]>> {
-        return this.http.post<ApiPagingResult<Project[]>>(`${this.projectUrl}/root-projects`, param ?? {});
+        return this.http.post<ApiPagingResult<Project[]>>(
+            `${this.projectUrl}/root-projects`,
+            param ?? {}
+        );
     }
 
     createProject(param) {
