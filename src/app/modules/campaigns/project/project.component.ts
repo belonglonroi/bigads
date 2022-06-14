@@ -62,6 +62,12 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
     ngOnInit(): void {
         this.actions = this.userService.action ?? [];
 
+        if(this.code) {
+            this.sort = {
+                expenditureAmount: 'DESC'
+            }
+        }
+
         this.reportService.selectedProjects$.asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
