@@ -18,7 +18,8 @@ import { InitialDataResolver } from './app.resolve';
                     initialData: InitialDataResolver,
                 },
                 children: [
-                    // { path: '', redirectTo: 'employees/profile', pathMatch: 'full' },
+                    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+                    { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'employees', loadChildren: () => import('./modules/employees/employees.module').then(m => m.EmployeesModule) },
                     { path: 'permissions', loadChildren: () => import('./modules/permissions/permissions.module').then(m => m.PermissionsModule) },
                     { path: 'projects', loadChildren: () => import('./modules/projects/projects.module').then(m => m.ProjectsModule) },

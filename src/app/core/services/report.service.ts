@@ -50,4 +50,12 @@ export class ReportService extends BaseService {
         const path = this.code ? `${this.reportUrl}/campaign-ads?code=${this.code}` : `${this.reportUrl}/campaign-ads`;
         return this.http.post(path, param);
     }
+
+    getListProjects(params) {
+        return this.http.post(`${this.campaignUrl}/campaigns`, params);
+    }
+
+    getListCampaignAds(params) {
+        return this.http.post(`${this.campaignUrl}/campaign-services`, params);
+    }
 }

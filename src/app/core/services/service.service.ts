@@ -6,22 +6,35 @@ import { AdService } from '../models/ad-service.model';
 import { ApiResult } from '../models/api-result.model';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AdServiceService extends BaseService {
+    get code() {
+        return sessionStorage.getItem('code');
+    }
 
-    constructor(
-        private http: HttpClient,
-    ) {
+    constructor(private http: HttpClient) {
         super();
     }
 
-    getService(query: { limit: number, page: number }): Observable<ApiResult<AdService>> {
-        return this.http.get<ApiResult<AdService>>(`${this.serviceUrl}/root?page=${query.page}&limit=${query.limit}`);
+    getService(query: {
+        limit: number;
+        page: number;
+    }): Observable<ApiResult<AdService>> {
+        const code = this.code ? `&code=${this.code}` : '';
+        return this.http.get<ApiResult<AdService>>(
+            `${this.serviceUrl}/root?page=${query.page}&limit=${query.limit}${code}`
+        );
     }
 
-    getAllService(query: { limit: number, page: number, serviceTypeId: number }): Observable<ApiResult<AdService>> {
-        return this.http.get<ApiResult<AdService>>(`${this.serviceUrl}/services?page=${query.page}&limit=${query.limit}&serviceTypeId=${query.serviceTypeId}`);
+    getAllService(query: {
+        limit: number;
+        page: number;
+        serviceTypeId: number;
+    }): Observable<ApiResult<AdService>> {
+        return this.http.get<ApiResult<AdService>>(
+            `${this.serviceUrl}/services?page=${query.page}&limit=${query.limit}&serviceTypeId=${query.serviceTypeId}`
+        );
     }
 
     createService(param) {

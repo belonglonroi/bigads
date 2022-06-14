@@ -6,15 +6,16 @@ import { ListUserResult, User } from '../models/user.model';
 import { ApiResult } from '../models/api-result.model';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UserService extends BaseService {
-
     user = new BehaviorSubject<User>(null);
 
-    constructor(
-        private http: HttpClient,
-    ) {
+    get code() {
+        return sessionStorage.getItem('code');
+    }
+
+    constructor(private http: HttpClient) {
         super();
     }
 
@@ -27,7 +28,9 @@ export class UserService extends BaseService {
     }
 
     get action() {
-        return this.user.getValue()?.userRole.roleActions.map(e => e.actionId);
+        return this.user
+            .getValue()
+            ?.userRole.roleActions.map((e) => e.actionId);
     }
 
     get() {
@@ -43,7 +46,11 @@ export class UserService extends BaseService {
     }
 
     getListUser(param): Observable<ApiResult<ListUserResult>> {
-        return this.http.post<ApiResult<ListUserResult>>(`${this.userUrl}/users`, param);
+        const code = this.code ? `?code=${this.code}` : '';
+        return this.http.post<ApiResult<ListUserResult>>(
+            `${this.userUrl}/users${code}`,
+            param
+        );
     }
 
     register(param) {

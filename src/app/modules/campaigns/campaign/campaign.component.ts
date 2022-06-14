@@ -69,6 +69,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
                 if (params.hasOwnProperty('code')) {
                     this.code = params.code;
                     sessionStorage.setItem('code', this.code);
+                    this.selectDate(5);
                 }
             });
 
