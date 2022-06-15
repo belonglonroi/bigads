@@ -179,7 +179,11 @@ export class DialogCampaignServiceComponent
 
     changeCustomer(id) {
         this.reportService
-            .getListProjects({ limit: 99999, page: 1, customerIds: id.toString() })
+            .getListProjects({
+                limit: 99999,
+                page: 1,
+                customerIds: id.toString(),
+            })
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (rs) => {
@@ -191,7 +195,13 @@ export class DialogCampaignServiceComponent
                     });
                     this.filterCampaigns = [...this.campaigns];
                 },
-                error: (err) => {},
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    });
+                },
             });
     }
 
