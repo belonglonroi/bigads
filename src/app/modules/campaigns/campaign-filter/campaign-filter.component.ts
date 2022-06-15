@@ -93,9 +93,10 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
             page: 1,
             limit: 9999,
         });
-        const getServices = this.AdServiceService.getService({
+        const getServices = this.AdServiceService.getAllService({
             page: 1,
             limit: 9999,
+            serviceTypeId: 1
         });
         const getProjects = this.ProjectService.getProjects({
             page: 1,

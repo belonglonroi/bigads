@@ -32,8 +32,9 @@ export class AdServiceService extends BaseService {
         page: number;
         serviceTypeId: number;
     }): Observable<ApiResult<AdService>> {
+        const code = this.code ? `&code=${this.code}` : '';
         return this.http.get<ApiResult<AdService>>(
-            `${this.serviceUrl}/services?page=${query.page}&limit=${query.limit}&serviceTypeId=${query.serviceTypeId}`
+            `${this.serviceUrl}/services?page=${query.page}&limit=${query.limit}&serviceTypeId=${query.serviceTypeId}${code}`
         );
     }
 
