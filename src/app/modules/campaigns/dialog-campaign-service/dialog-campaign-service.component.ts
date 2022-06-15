@@ -12,17 +12,22 @@ import * as moment from 'moment';
 import { CampaignServicesService } from 'src/app/core/services/campaign-services.service';
 import { MessageConfigService } from 'src/app/service/message.config.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
+import {
+    MESSAGE_TYPE,
+    MESSAGE_SUMARY,
+} from 'src/app/core/consts/message.const';
 import { ReportService } from 'src/app/core/services/report.service';
 import { CustomerService } from 'src/app/core/services/customer.service';
 
 @Component({
     selector: 'app-dialog-campaign-service',
     templateUrl: './dialog-campaign-service.component.html',
-    styleUrls: ['./dialog-campaign-service.component.scss']
+    styleUrls: ['./dialog-campaign-service.component.scss'],
 })
-export class DialogCampaignServiceComponent extends BaseClass implements OnInit {
-
+export class DialogCampaignServiceComponent
+    extends BaseClass
+    implements OnInit
+{
     startDate: Date = new Date();
     dialogData = {
         name: '',
@@ -35,8 +40,8 @@ export class DialogCampaignServiceComponent extends BaseClass implements OnInit 
         description: '',
         startDate: '',
         endDate: '',
-        isActive: true
-    }
+        isActive: true,
+    };
     invalid: boolean = false;
     filterCampaigns: Campaign[] = [];
     campaigns: Campaign[] = [];
@@ -54,31 +59,33 @@ export class DialogCampaignServiceComponent extends BaseClass implements OnInit 
         private messageConfig: MessageConfigService,
         private translate: TranslateService,
         private reportService: ReportService,
-        private customerService: CustomerService,
+        private customerService: CustomerService
     ) {
         super();
     }
 
     ngOnInit(): void {
-        this.reportService.selectedCustomers$.asObservable()
+        this.reportService.selectedCustomers$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: User[]) => {
                     if (res?.length === 1) {
                         this.dialogData.customerId = res[0].userId;
                     }
-                }
-            })
+                },
+            });
 
-        this.reportService.selectedProjects$.asObservable()
+        this.reportService.selectedProjects$
+            .asObservable()
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: Campaign[]) => {
                     if (res?.length === 1) {
                         this.dialogData.campaignId = res[0].campaignId;
                     }
-                }
-            })
+                },
+            });
         this.getInitialData();
 
         if (this.config.data?.campaignServiceId) {
@@ -94,8 +101,12 @@ export class DialogCampaignServiceComponent extends BaseClass implements OnInit 
                 startDate: '',
                 endDate: '',
                 isActive: this.config.data.isActive,
-            }
-            this.startDate = new Date(moment(this.config.data.startDate, 'DD/MM/YYYY').format('MM/DD/YYYY'));
+            };
+            this.startDate = new Date(
+                moment(this.config.data.startDate, 'DD/MM/YYYY').format(
+                    'MM/DD/YYYY'
+                )
+            );
             // this.dateRange = [
             //     new Date(moment(this.config.data.startDate, 'DD/MM/YYYY').format('MM/DD/YYYY')),
             //     new Date(moment(this.config.data.endDate, 'DD/MM/YYYY').format('MM/DD/YYYY'))
@@ -104,58 +115,94 @@ export class DialogCampaignServiceComponent extends BaseClass implements OnInit 
     }
 
     getInitialData() {
-        const getCampaign = this.reportService.getProjects({ limit: 99999, page: 1 });
-        const getAdService = this.adServiceService.getAllService({ limit: 99999, page: 1, serviceTypeId: 1 });
-        const getEmployees = this.userService.getListUser({ limit: 99999, page: 1 });
-        const getCustomers = this.customerService.getCustomers({ limit: 99999, page: 1 });
+        // const getCampaign = this.reportService.getListProjects({
+        //     limit: 99999,
+        //     page: 1,
+        // });
+        const getAdService = this.adServiceService.getAllService({
+            limit: 99999,
+            page: 1,
+            serviceTypeId: 1,
+        });
+        const getEmployees = this.userService.getListUser({
+            limit: 99999,
+            page: 1,
+        });
+        const getCustomers = this.customerService.getCustomers({
+            limit: 99999,
+            page: 1,
+        });
 
-        forkJoin([getCampaign, getAdService, getEmployees, getCustomers])
+        forkJoin([getAdService, getEmployees, getCustomers])
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
-                    this.campaigns = res[0].data.records.map((e: Campaign) => {
+                    this.services = res[0].data.records
+                        .map((e: AdService) => {
+                            return {
+                                ...e,
+                                isChildren: e.parentId ? true : false,
+                                parentId: e.parentId ?? e.serviceId,
+                            };
+                        })
+                        .sort(
+                            (a: AdService, b: AdService) =>
+                                a.serviceId - b.serviceId
+                        )
+                        .sort(
+                            (a: AdService, b: AdService) =>
+                                a.parentId - b.parentId
+                        );
+                    this.employees = res[1].data.records.map((e: User) => {
                         return {
                             ...e,
-                            projectName: `${e.project.name} - ${e.hotline}`,
-                        }
+                            fullname: `${e.lastName} ${e.firstName} ${
+                                e.department ? '- ' + e.department?.name : ''
+                            }`,
+                        };
                     });
-                    this.filterCampaigns = [...this.campaigns];
-                    this.services = res[1].data.records.map((e: AdService) => {
-                        return {
-                            ...e,
-                            isChildren: e.parentId ? true : false,
-                            parentId: e.parentId ?? e.serviceId,
-                        }
-                    }).sort((a: AdService, b: AdService) => a.serviceId - b.serviceId)
-                        .sort((a: AdService, b: AdService) => a.parentId - b.parentId);
-                    this.employees = res[2].data.records.map((e: User) => {
-                        return {
-                            ...e,
-                            fullname: `${e.lastName} ${e.firstName} ${e.department ? '- ' + e.department?.name : ''}`,
-                        }
-                    });
-                    console.log(this.employees);
-                    this.customers = res[3].data.records.map((e: User) => {
+
+                    this.customers = res[2].data.records.map((e: User) => {
                         return {
                             ...e,
                             fullname: `${e.lastName} ${e.firstName} - ${e.phone}`,
-                        }
+                        };
                     });
                 },
                 complete: () => {
                     if (this.dialogData.customerId) {
                         this.changeCustomer(this.dialogData.customerId);
                     }
-                }
-            })
+                },
+            });
     }
 
     changeCustomer(id) {
-        this.filterCampaigns = this.campaigns.filter(e => e.customer.userId === id);
+        this.reportService
+            .getListProjects({ limit: 99999, page: 1, customerIds: id.toString() })
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (rs) => {
+                    this.campaigns = rs.data.records.map((e: Campaign) => {
+                        return {
+                            ...e,
+                            projectName: `${e.project.name} - ${e.hotline}`,
+                        };
+                    });
+                    this.filterCampaigns = [...this.campaigns];
+                },
+                error: (err) => {},
+            });
     }
 
     create() {
-        if (!this.dialogData.name || !this.dialogData.customerId || !this.startDate || !this.dialogData.campaignId || !this.dialogData.serviceId) {
+        if (
+            !this.dialogData.name ||
+            !this.dialogData.customerId ||
+            !this.startDate ||
+            !this.dialogData.campaignId ||
+            !this.dialogData.serviceId
+        ) {
             this.invalid = true;
             return;
         }
@@ -171,32 +218,49 @@ export class DialogCampaignServiceComponent extends BaseClass implements OnInit 
         const params = {
             ...this.dialogData,
             staffIds: this.dialogData.staffIds.toString(),
-        }
+        };
 
-        this.campaignServicesService.createCampaignService(params)
+        this.campaignServicesService
+            .createCampaignService(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.messageConfig.messageConfig.next({
                         severity: MESSAGE_TYPE.success,
                         summary: this.translate.instant(MESSAGE_SUMARY.success),
-                        detail: this.translate.instant('Create_campaign_service_successfully'),
+                        detail: this.translate.instant(
+                            'Create_campaign_service_successfully'
+                        ),
                     });
 
                     this.dialogRef.close(true);
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
-            })
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
+            });
     }
 
     update() {
-        if (!this.dialogData.name || !this.dialogData.customerId || !this.startDate || !this.dialogData.campaignId || !this.dialogData.serviceId) {
+        if (
+            !this.dialogData.name ||
+            !this.dialogData.customerId ||
+            !this.startDate ||
+            !this.dialogData.campaignId ||
+            !this.dialogData.serviceId
+        ) {
             this.invalid = true;
             return;
         }
@@ -213,29 +277,38 @@ export class DialogCampaignServiceComponent extends BaseClass implements OnInit 
             ...this.dialogData,
             campaignServiceId: this.config.data.campaignServiceId,
             staffIds: this.dialogData.staffIds.toString(),
-        }
+        };
 
-        this.campaignServicesService.updateCampaignService(param)
+        this.campaignServicesService
+            .updateCampaignService(param)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.messageConfig.messageConfig.next({
                         severity: MESSAGE_TYPE.success,
                         summary: this.translate.instant(MESSAGE_SUMARY.success),
-                        detail: this.translate.instant('Update_campaign_service_successfully'),
+                        detail: this.translate.instant(
+                            'Update_campaign_service_successfully'
+                        ),
                     });
 
                     this.dialogRef.close(true);
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
-            })
-
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
+            });
     }
-
 }
