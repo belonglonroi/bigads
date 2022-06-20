@@ -49,6 +49,7 @@
         optionLabel="fullname" optionValue="userId" appendTo="body" placeholder="{{ 'Select_staff' | translate }}"
         [filter]="true" [disabled]="config.data?.method" filterBy="fullname" display="chip">
     </p-multiSelect>
+    <small *ngIf="!dialogData.staffIds && invalid" class="p-error">{{'Assign_to_staffs_required' | translate}}</small>
 </div>
 
 <div class="field">
@@ -56,7 +57,7 @@
     <p-inputNumber [(ngModel)]="dialogData.goal" class="w-full" styleClass="w-full" inputId="goal" autocomplete="off"
         [disabled]="config.data?.method">
     </p-inputNumber>
-    <!-- <small *ngIf="!dialogData.goal && invalid" class="p-error">{{'Amount_required' | translate}}</small> -->
+    <small *ngIf="!dialogData.goal && invalid" class="p-error">{{'Target_required' | translate}}</small>
 </div>
 
 <div class="field">

@@ -211,7 +211,9 @@ export class DialogCampaignServiceComponent
             !this.dialogData.customerId ||
             !this.startDate ||
             !this.dialogData.campaignId ||
-            !this.dialogData.serviceId
+            !this.dialogData.serviceId ||
+            !this.dialogData.staffIds ||
+            !this.dialogData.goal
         ) {
             this.invalid = true;
             return;
