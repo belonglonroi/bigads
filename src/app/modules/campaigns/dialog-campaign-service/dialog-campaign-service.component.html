@@ -49,7 +49,7 @@
         optionLabel="fullname" optionValue="userId" appendTo="body" placeholder="{{ 'Select_staff' | translate }}"
         [filter]="true" [disabled]="config.data?.method" filterBy="fullname" display="chip">
     </p-multiSelect>
-    <small *ngIf="!dialogData.staffIds && invalid" class="p-error">{{'Assign_to_staffs_required' | translate}}</small>
+    <small *ngIf="!dialogData.staffIds.length && invalid" class="p-error">{{'Assign_to_staffs_required' | translate}}</small>
 </div>
 
 <div class="field">

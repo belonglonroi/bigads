@@ -212,7 +212,7 @@ export class DialogCampaignServiceComponent
             !this.startDate ||
             !this.dialogData.campaignId ||
             !this.dialogData.serviceId ||
-            !this.dialogData.staffIds ||
+            !this.dialogData.staffIds.length ||
             !this.dialogData.goal
         ) {
             this.invalid = true;
