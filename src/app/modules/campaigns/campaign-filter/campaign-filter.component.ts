@@ -159,10 +159,17 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         } else {
             this.filterBinding.forEach((e) => {
                 if (e.filterOption !== 'campaignServiceIsActive') {
-                    this.filter[e.filterOption] = {
-                        compareId: e.compareOption,
-                        value: e.value,
-                    };
+                    if(this.filter.hasOwnProperty(e.filterOption)) {
+                        this.filter[e.filterOption] = {
+                            compareId: e.compareOption,
+                            value: this.filter[e.filterOption].value +'&'+ e.value,
+                        };
+                    } else {
+                        this.filter[e.filterOption] = {
+                            compareId: e.compareOption,
+                            value: e.value,
+                        };
+                    }
                 } else {
                     this.filter[e.filterOption] = e.value;
                 }
