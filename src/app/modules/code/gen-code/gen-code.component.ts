@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
 import {
     MESSAGE_TYPE,
@@ -14,10 +15,12 @@ import {
 import { CampaignService } from 'src/app/core/models/campaign-services.model';
 import { Campaign } from 'src/app/core/models/campaign.model';
 import { Code } from 'src/app/core/models/code.model';
+import { Organization } from 'src/app/core/models/organization.model';
 import { User } from 'src/app/core/models/user.model';
 import { CampaignServicesService } from 'src/app/core/services/campaign-services.service';
 import { CodeService } from 'src/app/core/services/code.service';
 import { CustomerService } from 'src/app/core/services/customer.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import { MessageConfigService } from 'src/app/service/message.config.service';
 
@@ -28,12 +31,15 @@ import { MessageConfigService } from 'src/app/service/message.config.service';
 })
 export class GenCodeComponent extends BaseClass implements OnInit {
     data = {
+        name: '',
+        organizationIds: [],
         customerIds: [],
         campaignIds: [],
         campaignServiceIds: [],
         expiresIn: 0,
     };
     datePicker = new Date(new Date().setHours(0, 0, 0, 0));
+    organizations: Organization[] = [];
     customers: User[] = [];
     projects: Campaign[] = [];
     campaigns: CampaignService[] = [];
@@ -46,7 +52,8 @@ export class GenCodeComponent extends BaseClass implements OnInit {
         private codeService: CodeService,
         private reportService: ReportService,
         private messageConfig: MessageConfigService,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private organizationService: OrganizationService
     ) {
         super();
     }
@@ -55,7 +62,44 @@ export class GenCodeComponent extends BaseClass implements OnInit {
         if (this.config.data) {
             this.getDetails();
         }
-        this.getCustomer();
+
+        this.isLoading = true;
+        const getOrganizations = this.organizationService.getOrganizations({
+            page: 1,
+            limit: 99999,
+        });
+        const getCustomers = this.customerService.getCustomers({
+            page: 1,
+            limit: 99999,
+        });
+
+        forkJoin([getOrganizations, getCustomers])
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (
+                    rs: [
+                        ApiPagingResult<Organization[]>,
+                        ApiPagingResult<User[]>
+                    ]
+                ) => {
+                    this.organizations = rs[0].data.records;
+                    this.customers = rs[1].data.records.map((e) => {
+                        return {
+                            ...e,
+                            fullname: e.lastName + ' ' + e.firstName,
+                        };
+                    });
+                    this.isLoading = false;
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    });
+                },
+            });
+        // this.getCustomer();
     }
 
     getDetails() {
@@ -66,6 +110,8 @@ export class GenCodeComponent extends BaseClass implements OnInit {
             .subscribe({
                 next: (rs: ApiResult<Code>) => {
                     this.data = {
+                        name: rs.data.name,
+                        organizationIds: [],
                         customerIds: rs.data.customers.map((e) => e.userId),
                         campaignIds: rs.data.campaigns.map((e) => e.campaignId),
                         campaignServiceIds: rs.data.campaignServices.map(
@@ -89,7 +135,11 @@ export class GenCodeComponent extends BaseClass implements OnInit {
     getCustomer() {
         this.isLoading = true;
         this.customerService
-            .getCustomers({ limit: 9999, page: 1 })
+            .getCustomers({
+                limit: 9999,
+                page: 1,
+                organizationIds: this.data.organizationIds.toString() ?? '',
+            })
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (rs: ApiPagingResult<User[]>) => {
@@ -235,6 +285,7 @@ export class GenCodeComponent extends BaseClass implements OnInit {
 
     update() {
         const params = {
+            name: this.data.name,
             codeId: this.config.data.codeId,
             customerIds: this.data.customerIds.toString(),
             projectIds: '',
