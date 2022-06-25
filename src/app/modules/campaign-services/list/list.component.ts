@@ -11,23 +11,25 @@ import { MessageConfigService } from 'src/app/service/message.config.service';
 import { DialogCampaignAdComponent } from '../dialog-campaign-ad/dialog-campaign-ad.component';
 import { CampaignAdsService } from 'src/app/core/services/campaign-ads.service';
 import { CampaignAds } from 'src/app/core/models/campaign-ads.model';
-import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
+import {
+    MESSAGE_TYPE,
+    MESSAGE_SUMARY,
+} from 'src/app/core/consts/message.const';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    providers: [DialogService, ConfirmationService]
+    providers: [DialogService, ConfirmationService],
 })
 export class ListComponent extends BaseClass implements OnInit {
-
     campaignAds: CampaignService[] = [];
     recordsHasChanged: CampaignService[] = [];
     fetchingData: boolean = false;
     overlayUpdate = {
         amount: 0,
-        result: 0
-    }
+        result: 0,
+    };
     itemUpdate: CampaignAds;
     dateFilter: Date = new Date();
 
@@ -37,7 +39,7 @@ export class ListComponent extends BaseClass implements OnInit {
         private translate: TranslateService,
         private messageConfig: MessageConfigService,
         private campaignAdsService: CampaignAdsService,
-        private confirmationService: ConfirmationService,
+        private confirmationService: ConfirmationService
     ) {
         super();
     }
@@ -76,9 +78,10 @@ export class ListComponent extends BaseClass implements OnInit {
             page: this.page,
             limit: this.limit,
             isActive: true,
-            inputDate: moment(this.dateFilter).format('YYYY-MM-DD')
-        }
-        this.campaignServicesService.getCampaignServices(param)
+            inputDate: moment(this.dateFilter).format('YYYY-MM-DD'),
+        };
+        this.campaignServicesService
+            .getCampaignServices(param)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res: ApiPagingResult<CampaignService[]>) => {
@@ -86,51 +89,64 @@ export class ListComponent extends BaseClass implements OnInit {
                     this.totalRecords = res.data.total;
                     this.transformData(res.data.records);
                 },
-                error: (err) => {
-
-                }
-            })
+                error: (err) => {},
+            });
     }
 
     transformData(data: CampaignService[]) {
-        this.campaignAds = data.map(e => {
+        this.campaignAds = data.map((e) => {
             return {
                 ...e,
-                customerName: `${e.campaign.customer?.lastName ?? ''} ${e.campaign.customer?.firstName ?? ''}`,
+                customerName: `${e.campaign.customer?.lastName ?? ''} ${
+                    e.campaign.customer?.firstName ?? ''
+                }`,
                 project: e.campaign.project?.name,
                 serviceName: e.service.serviceName,
                 hotline: e.campaign.hotline,
                 startDate: moment(e.startDate).format('DD/MM/YYYY'),
                 endDate: moment(e.endDate).format('DD/MM/YYYY'),
                 adStaffName: e.adStaff?.lastName + ' ' + e.adStaff?.firstName,
-                planningStaffName: e.planningStaff?.lastName + ' ' + e.planningStaff?.firstName,
-                contentStaffName: e.contentStaff?.lastName + ' ' + e.contentStaff?.firstName,
+                planningStaffName:
+                    e.planningStaff?.lastName +
+                    ' ' +
+                    e.planningStaff?.firstName,
+                contentStaffName:
+                    e.contentStaff?.lastName + ' ' + e.contentStaff?.firstName,
                 note: e.campaign.description,
                 campaignAdsIndex: {
                     ...e.campaignAdsIndex,
-                    result: e.campaignAdsIndex.result === 0 ? null : e.campaignAdsIndex.result,
-                    amount: e.campaignAdsIndex.amount === 0 ? null : e.campaignAdsIndex.amount,
-                }
+                    result:
+                        e.campaignAdsIndex.result === 0
+                            ? null
+                            : e.campaignAdsIndex.result,
+                    amount:
+                        e.campaignAdsIndex.amount === 0
+                            ? null
+                            : e.campaignAdsIndex.amount,
+                },
                 // costPerResult: e.result === 0 ? 0 : (e.amount / e.result),
-            }
+            };
         });
-        console.log(this.campaignAds)
+        console.log(this.campaignAds);
     }
 
     changeState(e, item: CampaignService) {
         const param = {
             campaignServiceId: item.campaignServiceId,
-            isActive: e.checked
-        }
+            isActive: e.checked,
+        };
 
-        this.campaignServicesService.toggleStateCampaignService(param)
+        this.campaignServicesService
+            .toggleStateCampaignService(param)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     if (res.data.success) {
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
-                            summary: this.translate.instant(MESSAGE_SUMARY.success),
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
                             detail: res.data.message,
                         });
                         this.getCampaignServices();
@@ -138,13 +154,21 @@ export class ListComponent extends BaseClass implements OnInit {
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
                     this.getCampaignServices();
-                }
-            })
+                },
+            });
     }
 
     changePage(e) {
@@ -156,61 +180,77 @@ export class ListComponent extends BaseClass implements OnInit {
     openDialog(e?) {
         const dialogRef = this.dialogSerive.open(DialogCampaignAdComponent, {
             width: '450px',
-            header: e ? this.translate.instant('Update_campaign_service') : this.translate.instant('Create_campaign_service'),
+            header: e
+                ? this.translate.instant('Update_campaign_service')
+                : this.translate.instant('Create_campaign_service'),
             data: e,
-        })
+        });
 
         dialogRef.onClose.subscribe({
             next: (res) => {
                 if (res) {
                     this.getCampaignServices();
                 }
-            }
-        })
+            },
+        });
     }
 
     updateCost(e: CampaignService) {
         const param = {
-            campaignAds: this.recordsHasChanged.map(x => {
+            campaignAds: this.recordsHasChanged.map((x) => {
                 return {
                     campaignServiceId: x.campaignServiceId,
                     inputDate: moment(this.dateFilter).format('YYYY-MM-DD'),
-                    ...x.campaignAdsIndex
-                }
-            })
-        }
+                    ...x.campaignAdsIndex,
+                };
+            }),
+        };
 
-        this.campaignAdsService.createCampaignAds(param)
+        this.campaignAdsService
+            .createCampaignAds(param)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     this.messageConfig.messageConfig.next({
                         severity: MESSAGE_TYPE.success,
                         summary: this.translate.instant(MESSAGE_SUMARY.success),
-                        detail: this.translate.instant('Update_cost_successfully'),
+                        detail: this.translate.instant(
+                            'Update_cost_successfully'
+                        ),
                     });
                     this.recordsHasChanged = [];
                     this.getCampaignServices();
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
-            })
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
+            });
     }
 
     delete(e: CampaignAds) {
-        this.campaignServicesService.deleteCampaignService(e.campaignAdId)
+        this.campaignServicesService
+            .deleteCampaignService(e.campaignAdId)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     if (res.data.success) {
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
-                            summary: this.translate.instant(MESSAGE_SUMARY.success),
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
                             detail: res.data.message,
                         });
                         this.getCampaignServices();
@@ -218,27 +258,56 @@ export class ListComponent extends BaseClass implements OnInit {
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
             });
     }
 
     changeResult(item: CampaignService) {
-        if (this.recordsHasChanged.find(e => e.campaignServiceId === item.campaignServiceId)) {
-            this.recordsHasChanged.find(e => e.campaignServiceId === item.campaignServiceId).campaignAdsIndex.result = item.campaignAdsIndex.result;
+        if (
+            this.recordsHasChanged.find(
+                (e) => e.campaignServiceId === item.campaignServiceId
+            )
+        ) {
+            this.recordsHasChanged.find(
+                (e) => e.campaignServiceId === item.campaignServiceId
+            ).campaignAdsIndex.result = item.campaignAdsIndex.result;
         } else {
             this.recordsHasChanged.push(item);
         }
     }
 
     changeAmount(item: CampaignService) {
-        if (this.recordsHasChanged.find(e => e.campaignServiceId === item.campaignServiceId)) {
-            this.recordsHasChanged.find(e => e.campaignServiceId === item.campaignServiceId).campaignAdsIndex.amount = item.campaignAdsIndex.amount;
+        if (
+            this.recordsHasChanged.find(
+                (e) => e.campaignServiceId === item.campaignServiceId
+            )
+        ) {
+            this.recordsHasChanged.find(
+                (e) => e.campaignServiceId === item.campaignServiceId
+            ).campaignAdsIndex.amount = item.campaignAdsIndex.amount;
         } else {
             this.recordsHasChanged.push(item);
         }
+    }
+
+    pasteHandle(e: ClipboardEvent, item: CampaignService, field: string) {
+        e.preventDefault();
+        const clipboardEvent = e.clipboardData;
+        let value = clipboardEvent.getData('text');
+        value = value.replace(/\D/g, '');
+        item.campaignAdsIndex[field] = parseInt(value);
+        this.changeAmount(item);
     }
 }

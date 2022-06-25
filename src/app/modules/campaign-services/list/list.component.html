@@ -61,9 +61,11 @@
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.result"
+                            <input pInputText type="text" (paste)="pasteHandle($event, campaignService, 'result')"
+                                [(ngModel)]="campaignService.campaignAdsIndex.result" required>
+                            <!-- <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.result" (paste)="pasteHandle($event)"
                                 (onBlur)="changeAmount(campaignService)" required>
-                            </p-inputNumber>
+                            </p-inputNumber> -->
                         </ng-template>
                         <ng-template pTemplate="output">
                             <input pInputText type="text" disabled
@@ -74,9 +76,11 @@
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.amount"
+                            <input pInputText type="text" (paste)="pasteHandle($event, campaignService, 'amount')"
+                                [(ngModel)]="campaignService.campaignAdsIndex.amount" required>
+                            <!-- <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.amount"
                                 (onBlur)="changeAmount(campaignService)" required>
-                            </p-inputNumber>
+                            </p-inputNumber> -->
                         </ng-template>
                         <ng-template pTemplate="output">
                             <input pInputText type="text" disabled
