@@ -109,10 +109,10 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
     }
 
     getInitialData() {
-        const getCampaign = this.reportService.getProjects({
-            limit: 99999,
-            page: 1,
-        });
+        // const getCampaign = this.reportService.getProjects({
+        //     limit: 99999,
+        //     page: 1,
+        // });
         const getAdService = this.adServiceService.getAllService({
             limit: 99999,
             page: 1,
@@ -127,18 +127,18 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
             page: 1,
         });
 
-        forkJoin([getCampaign, getAdService, getEmployees, getCustomers])
+        forkJoin([getAdService, getEmployees, getCustomers])
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
-                    this.campaigns = res[0].data.records.map((e: Campaign) => {
-                        return {
-                            ...e,
-                            projectName: `${e.project.name} - ${e.hotline}`,
-                        };
-                    });
-                    this.filterCampaigns = [...this.campaigns];
-                    this.services = res[1].data.records
+                    // this.campaigns = res[0].data.records.map((e: Campaign) => {
+                    //     return {
+                    //         ...e,
+                    //         projectName: `${e.project.name} - ${e.hotline}`,
+                    //     };
+                    // });
+                    // this.filterCampaigns = [...this.campaigns];
+                    this.services = res[0].data.records
                         .map((e: AdService) => {
                             return {
                                 ...e,
@@ -154,7 +154,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
                             (a: AdService, b: AdService) =>
                                 a.parentId - b.parentId
                         );
-                    this.employees = res[2].data.records.map((e: User) => {
+                    this.employees = res[1].data.records.map((e: User) => {
                         return {
                             ...e,
                             fullname: `${e.lastName} ${e.firstName} ${
@@ -162,7 +162,7 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
                             }`,
                         };
                     });
-                    this.customers = res[3].data.records.map((e: User) => {
+                    this.customers = res[2].data.records.map((e: User) => {
                         return {
                             ...e,
                             fullname: `${e.lastName} ${e.firstName} - ${e.phone}`,
@@ -178,9 +178,31 @@ export class DialogOrtherServiceComponent extends BaseClass implements OnInit {
     }
 
     changeCustomer(id) {
-        this.filterCampaigns = this.campaigns.filter(
-            (e) => e.customer.userId === id
-        );
+        this.reportService
+            .getListProjects({
+                limit: 99999,
+                page: 1,
+                customerIds: id.toString(),
+            })
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe({
+                next: (rs) => {
+                    this.campaigns = rs.data.records.map((e: Campaign) => {
+                        return {
+                            ...e,
+                            projectName: `${e.project.name} - ${e.hotline}`,
+                        };
+                    });
+                    this.filterCampaigns = [...this.campaigns];
+                },
+                error: (err) => {
+                    this.messageConfig.messageConfig.next({
+                        severity: MESSAGE_TYPE.error,
+                        summary: this.translate.instant(MESSAGE_SUMARY.error),
+                        detail: this.translate.instant('Internal_server'),
+                    });
+                },
+            });
     }
 
     create() {
