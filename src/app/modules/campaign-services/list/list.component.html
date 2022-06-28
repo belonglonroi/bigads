@@ -62,7 +62,8 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <input pInputText type="text" (paste)="pasteHandle($event, campaignService, 'result')"
-                                [(ngModel)]="campaignService.campaignAdsIndex.result" required>
+                                [(ngModel)]="campaignService.campaignAdsIndex.result"
+                                (blur)="changeAmount(campaignService)" required>
                             <!-- <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.result" (paste)="pasteHandle($event)"
                                 (onBlur)="changeAmount(campaignService)" required>
                             </p-inputNumber> -->
@@ -77,7 +78,8 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <input pInputText type="text" (paste)="pasteHandle($event, campaignService, 'amount')"
-                                [(ngModel)]="campaignService.campaignAdsIndex.amount" required>
+                                [(ngModel)]="campaignService.campaignAdsIndex.amount"
+                                (blur)="changeAmount(campaignService)" required>
                             <!-- <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.amount"
                                 (onBlur)="changeAmount(campaignService)" required>
                             </p-inputNumber> -->
