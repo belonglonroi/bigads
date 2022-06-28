@@ -5,7 +5,7 @@ import { User } from "./user.model";
 
 export interface Code {
     name: string;
-    organizations: Organization[];
+    oraginzations: Organization[];
     campaignServices: CampaignService[];
     campaigns: Campaign[];
     code: string;

@@ -24,4 +24,8 @@ export class CampaignService extends BaseService {
     getCampaigns(params) {
         return this.http.post(`${this.campaignUrl}/campaigns`, params);
     }
+
+    getCampaignServices(params) {
+        return this.http.post(`${this.campaignUrl}/campaign-services`, params);
+    }
 }

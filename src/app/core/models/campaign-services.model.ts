@@ -35,4 +35,6 @@ export class CampaignService {
     campaignAdsIndex?: CampaignAds;
     description?: string;
     performanceString?: string;
+    campaignAccounting?: number;
+    customerAccounting?: number;
 }
