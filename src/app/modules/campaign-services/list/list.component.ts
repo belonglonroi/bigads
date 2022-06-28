@@ -15,6 +15,9 @@ import {
     MESSAGE_TYPE,
     MESSAGE_SUMARY,
 } from 'src/app/core/consts/message.const';
+import { CampaignComponent } from '../../campaigns/campaign/campaign.component';
+import { Router } from '@angular/router';
+import { CampaignService as CampService } from 'src/app/core/services/campaign.service';
 
 @Component({
     selector: 'app-list',
@@ -39,7 +42,9 @@ export class ListComponent extends BaseClass implements OnInit {
         private translate: TranslateService,
         private messageConfig: MessageConfigService,
         private campaignAdsService: CampaignAdsService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private router: Router,
+        private campaignService: CampService
     ) {
         super();
     }
@@ -124,10 +129,8 @@ export class ListComponent extends BaseClass implements OnInit {
                             ? null
                             : e.campaignAdsIndex.amount,
                 },
-                // costPerResult: e.result === 0 ? 0 : (e.amount / e.result),
             };
         });
-        console.log(this.campaignAds);
     }
 
     changeState(e, item: CampaignService) {
@@ -309,5 +312,10 @@ export class ListComponent extends BaseClass implements OnInit {
         value = value.replace(/\D/g, '');
         item.campaignAdsIndex[field] = parseInt(value);
         this.changeAmount(item);
+    }
+
+    redirectToCampaign() {
+        this.router.navigateByUrl('campaigns');
+        this.campaignService.tab$.next(2);
     }
 }

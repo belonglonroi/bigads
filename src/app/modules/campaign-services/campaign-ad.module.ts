@@ -9,16 +9,12 @@ import { httpTranslateLoader } from 'src/assets/i18n/util';
 import { ListComponent } from './list/list.component';
 import { DialogCampaignAdComponent } from './dialog-campaign-ad/dialog-campaign-ad.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CampaignComponent } from '../campaigns/campaign/campaign.component';
 
-const campaignServiceRoutes: Routes = [
-    { path: '', component: ListComponent }
-]
+const campaignServiceRoutes: Routes = [{ path: '', component: ListComponent }];
 
 @NgModule({
-    declarations: [
-        ListComponent,
-        DialogCampaignAdComponent
-    ],
+    declarations: [ListComponent, DialogCampaignAdComponent],
     imports: [
         CommonModule,
         PerfectScrollbarModule,
@@ -29,8 +25,10 @@ const campaignServiceRoutes: Routes = [
             loader: {
                 provide: TranslateLoader,
                 useFactory: httpTranslateLoader,
-                deps: [HttpClient]
-            }
-        })],
+                deps: [HttpClient],
+            },
+        }),
+    ],
+    providers: [CampaignComponent],
 })
-export class CampaignServicesModule { }
+export class CampaignServicesModule {}

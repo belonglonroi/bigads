@@ -237,6 +237,7 @@ export class GenCodeComponent extends BaseClass implements OnInit {
 
     create() {
         const params = {
+            name: this.data.name,
             customerIds: this.data.customerIds.toString(),
             projectIds: '',
             campaignIds: this.data.campaignIds.toString(),

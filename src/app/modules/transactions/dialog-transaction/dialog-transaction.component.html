@@ -4,14 +4,14 @@
         <label for="organization" class="block">{{'Organization' | translate}}</label>
         <p-dropdown [options]="organizations" styleClass="w-full" [(ngModel)]="dialogData.organizationId"
             (ngModelChange)="changeOrganization($event)" optionLabel="organizationName" optionValue="organizationId"
-            placeholder="{{ 'Select_organization' | translate }}" [filter]="true" filterBy="organizationName">
+            placeholder="{{ 'Select_organization' | translate }}" [filter]="true" filterBy="organizationName" appendTo="body">
         </p-dropdown>
     </div>
     <div class="field">
         <label for="customer" class="block">{{'Customer' | translate}}</label>
         <p-dropdown [options]="customers" styleClass="w-full" [(ngModel)]="dialogData.customerId"
             (ngModelChange)="changeCustomer($event)" optionLabel="fullname" optionValue="userId"
-            placeholder="{{ 'Select_customer' | translate }}" [filter]="true" filterBy="fullname"></p-dropdown>
+            placeholder="{{ 'Select_customer' | translate }}" [filter]="true" filterBy="fullname" appendTo="body"></p-dropdown>
         <small *ngIf="!dialogData.customerId && invalid" class="p-error">{{'Customer_required' | translate}}</small>
     </div>
 
@@ -20,7 +20,7 @@
         <!-- <input id="campaign" type="text" pInputText class="w-full" [(ngModel)]="dialogData.campaignId" autocomplete="off" /> -->
         <p-dropdown [options]="campaigns" styleClass="w-full" [(ngModel)]="dialogData.campaignId"
             optionLabel="projectName" optionValue="campaignId" placeholder="{{ 'Select_project' | translate }}"
-            [filter]="true" filterBy="projectName">
+            [filter]="true" filterBy="projectName" appendTo="body">
         </p-dropdown>
         <small *ngIf="!dialogData.campaignId && invalid" class="p-error">{{'Campaign_required' | translate}}</small>
     </div>
@@ -28,7 +28,7 @@
     <div class="field">
         <label for="type" class="block">{{'Transaction_type' | translate}}</label>
         <p-dropdown [options]="paymentType" styleClass="w-full" [(ngModel)]="dialogData.paymentType" optionLabel="name"
-            optionValue="code">
+            optionValue="code" appendTo="body">
         </p-dropdown>
     </div>
 

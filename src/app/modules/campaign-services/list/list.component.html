@@ -6,7 +6,7 @@
         <ng-template pTemplate="caption">
             <div class="flex justify-content-between">
                 <div class="flex">
-                    <a [routerLink]="'/campaigns'" [queryParams]="{ tab: '3' }">{{'Campaign' | translate}}</a>
+                    <b class="cursor-pointer text-primary" (click)="redirectToCampaign()">{{'Campaign' | translate}}</b>
                 </div>
 
                 <p-calendar [(ngModel)]="dateFilter" styleClass="pr-3" inputStyleClass="pr-5"

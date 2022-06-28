@@ -11,6 +11,7 @@ import { CampaignFilter } from 'src/app/core/models/campaign-filter.model';
 import { Campaign } from 'src/app/core/models/campaign.model';
 import { Organization } from 'src/app/core/models/organization.model';
 import { User } from 'src/app/core/models/user.model';
+import { CampaignService } from 'src/app/core/services/campaign.service';
 import { CustomerService } from 'src/app/core/services/customer.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import { TabProjectService } from 'src/app/core/services/tab-project.service';
@@ -55,7 +56,8 @@ export class CampaignComponent extends BaseClass implements OnInit {
         private customerService: CustomerService,
         private tabProjectService: TabProjectService,
         private route: ActivatedRoute,
-        private userService: UserService
+        private userService: UserService,
+        private campaignService: CampaignService
     ) {
         super();
     }
@@ -135,6 +137,8 @@ export class CampaignComponent extends BaseClass implements OnInit {
                     this.selectedCampaignAds = res;
                 },
             });
+
+        this.activeIndex = this.campaignService.getTab;
     }
 
     selectedOrganizationsRemoved() {
