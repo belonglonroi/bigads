@@ -316,6 +316,6 @@ export class ListComponent extends BaseClass implements OnInit {
 
     redirectToCampaign() {
         this.router.navigateByUrl('campaigns');
-        this.campaignService.tab$.next(2);
+        this.campaignService.tab$.next(3);
     }
 }
