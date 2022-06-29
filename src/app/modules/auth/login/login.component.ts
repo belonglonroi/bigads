@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { BaseClass } from 'src/app/core/base/base.class';
@@ -29,7 +29,8 @@ export class LoginComponent extends BaseClass implements OnInit {
         private authService: AuthService,
         private messageConfigService: MessageConfigService,
         private translate: TranslateService,
-        private router: Router
+        private router: Router,
+        private activatedRoute: ActivatedRoute
     ) {
         super();
     }
@@ -64,7 +65,11 @@ export class LoginComponent extends BaseClass implements OnInit {
             .subscribe({
                 next: () => {
                     this.loading = false;
-                    this.router.navigateByUrl('employees/profile');
+                    const redirectURL =
+                        this.activatedRoute.snapshot.queryParamMap.get(
+                            'redirectURL'
+                        ) || 'employees/profile';
+                    this.router.navigateByUrl(redirectURL);
                     this.messageConfigService.messageConfig.next({
                         severity: MESSAGE_TYPE.success,
                         summary: this.translate.instant(MESSAGE_SUMARY.success),

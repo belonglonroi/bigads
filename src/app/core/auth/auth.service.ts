@@ -6,6 +6,7 @@ import { ApiResult } from '../models/api-result.model';
 import { LoginParam, LoginResult } from '../models/auth.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +15,11 @@ export class AuthService extends BaseService {
     isAuthenticated: boolean = false;
     token: string = '';
 
-    constructor(private http: HttpClient, private userService: UserService) {
+    constructor(
+        private http: HttpClient,
+        private userService: UserService,
+        private router: Router
+    ) {
         super();
     }
 
@@ -65,6 +70,8 @@ export class AuthService extends BaseService {
         }
 
         if (!this.accessToken) {
+            // Redirect to the sign-in page
+            // this.router.navigate(['auth/login'], { queryParams: { redirectURL } });
             return of(false);
         }
 

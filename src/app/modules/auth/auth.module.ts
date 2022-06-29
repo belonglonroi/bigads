@@ -8,7 +8,7 @@ import { httpTranslateLoader } from 'src/assets/i18n/util';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 const authRoutes: Routes = [
-    { path: '', redirectTo: '/auth/login' },
+    { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent }
 ]
 
