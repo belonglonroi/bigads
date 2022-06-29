@@ -271,10 +271,14 @@ export class CampaignComponent extends BaseClass implements OnInit {
             this.reportService.campaignFilter$.next(filter);
         } else {
             this.filterBinding.forEach((e) => {
-                this.filter[e.filterOption] = {
-                    compareId: e.compareOption,
-                    value: e.value,
-                };
+                if(e.filterOption !== 'campaignServiceIsActive') {
+                    this.filter[e.filterOption] = {
+                        compareId: e.compareOption,
+                        value: Array.isArray(e.value) ? e.value.join(', ') : e.value,
+                    };
+                } else {
+                    this.filter[e.filterOption] = e.value;
+                }
             });
 
             this.reportService.campaignFilter$.next(this.filter);

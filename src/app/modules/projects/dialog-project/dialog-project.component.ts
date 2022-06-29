@@ -76,7 +76,7 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
     }
 
     create() {
-        if (!this.dialogData.name || !this.dialogData.description) {
+        if (!this.dialogData.name) {
             this.invalid = true
             return;
         }
@@ -106,7 +106,7 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
     }
 
     update() {
-        if (!this.dialogData.name || !this.dialogData.description) {
+        if (!this.dialogData.name) {
             this.invalid = true
             return;
         }

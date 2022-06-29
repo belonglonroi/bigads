@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card transaction-table">
 
     <!-- table data -->
     <p-table #transactionData [value]="transactions" dataKey="campaignPaymentId" styleClass="p-datatable-sm"
@@ -47,23 +47,23 @@
         <ng-template pTemplate="header">
             <tr>
                 <!-- <th pResizableColumn></th> -->
-                <th pResizableColumn pSortableColumn="name">{{'Customer' | translate}}
+                <th>{{'Customer' | translate}}
                 </th>
-                <th pResizableColumn pSortableColumn="createdName">{{'Project' | translate}}
+                <th>{{'Project' | translate}}
                 </th>
-                <th pResizableColumn pSortableColumn="description">{{'Hotline' | translate}}
+                <th>{{'Hotline' | translate}}
                 </th>
-                <th pResizableColumn pSortableColumn="createdUtcDate">{{'Amount' | translate}}
+                <th>{{'Amount' | translate}}
                 </th>
-                <th pResizableColumn pSortableColumn="paymentType">{{'Transaction_type' | translate}}
+                <th>{{'Transaction_type' | translate}}
                 </th>
-                <th pResizableColumn pSortableColumn="transactionUtcDate">{{'Transaction_date' | translate}}
+                <th>{{'Transaction_date' | translate}}
                 </th>
-                <th pResizableColumn pSortableColumn="createdByName">{{'Created_by' | translate}}
+                <th>{{'Created_by' | translate}}
                 </th>
-                <th pResizableColumn pSortableColumn="createdUtcDate">{{'Created_date' | translate}}
+                <th>{{'Created_date' | translate}}
                 </th>
-                <th pResizableColumn style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
+                <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-transaction>
