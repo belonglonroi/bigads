@@ -1,5 +1,5 @@
 <div style="width: 300px">
-    <p-dropdown appendTo="body" [options]="campaignFilterOptions" [(ngModel)]="filterForm.filterOption"
+    <p-dropdown appendTo="body" [options]="campaignFilterOptions" [(ngModel)]="filterForm.filterOption" [group]="true"
         [disabled]="filterUpdate" optionLabel="label" optionValue="value" [filter]="true" filterBy="label"
         (onChange)="changeFilterOption($event)" placeholder="{{'Select_filter_option' | translate}}"
         styleClass="w-full mb-3">

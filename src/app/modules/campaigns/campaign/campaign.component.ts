@@ -23,12 +23,7 @@ import { UserService } from 'src/app/core/services/user.service';
     styleUrls: ['./campaign.component.scss'],
 })
 export class CampaignComponent extends BaseClass implements OnInit {
-    campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map((e) => {
-        return {
-            value: e.value,
-            label: this.translate.instant(e.label),
-        };
-    });
+    campaignFilterOptions = [].concat.apply([], CAMPAIGN_FILTER_OPTIONS.map((e) => e.items));
 
     compareOptions = COMPARE_OPTIONS.map((e) => {
         return {
@@ -262,7 +257,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
             (x) => x.value === e.compareOption
         );
         return (
-            option.label +
+            this.translate.instant(option.label) +
             ' ' +
             compare.label.toLowerCase() +
             (e.value === '' ? '' : ` '${e.value}'`)

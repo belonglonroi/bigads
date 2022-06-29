@@ -34,8 +34,14 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
     @Output() updated = new EventEmitter();
     campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map((e) => {
         return {
-            value: e.value,
+            value: e.value ?? '',
             label: this.translate.instant(e.label),
+            items: e.items?.map((x) => {
+                return {
+                    value: x.value,
+                    label: this.translate.instant(x.label),
+                };
+            }),
         };
     });
 
@@ -166,9 +172,7 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
                         this.filter[e.filterOption] = {
                             compareId: e.compareOption,
                             value:
-                                this.filter[e.filterOption].value +
-                                '&' +
-                                value,
+                                this.filter[e.filterOption].value + '&' + value,
                         };
                     } else {
                         this.filter[e.filterOption] = {
