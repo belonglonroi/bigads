@@ -27,12 +27,12 @@
                         <small class="p-error" *ngIf="!formLogin.password && invalid">{{'Password_required' |
                             translate}}</small>
 
-                        <div class="flex align-items-center justify-content-between my-5">
-                            <div class="flex align-items-center">
+                        <div class="flex align-items-center justify-content-end my-5">
+                            <!-- <div class="flex align-items-center">
                                 <p-checkbox id="rememberme" name="remember" [binary]="true" [(ngModel)]="formLogin.remember" styleClass="mr-2">
                                 </p-checkbox>
                                 <label for="rememberme">{{ 'Remember_me' | translate }}</label>
-                            </div>
+                            </div> -->
                             <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">{{
                                 'Forgot_password' | translate }}</a>
                         </div>
