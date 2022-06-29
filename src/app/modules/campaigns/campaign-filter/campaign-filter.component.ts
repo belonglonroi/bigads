@@ -96,7 +96,7 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         const getServices = this.AdServiceService.getAllService({
             page: 1,
             limit: 9999,
-            serviceTypeId: 1
+            serviceTypeId: 1,
         });
         const getProjects = this.ProjectService.getProjects({
             page: 1,
@@ -158,20 +158,26 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
             this.reportService.campaignFilter$.next({});
         } else {
             this.filterBinding.forEach((e) => {
+                const value = Array.isArray(e.value)
+                    ? e.value.join(', ')
+                    : e.value;
                 if (e.filterOption !== 'campaignServiceIsActive') {
-                    if(this.filter.hasOwnProperty(e.filterOption)) {
+                    if (this.filter.hasOwnProperty(e.filterOption)) {
                         this.filter[e.filterOption] = {
                             compareId: e.compareOption,
-                            value: this.filter[e.filterOption].value +'&'+ e.value,
+                            value:
+                                this.filter[e.filterOption].value +
+                                '&' +
+                                value,
                         };
                     } else {
                         this.filter[e.filterOption] = {
                             compareId: e.compareOption,
-                            value: e.value,
+                            value: value,
                         };
                     }
                 } else {
-                    this.filter[e.filterOption] = e.value;
+                    this.filter[e.filterOption] = value;
                 }
             });
 
@@ -190,7 +196,7 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
                 });
             const filter = {
                 ...this.reportService.campaignFilter$.value,
-                ...this.filter
+                ...this.filter,
             };
 
             this.reportService.campaignFilter$.next(filter);
