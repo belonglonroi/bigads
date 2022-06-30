@@ -318,4 +318,16 @@ export class ListComponent extends BaseClass implements OnInit {
         this.router.navigateByUrl('campaigns');
         this.campaignService.tab$.next(3);
     }
+
+    getColor(e: string) {
+        let color = 'unset';
+        if (e === 'Kém' || e === 'Rất kém') {
+            color = 'red'
+        } else if (e === 'Đạt yêu cầu') {
+            color = 'blue'
+        } else if (e === 'Tốt' || e === 'Xuất sắc') {
+            color = 'green';
+        }
+        return color;
+    }
 }

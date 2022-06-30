@@ -50,7 +50,10 @@
                 <td>{{campaignService.project}} ({{campaignService.campaignAccounting | number}})</td>
                 <td>{{campaignService.customerName}} ({{campaignService.customerAccounting | number}})</td>
                 <td>{{campaignService.hotline}}</td>
-                <td>{{campaignService.performanceString}}</td>
+                <td>
+                    <span
+                        [ngStyle]="{'color': getColor(campaignService.performanceString)}">{{campaignService.performanceString}}</span>
+                </td>
                 <td>{{campaignService.adAccount}}</td>
                 <td>
                     <div *ngFor="let staff of campaignService.staffs">

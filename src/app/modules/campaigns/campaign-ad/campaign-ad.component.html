@@ -1,7 +1,7 @@
 <p-table [lazy]="true" #campaignAdsData [value]="campaignAds" dataKey="campaignServiceId" styleClass="p-datatable-sm"
     [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'" [loading]="fetchingData"
     [(selection)]="selectedCampaignAds" [scrollable]="true" (selectionChange)="selectionChange()"
-    (onSort)="sortCustomer($event)" responsiveLayout="scroll">
+    (onSort)="sortCustom($event)" responsiveLayout="scroll">
     <ng-template *ngIf="actions.includes(702) || actions.includes(703)" pTemplate="caption">
         <div class="flex">
             <p-button label="{{'Add_campaign' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"

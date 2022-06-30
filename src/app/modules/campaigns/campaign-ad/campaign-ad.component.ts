@@ -325,7 +325,7 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         return color;
     }
 
-    sortCustomer(e: SortEvent) {
+    sortCustom(e: SortEvent) {
         this.sort = {};
         if (e.order === 1) {
             this.sort[e.field] = 'DESC';
