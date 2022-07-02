@@ -222,7 +222,7 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
 
     openDialog(e?: Campaign, method?: string) {
         const dialogRef = this.dialogService.open(DialogProjectComponent, {
-            header: method ? this.translate.instant('Detail_project') : this.translate.instant('Add_project'),
+            header: method ? this.translate.instant('Detail_project') : (!e ? this.translate.instant('Add_project') : this.translate.instant('Update_project')),
             width: '450px',
             data: {
                 ...e,
