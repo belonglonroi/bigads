@@ -47,8 +47,16 @@
                         <div>{{campaignService.serviceName}}</div>
                     </div>
                 </td>
-                <td>{{campaignService.project}} ({{campaignService.campaignAccounting | number}})</td>
-                <td>{{campaignService.customerName}} ({{campaignService.customerAccounting | number}})</td>
+                <td>{{campaignService.project}}
+                    <b
+                        [ngClass]="{'text-pink-400': (campaignService.campaignAccounting) < 0, 'text-green-500': (campaignService.campaignAccounting) > 0}">
+                        ({{campaignService.campaignAccounting | number}})</b>
+                </td>
+                <td>{{campaignService.customerName}}
+                    <b
+                        [ngClass]="{'text-pink-400': (campaignService.campaignAccounting) < 0, 'text-green-500': (campaignService.campaignAccounting) > 0}">
+                        ({{campaignService.customerAccounting | number}})</b>
+                </td>
                 <td>{{campaignService.hotline}}</td>
                 <td>
                     <span
