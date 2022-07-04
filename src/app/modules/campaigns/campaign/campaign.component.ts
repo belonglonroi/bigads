@@ -23,7 +23,10 @@ import { UserService } from 'src/app/core/services/user.service';
     styleUrls: ['./campaign.component.scss'],
 })
 export class CampaignComponent extends BaseClass implements OnInit {
-    campaignFilterOptions = [].concat.apply([], CAMPAIGN_FILTER_OPTIONS.map((e) => e.items));
+    campaignFilterOptions = [].concat.apply(
+        [],
+        CAMPAIGN_FILTER_OPTIONS.map((e) => e.items)
+    );
 
     compareOptions = COMPARE_OPTIONS.map((e) => {
         return {
@@ -271,10 +274,12 @@ export class CampaignComponent extends BaseClass implements OnInit {
             this.reportService.campaignFilter$.next(filter);
         } else {
             this.filterBinding.forEach((e) => {
-                if(e.filterOption !== 'campaignServiceIsActive') {
+                if (e.filterOption !== 'campaignServiceIsActive') {
                     this.filter[e.filterOption] = {
                         compareId: e.compareOption,
-                        value: Array.isArray(e.value) ? e.value.join(', ') : e.value,
+                        value: Array.isArray(e.value)
+                            ? e.value.join(', ')
+                            : e.value,
                     };
                 } else {
                     this.filter[e.filterOption] = e.value;
@@ -302,5 +307,17 @@ export class CampaignComponent extends BaseClass implements OnInit {
 
     receivedActiveIndex(e: number) {
         this.activeIndex = e;
+    }
+
+    isMobile() {
+        return window.innerWidth < 600;
+    }
+
+    setCalendar() {
+        if (this.isMobile()) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 }

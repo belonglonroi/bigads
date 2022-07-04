@@ -2,12 +2,12 @@
 
     <div class="flex justify-content-between mb-3">
         <div>
-            <span class="p-input-icon-right">
+            <span [fxHide.lt-md]="true" class="p-input-icon-right">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" placeholder="{{'Search_by_customer' | translate}}"
                     [ngModel]="customerName" (ngModelChangeDebounced)="searchByCustomer($event)">
             </span>
-            <button type="text" pButton label="{{'Campaign_filter' | translate}}" icon="pi pi-filter"
+            <button type="text" pButton icon="pi pi-filter"
                 class="p-button-text" (click)="filterUpdate = undefined; op.toggle($event)"></button>
             <p-overlayPanel #op>
                 <ng-template pTemplate>
@@ -19,9 +19,9 @@
 
         <div class="relative">
             <!-- <span class="mr-3">{{'Created_date' | translate}}</span> -->
-            <p-calendar #calendar [(ngModel)]="dateFilter" styleClass="pr-3" inputStyleClass="pr-5" [numberOfMonths]="2"
-                placeholder="{{'Filter_by_date' | translate}}" selectionMode="range" [readonlyInput]="true"
-                (ngModelChange)="dateFilterChange($event)">
+            <p-calendar #calendar [(ngModel)]="dateFilter" styleClass="pr-3" inputStyleClass="pr-5"
+                [numberOfMonths]="setCalendar()" placeholder="{{'Filter_by_date' | translate}}" selectionMode="range"
+                [readonlyInput]="true" (ngModelChange)="dateFilterChange($event)">
                 <p-footer>
                     <button type="text" pButton label="{{'Today' | translate}}" class="p-button-text"
                         (click)="selectDate(1); calendar.toggle()"></button>

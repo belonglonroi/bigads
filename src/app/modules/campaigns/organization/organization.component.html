@@ -79,58 +79,66 @@
 </p-table>
 
 <!-- Mobile & tablet view -->
-<div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
-    fxLayoutAlign.xs="start stretch">
-    <div class="card mb-3 border-round shadow-none" *ngFor="let organization of organizations" fxFlex.gt-xs="49"
-        fxFlex.xs="100">
+<div>
+    <div class="campaign overlay" *ngIf="fetchingData">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    </div>
+    <div [fxHide.gt-sm]="true" *ngIf="!fetchingData" fxLayout="row wrap" fxLayoutAlign="space-between start"
+        fxLayout.xs="column" fxLayoutAlign.xs="start stretch">
+        <div class="card mb-3 border-round shadow-none" *ngFor="let organization of organizations" fxFlex.gt-xs="49"
+            fxFlex.xs="100">
 
-        <div fxLayoutAlign="space-between start">
-            <span class="cursor-pointer text-primary font-bold" (click)="organizationClicked(organization)">
-                {{organization.organizationName}}</span>
-            <p-checkbox [value]="organization" [(ngModel)]="selectedOrganizations"
-                (ngModelChange)="organizationSelectedHandle()"></p-checkbox>
-        </div>
+            <div fxLayoutAlign="space-between start">
+                <span class="cursor-pointer text-primary font-bold" (click)="organizationClicked(organization)">
+                    {{organization.organizationName}}</span>
+                <p-checkbox [value]="organization" [(ngModel)]="selectedOrganizations"
+                    (ngModelChange)="organizationSelectedHandle()"></p-checkbox>
+            </div>
 
-        <div fxLayoutAlign="space-between start">
-            <b>{{'Description' | translate}}:</b>
-            <span>{{organization.description}}</span>
-        </div>
+            <ng-container *ngIf="!code">
 
-        <div fxLayoutAlign="space-between start">
-            <b>{{'Address' | translate}}:</b>
-            <span>{{organization.address}}</span>
-        </div>
+                <div fxLayoutAlign="space-between start">
+                    <b>{{'Description' | translate}}:</b>
+                    <span>{{organization.description}}</span>
+                </div>
 
-        <div fxLayoutAlign="space-between start">
-            <b>{{'Quantity' | translate}}:</b>
-            <span>{{organization.quantity}}</span>
-        </div>
+                <div fxLayoutAlign="space-between start">
+                    <b>{{'Address' | translate}}:</b>
+                    <span>{{organization.address}}</span>
+                </div>
 
-        <div fxLayoutAlign="space-between start">
-            <b>{{'Website' | translate}}:</b>
-            <span>{{organization.website}}</span>
-        </div>
+                <div fxLayoutAlign="space-between start">
+                    <b>{{'Quantity' | translate}}:</b>
+                    <span>{{organization.quantity}}</span>
+                </div>
 
-        <div *ngIf="!code" fxLayout="row wrap" fxLayoutAlign="center start">
-            <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
-                pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
-                (click)="openDialog(organization, 'VIEW')"></button>
+                <div fxLayoutAlign="space-between start">
+                    <b>{{'Website' | translate}}:</b>
+                    <span>{{organization.website}}</span>
+                </div>
+            </ng-container>
 
-            <button [disabled]="!actions.includes(502)" pButton pRipple type="button" icon="pi pi-pencil"
-                pTooltip="{{'Update' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
-                (click)="openDialog(organization)"></button>
+            <div *ngIf="!code" fxLayout="row wrap" fxLayoutAlign="center start">
+                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                    pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialog(organization, 'VIEW')"></button>
 
-            <button [disabled]="!actions.includes(201) && !actions.includes(202) " pButton pRipple type="button"
-                icon="pi pi-user-edit" pTooltip="{{'Update_member' | translate}}" tooltipPosition="top"
-                class="p-button-rounded p-button-text p-button-success"
-                (click)="updateUserOrganization(organization)"></button>
+                <button [disabled]="!actions.includes(502)" pButton pRipple type="button" icon="pi pi-pencil"
+                    pTooltip="{{'Update' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialog(organization)"></button>
 
-            <button [disabled]="!actions.includes(503)" pButton pRipple type="button" icon="pi pi-trash"
-                pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
-                class="p-button-rounded p-button-text p-button-danger" (click)="delete(organization)"></button>
+                <button [disabled]="!actions.includes(201) && !actions.includes(202) " pButton pRipple type="button"
+                    icon="pi pi-user-edit" pTooltip="{{'Update_member' | translate}}" tooltipPosition="top"
+                    class="p-button-rounded p-button-text p-button-success"
+                    (click)="updateUserOrganization(organization)"></button>
+
+                <button [disabled]="!actions.includes(503)" pButton pRipple type="button" icon="pi pi-trash"
+                    pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="delete(organization)"></button>
+            </div>
         </div>
     </div>
 </div>
 
-<p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+<p-paginator *ngIf="!fetchingData" [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
     [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>

@@ -160,99 +160,106 @@
 </p-table>
 
 <!-- mobile & tablet view -->
-<div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
-    fxLayoutAlign.xs="start stretch">
-    <div class="card mb-3 border-round shadow-none" *ngFor="let project of projects" fxFlex.gt-xs="49" fxFlex.xs="100">
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <span class="cursor-pointer text-primary font-bold" (click)="projectClicked(project)">
-                {{project.projectName}}</span>
-            <p-checkbox [value]="project" [(ngModel)]="selectedProjects" (ngModelChange)="projectSelectedHandle()">
-            </p-checkbox>
-        </div>
+<div>
+    <div class="campaign overlay" *ngIf="fetchingData">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    </div>
+    <div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
+        fxLayoutAlign.xs="start stretch">
+        <div class="card mb-3 border-round shadow-none" *ngFor="let project of projects" fxFlex.gt-xs="49"
+            fxFlex.xs="100">
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <span class="cursor-pointer text-primary font-bold" (click)="projectClicked(project)">
+                    {{project.projectName}}</span>
+                <p-checkbox [value]="project" [(ngModel)]="selectedProjects" (ngModelChange)="projectSelectedHandle()">
+                </p-checkbox>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <span *ngIf="project.category">({{project.category}})</span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <span *ngIf="project.category">({{project.category}})</span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Customer' | translate}}:</b>
-            <span>{{project.customerName}} - {{project.hotline}} </span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Customer' | translate}}:</b>
+                <span>{{project.customerName}} - {{project.hotline}} </span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Performance' | translate}}:</b>
-            <span>
-                <span>{{project.performanceRate}} </span>
-                <span [ngStyle]="{'color': getColor(project.performanceString)}">({{project.performanceString}})</span>
-            </span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Performance' | translate}}:</b>
+                <span>
+                    <span>{{project.performanceRate}} </span>
+                    <span
+                        [ngStyle]="{'color': getColor(project.performanceString)}">({{project.performanceString}})</span>
+                </span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Customer_transaction' | translate}}:</b>
-            <span>
-                <span>{{project.transactionAmount | number}}</span>
-            </span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Customer_transaction' | translate}}:</b>
+                <span>
+                    <span>{{project.transactionAmount | number}}</span>
+                </span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Expenditure' | translate}}:</b>
-            <span>
-                <span>{{project.expenditureAmount | number}}</span>
-            </span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Expenditure' | translate}}:</b>
+                <span>
+                    <span>{{project.expenditureAmount | number}}</span>
+                </span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Accounting' | translate}}:</b>
-            <span>
-                <span>{{project.accountingAmount | number}}</span>
-            </span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Accounting' | translate}}:</b>
+                <span>
+                    <span>{{project.accountingAmount | number}}</span>
+                </span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Fee' | translate}}:</b>
-            <span>
-                <span>{{project.feeAmount | number}}</span>
-            </span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Fee' | translate}}:</b>
+                <span>
+                    <span>{{project.feeAmount | number}}</span>
+                </span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Fee_rate' | translate}}:</b>
-            <span>
-                <span>{{project.feeType === 2 ? ('Package_fee' | translate) :
-                    project.fixedRate * 100 + ' %'}}</span>
-            </span>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Fee_rate' | translate}}:</b>
+                <span>
+                    <span>{{project.feeType === 2 ? ('Package_fee' | translate) :
+                        project.fixedRate * 100 + ' %'}}</span>
+                </span>
+            </div>
 
-        <div fxLayoutAlign="space-between start" class="mb-2">
-            <b>{{'Day_left' | translate}}:</b>
-            <ng-container *ngIf="project.isExpired; else dayLeft">
-                <span class="red">{{'Expired' | translate}}</span>
-                <button pButton pRipple type="button" icon="pi pi-history" pTooltip="{{'Extend' | translate}}"
-                    tooltipPosition="top" class="p-button-rounded p-button-text"
-                    (click)="openDialogExtend(project)"></button>
-            </ng-container>
-            <ng-template #dayLeft>
-                {{project.dayLeft}}
-            </ng-template>
-        </div>
+            <div fxLayoutAlign="space-between start" class="mb-2">
+                <b>{{'Day_left' | translate}}:</b>
+                <ng-container *ngIf="project.isExpired; else dayLeft">
+                    <span class="red">{{'Expired' | translate}}</span>
+                    <button pButton pRipple type="button" icon="pi pi-history" pTooltip="{{'Extend' | translate}}"
+                        tooltipPosition="top" class="p-button-rounded p-button-text"
+                        (click)="openDialogExtend(project)"></button>
+                </ng-container>
+                <ng-template #dayLeft>
+                    {{project.dayLeft}}
+                </ng-template>
+            </div>
 
-        <div *ngIf="!code" fxLayout="row wrap" fxLayoutAlign="center start">
-            <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
-                pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
-                (click)="openDialog(project, 'VIEW')"></button>
+            <div *ngIf="!code" fxLayout="row wrap" fxLayoutAlign="center start">
+                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                    pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialog(project, 'VIEW')"></button>
 
-            <button [disabled]="!actions.includes(603)" pButton pRipple type="button" icon="pi pi-pencil"
-                pTooltip="{{'Edit' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
-                (click)="openDialog(project)"></button>
+                <button [disabled]="!actions.includes(603)" pButton pRipple type="button" icon="pi pi-pencil"
+                    pTooltip="{{'Edit' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                    (click)="openDialog(project)"></button>
 
-            <button [disabled]="!actions.includes(604)" pButton pRipple type="button" icon="pi pi-trash"
-                pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
-                class="p-button-rounded p-button-text p-button-danger" (click)="delete(project)"></button>
+                <button [disabled]="!actions.includes(604)" pButton pRipple type="button" icon="pi pi-trash"
+                    pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="delete(project)"></button>
+            </div>
         </div>
     </div>
 </div>
 
-<p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+<p-paginator *ngIf="!fetchingData" [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
     [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
 
 <p-confirmPopup></p-confirmPopup>

@@ -15,3 +15,19 @@
     // top: 50%;
     // transform: translate(0, -50%);
 }
+
+@media only screen and (max-width: 600px) {
+    ::ng-deep p-calendar {
+        span>div {
+            display: flex;
+            flex-direction: row-reverse;
+
+            p-footer {
+                display: flex;
+                flex-direction: column;
+                width: max-content;
+                justify-content: center;
+            }
+        }
+    }
+}
