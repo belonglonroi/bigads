@@ -112,7 +112,7 @@
 
 </div>
 
-<p-accordion [fxHide.gt-sm]="true" [activeIndex]="activeIndex">
+<p-accordion [fxHide.gt-sm]="true" [(activeIndex)]="activeIndex">
     <p-accordionTab [cache]="false">
         <ng-template pTemplate="header">
             <span>{{'Organization' | translate}}</span>
