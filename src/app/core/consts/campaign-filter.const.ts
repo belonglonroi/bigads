@@ -4,6 +4,7 @@ export const CAMPAIGN_FILTER_OPTIONS = [
         items: [
             { value: 'customerName', label: 'Customer_name' },
             { value: 'projectName', label: 'Project_name' },
+            { value: 'campaignServiceName', label: 'Campaign_service_name'}
         ]
     },
     {

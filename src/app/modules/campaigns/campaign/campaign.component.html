@@ -1,4 +1,4 @@
-<div class="card">
+<div [ngClass.lt-md]="'border-round shadow-none'" class="card">
 
     <div class="flex justify-content-between mb-3">
         <div>
@@ -15,10 +15,6 @@
                     </app-campaign-filter>
                 </ng-template>
             </p-overlayPanel>
-            <p-chip *ngFor="let item of filterBinding" [label]="getFilterItem(item)" [removable]="true"
-                styleClass="p-1 mx-1 border-round cursor-pointer" (onRemove)="removeFilter(item)"
-                (click)="filterUpdate = item; op.toggle($event)">
-            </p-chip>
         </div>
 
         <div class="relative">
@@ -47,9 +43,16 @@
         </div>
     </div>
 
-    <p-tabView styleClass="w-full" [(activeIndex)]="activeIndex">
+    <div>
+        <p-chip *ngFor="let item of filterBinding" [label]="getFilterItem(item)" [removable]="true"
+            styleClass="p-1 mx-1 border-round cursor-pointer" (onRemove)="removeFilter(item)"
+            (click)="filterUpdate = item; op.toggle($event)">
+        </p-chip>
+    </div>
 
-        <p-tabPanel *ngIf="!code || actions.includes(500)" headerStyleClass="w-4" [cache]="false">
+    <p-tabView [fxHide.lt-md]="true" styleClass="w-full" [(activeIndex)]="activeIndex">
+
+        <p-tabPanel headerStyleClass="w-4" [cache]="false">
 
             <ng-template pTemplate="header">
                 <span>{{'Organization' | translate}}</span>
@@ -59,7 +62,8 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-organization [organizationsInput]="selectedOrganizations"></app-organization>
+                <app-organization [organizationsInput]="selectedOrganizations" (tabIndex)="receivedActiveIndex($event)">
+                </app-organization>
             </ng-template>
         </p-tabPanel>
 
@@ -107,3 +111,92 @@
     </p-tabView>
 
 </div>
+
+<p-accordion [fxHide.gt-sm]="true" [activeIndex]="activeIndex">
+    <p-accordionTab [cache]="false">
+        <ng-template pTemplate="header">
+            <span>{{'Organization' | translate}}</span>
+            <p-chip label="{{('Selected_item' | translate) + ' ' + selectedOrganizations.length}}"
+                *ngIf="selectedOrganizations?.length > 0" [removable]="true" (onRemove)="selectedOrganizationsRemoved()"
+                styleClass="custom-chip z-5"></p-chip>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <app-organization [organizationsInput]="selectedOrganizations" (tabIndex)="receivedActiveIndex($event)">
+            </app-organization>
+        </ng-template>
+    </p-accordionTab>
+
+    <p-accordionTab [cache]="false">
+        <ng-template pTemplate="header">
+            <span>{{'Customer' | translate}}</span>
+            <p-chip label="{{('Selected_item' | translate) + ' ' + selectedCustomers.length}}"
+                *ngIf="selectedCustomers?.length > 0" [removable]="true" (onRemove)="selectedCustomersRemoved()"
+                styleClass="custom-chip z-5"></p-chip>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <app-customer [customerName]="customerName" [organizationsInput]="selectedOrganizations"
+                [customersInput]="selectedCustomers" (tabIndex)="receivedActiveIndex($event)">
+            </app-customer>
+        </ng-template>
+    </p-accordionTab>
+
+    <p-accordionTab [cache]="false">
+        <ng-template pTemplate="header">
+            <span>{{'Project' | translate}}</span>
+            <p-chip label="{{('Selected_item' | translate) + ' ' + selectedProjects.length}}"
+                *ngIf="selectedProjects?.length > 0" [removable]="true" (onRemove)="selectedProjectsRemoved()"
+                styleClass="custom-chip z-5"></p-chip>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <app-project [customerName]="customerName" (tabIndex)="receivedActiveIndex($event)"></app-project>
+        </ng-template>
+    </p-accordionTab>
+
+    <p-accordionTab [cache]="false">
+        <ng-template pTemplate="header">
+            <span>{{'Campaign' | translate}}</span>
+            <p-chip label="{{('Selected_item' | translate) + ' ' + selectedCampaignAds.length}}"
+                *ngIf="selectedCampaignAds?.length > 0" [removable]="true" (onRemove)="selectedCampaignAdsRemoved()"
+                styleClass="custom-chip z-5"></p-chip>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <app-campaign-ad [customerName]="customerName"></app-campaign-ad>
+        </ng-template>
+    </p-accordionTab>
+</p-accordion>
+
+<!-- <div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="start start" fxLayout.xs="column" fxLayoutAlign.xs="start stretch">
+    <div class="card" fxFlex.xs="100">
+        <span>{{'Organization' | translate}}</span>
+        <p-chip label="{{('Selected_item' | translate) + ' ' + selectedOrganizations.length}}"
+            *ngIf="selectedOrganizations?.length > 0" [removable]="true" (onRemove)="selectedOrganizationsRemoved()"
+            styleClass="custom-chip z-5"></p-chip>
+    </div>
+
+    <div class="card" fxFlex.xs="100">
+        <span>{{'Customer' | translate}}</span>
+        <p-chip label="{{('Selected_item' | translate) + ' ' + selectedCustomers.length}}"
+            *ngIf="selectedCustomers?.length > 0" [removable]="true" (onRemove)="selectedCustomersRemoved()"
+            styleClass="custom-chip z-5"></p-chip>
+    </div>
+
+    <div class="card" fxFlex.xs="100">
+        <span>{{'Project' | translate}}</span>
+        <p-chip label="{{('Selected_item' | translate) + ' ' + selectedProjects.length}}"
+            *ngIf="selectedProjects?.length > 0" [removable]="true" (onRemove)="selectedProjectsRemoved()"
+            styleClass="custom-chip z-5"></p-chip>
+    </div>
+
+    <div class="card" fxFlex.xs="100">
+        <span>{{'Campaign' | translate}}</span>
+        <p-chip label="{{('Selected_item' | translate) + ' ' + selectedCampaignAds.length}}"
+            *ngIf="selectedCampaignAds?.length > 0" [removable]="true" (onRemove)="selectedCampaignAdsRemoved()"
+            styleClass="custom-chip z-5"></p-chip>
+    </div>
+
+
+</div> -->

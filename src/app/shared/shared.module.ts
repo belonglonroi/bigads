@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModelChangeDebouncedDirective } from './directive/ngModel-change-debounced.directive';
 import { AgGridModule } from 'ag-grid-angular';
 import { SharedPrimeModule } from './primeng.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     declarations: [
@@ -12,11 +13,13 @@ import { SharedPrimeModule } from './primeng.module';
         CommonModule,
         AgGridModule,
         SharedPrimeModule,
+        FlexLayoutModule
     ],
     exports: [
         NgModelChangeDebouncedDirective,
         AgGridModule,
         SharedPrimeModule,
+        FlexLayoutModule
     ],
     providers: [],
 })

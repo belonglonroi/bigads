@@ -1,7 +1,7 @@
-<p-table [lazy]="true" #campaignAdsData [value]="campaignAds" dataKey="campaignServiceId" styleClass="p-datatable-sm"
-    [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'" [loading]="fetchingData"
-    [(selection)]="selectedCampaignAds" [scrollable]="true" (selectionChange)="selectionChange()"
-    (onSort)="sortCustom($event)" responsiveLayout="scroll">
+<p-table [fxHide.lt-md]="true" [lazy]="true" #campaignAdsData [value]="campaignAds" dataKey="campaignServiceId"
+    styleClass="p-datatable-sm" [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'"
+    [loading]="fetchingData" [(selection)]="selectedCampaignAds" [scrollable]="true"
+    (selectionChange)="selectionChange()" (onSort)="sortCustom($event)" responsiveLayout="scroll">
     <ng-template *ngIf="actions.includes(702) || actions.includes(703)" pTemplate="caption">
         <div class="flex">
             <p-button label="{{'Add_campaign' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"
@@ -143,17 +143,17 @@
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.result | number}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.amount | number}}</td>
             <td style="min-width: 100px; max-width: 120px;">
-                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
-                    tooltipPosition="top" class="p-button-rounded p-button-text"
+                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                    pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
                     (click)="openDialog(campaignAd, 'VIEW')"></button>
 
-                <button [disabled]="!actions.includes(704) || !actions.includes(705)" pButton pRipple type="button" icon="pi pi-pencil" pTooltip="{{'Edit' | translate}}"
-                    tooltipPosition="top" class="p-button-rounded p-button-text"
-                    (click)="openDialogHandler(campaignAd)"></button>
+                <button [disabled]="!actions.includes(704) || !actions.includes(705)" pButton pRipple type="button"
+                    icon="pi pi-pencil" pTooltip="{{'Edit' | translate}}" tooltipPosition="top"
+                    class="p-button-rounded p-button-text" (click)="openDialogHandler(campaignAd)"></button>
 
-                <button [disabled]="!actions.includes(706) || !actions.includes(707)" pButton pRipple type="button" icon="pi pi-trash" pTooltip="{{'Delete' | translate}}"
-                    tooltipPosition="top" class="p-button-rounded p-button-text p-button-danger"
-                    (click)="delete(campaignAd)"></button>
+                <button [disabled]="!actions.includes(706) || !actions.includes(707)" pButton pRipple type="button"
+                    icon="pi pi-trash" pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                    class="p-button-rounded p-button-text p-button-danger" (click)="delete(campaignAd)"></button>
             </td>
         </tr>
     </ng-template>
@@ -181,6 +181,116 @@
         </div>
     </ng-template>
 </p-table>
+
+<!-- mobile & tablet view -->
+<div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
+    fxLayoutAlign.xs="start stretch">
+    <div class="card mb-3 border-round shadow-none" *ngFor="let campaignAd of campaignAds" fxFlex.gt-xs="49"
+        fxFlex.xs="100">
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <span class="font-bold">
+                {{campaignAd.name}}</span>
+            <p-checkbox [value]="campaignAd" [(ngModel)]="selectedCampaignAds"
+                (ngModelChange)="campaignAdsSelectedHandle()">
+            </p-checkbox>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Project' | translate}}:</b>
+            <span>{{campaignAd.project}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Customer' | translate}}:</b>
+            <span>{{campaignAd.customerName}} - {{campaignAd.hotline}} </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Service' | translate}}:</b>
+            <span>{{campaignAd.serviceName}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Performance' | translate}}:</b>
+            <span>
+                <span
+                    [ngStyle]="{'color': getColor(campaignAd.performanceString)}">({{campaignAd.performanceString}})</span>
+            </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Ad_account' | translate}}:</b>
+            <span>{{campaignAd.adAccount}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Start_date' | translate}}:</b>
+            <span>{{campaignAd.startDate}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'End_date' | translate}}:</b>
+            <span>{{campaignAd.endDate}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Staff' | translate}}:</b>
+            <span>
+                <div *ngFor="let staff of campaignAd.staffs">
+                    {{staff.lastName + ' ' + staff.firstName}}
+                </div>
+            </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Target' | translate}}:</b>
+            <span>{{campaignAd.goal | number}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Description' | translate}}:</b>
+            <span>{{campaignAd.description}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Fee' | translate}}:</b>
+            <span>{{campaignAd.serviceFee | number}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Cost_per_result' | translate}}:</b>
+            <span>{{campaignAd.costPerResult | number}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Result' | translate}}:</b>
+            <span>{{campaignAd.result | number}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Cost' | translate}}:</b>
+            <span>{{campaignAd.amount | number}}</span>
+        </div>
+
+        <div *ngIf="!code" fxLayout="row wrap" fxLayoutAlign="center center">
+            <p-inputSwitch [(ngModel)]="campaignAd.isActive" (onChange)="toggleState(campaignAd, $event)">
+            </p-inputSwitch>
+
+            <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                (click)="openDialog(campaignAd, 'VIEW')"></button>
+
+            <button [disabled]="!actions.includes(704) || !actions.includes(705)" pButton pRipple type="button"
+                icon="pi pi-pencil" pTooltip="{{'Edit' | translate}}" tooltipPosition="top"
+                class="p-button-rounded p-button-text" (click)="openDialogHandler(campaignAd)"></button>
+
+            <button [disabled]="!actions.includes(706) || !actions.includes(707)" pButton pRipple type="button"
+                icon="pi pi-trash" pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                class="p-button-rounded p-button-text p-button-danger" (click)="delete(campaignAd)"></button>
+        </div>
+    </div>
+</div>
 
 <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
     [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>

@@ -1,6 +1,9 @@
-<p-table [lazy]="true" #customerData [value]="customers" dataKey="userId" styleClass="p-datatable-sm" responsiveLayout="scroll"
-    [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'" [loading]="fetchingData" [(selection)]="selectedCustomers"
-    (selectionChange)="selectionChange()" (onSort)="sortCustomer($event)" [scrollable]="true">
+<!-- desktop view -->
+<p-table [fxHide.lt-md]="true" [lazy]="true" #customerData [value]="customers" dataKey="userId"
+    styleClass="p-datatable-sm" responsiveLayout="scroll"
+    [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'" [loading]="fetchingData"
+    [(selection)]="selectedCustomers" (selectionChange)="selectionChange()" (onSort)="sortCustom($event)"
+    [scrollable]="true">
     <ng-template *ngIf="actions.includes(105) || actions.includes(107)" pTemplate="caption">
         <div class="flex">
             <p-button *ngIf="actions.includes(105)" label="{{'Add_customer' | translate}}" icon="pi pi-plus"
@@ -72,7 +75,7 @@
                 <p-tableCheckbox [value]="customer"></p-tableCheckbox>
             </td>
             <td style="max-width: 25rem; min-width: 15rem" pFrozenColumn>
-                <div class="cursor-pointer" (click)="customerClicked(customer)">
+                <div class="cursor-pointer text-primary" (click)="customerClicked(customer)">
                     {{customer.customerName}}
                 </div>
             </td>
@@ -92,8 +95,8 @@
             <td style="max-width: 25rem; min-width: 10rem">{{customer.feeAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{customer.feeRate * 100}} %</td>
             <td style="min-width: 100px; max-width: 120px;">
-                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
-                    tooltipPosition="top" class="p-button-rounded p-button-text"
+                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                    pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
                     (click)="openDialog(customer, 'VIEW')"></button>
 
                 <button [disabled]="!actions.includes(106)" pButton pRipple type="button" icon="pi pi-pencil"
@@ -135,6 +138,78 @@
         </div>
     </ng-template>
 </p-table>
+
+<!-- mobile & tablet view -->
+<div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
+    fxLayoutAlign.xs="start stretch">
+    <div class="card mb-3 border-round shadow-none" *ngFor="let customer of customers" fxFlex.gt-xs="49"
+        fxFlex.xs="100">
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <span class="cursor-pointer text-primary font-bold" (click)="customerClicked(customer)">
+                {{customer.customerName}} - {{customer.phone}}</span>
+            <p-checkbox [value]="customer" [(ngModel)]="selectedCustomers" (ngModelChange)="customerSelectedHandle()">
+            </p-checkbox>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Performance' | translate}}:</b>
+            <span>
+                <span>{{customer.performanceRate}} </span>
+                <span [ngStyle]="{'color': getColor(customer.performanceString)}">({{customer.performanceString}})</span>
+            </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Customer_transaction' | translate}}:</b>
+            <span>
+                <span>{{customer.transactionAmount | number}}</span>
+            </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Expenditure' | translate}}:</b>
+            <span>
+                <span>{{customer.expenditureAmount | number}}</span>
+            </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Accounting' | translate}}:</b>
+            <span>
+                <span>{{customer.accountingAmount | number}}</span>
+            </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Fee' | translate}}:</b>
+            <span>
+                <span>{{customer.feeAmount | number}}</span>
+            </span>
+        </div>
+
+        <div fxLayoutAlign="space-between start" class="mb-2">
+            <b>{{'Fee_rate' | translate}}:</b>
+            <span>
+                <span>{{customer.feeRate * 100}} %</span>
+            </span>
+        </div>
+
+        <div *ngIf="!code" fxLayout="row wrap" fxLayoutAlign="center start">
+            <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                (click)="openDialog(customer, 'VIEW')"></button>
+
+            <button [disabled]="!actions.includes(106)" pButton pRipple type="button" icon="pi pi-pencil"
+                pTooltip="{{'Edit' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                (click)="openDialog(customer)"></button>
+
+            <button [disabled]="!actions.includes(107)" pButton pRipple type="button" icon="pi pi-trash"
+                pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                class="p-button-rounded p-button-text p-button-danger" (click)="delete(customer)"></button>
+        </div>
+    </div>
+</div>
 
 <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
     [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>

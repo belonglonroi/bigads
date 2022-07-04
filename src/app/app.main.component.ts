@@ -57,7 +57,6 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnInit() {
         this.config = this.configService.config;
-        console.log(this.config);
         this.subscription = this.configService.configUpdate$.subscribe(config => this.config = config);
     }
 
@@ -159,11 +158,11 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     isDesktop() {
-        return window.innerWidth > 1024;
+        return window.innerWidth > 1280;
     }
 
     isMobile(){
-        return window.innerWidth < 1024;
+        return window.innerWidth < 1280;
     }
 
     onSearchClick() {

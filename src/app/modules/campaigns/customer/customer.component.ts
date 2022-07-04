@@ -326,7 +326,7 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
         this.tabIndex.emit(2);
     }
 
-    sortCustomer(e: SortEvent) {
+    sortCustom(e: SortEvent) {
         this.sort = {};
         if (e.order === 1) {
             this.sort[e.field] = 'DESC';
@@ -334,5 +334,9 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
             this.sort[e.field] = 'ASC';
         }
         this.getCustomers();
+    }
+
+    customerSelectedHandle() {
+        this.reportService.selectedCustomers$.next(this.selectedCustomers);
     }
 }

@@ -335,4 +335,8 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         this.getCampaignAds();
     }
 
+    campaignAdsSelectedHandle() {
+        this.reportService.selectedCampaignAds$.next(this.selectedCampaignAds);
+    }
+
 }

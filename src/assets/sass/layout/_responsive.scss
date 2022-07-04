@@ -1,4 +1,4 @@
-@media (min-width: 992px) {
+@media (min-width: 1280px) {
     .layout-wrapper {
         &.layout-overlay {
             .layout-main-container {
@@ -46,7 +46,7 @@
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1279px) {
     .layout-wrapper {
         .layout-main-container {
             margin-left: 0;

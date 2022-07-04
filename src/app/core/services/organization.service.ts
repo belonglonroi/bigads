@@ -6,6 +6,10 @@ import { BaseService } from '../base/base.service';
     providedIn: 'root'
 })
 export class OrganizationService extends BaseService {
+    get code() {
+        return sessionStorage.getItem('code');
+    }
+
     constructor(
         private http: HttpClient,
     ) {
@@ -13,7 +17,8 @@ export class OrganizationService extends BaseService {
     }
 
     getOrganizations(param) {
-        return this.http.post(`${this.organizationUrl}/organizations`, param);
+        const path = this.code ? `${this.organizationUrl}/organizations?code=${this.code}` : `${this.organizationUrl}/organizations`;
+        return this.http.post(path, param);
     }
 
     createOrganization(param) {

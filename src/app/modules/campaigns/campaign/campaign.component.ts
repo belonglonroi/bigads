@@ -138,10 +138,12 @@ export class CampaignComponent extends BaseClass implements OnInit {
 
     selectedOrganizationsRemoved() {
         this.reportService.selectedOrganization$.next([]);
+        this.activeIndex = 0;
     }
 
     selectedCustomersRemoved() {
         this.reportService.selectedCustomers$.next([]);
+        this.activeIndex = 1;
         // const storageCustomerTable = JSON.parse(this.customerService.storageTable);
         // storageCustomerTable.selection = [];
         // localStorage.setItem('customerRp', JSON.stringify(storageCustomerTable));
@@ -149,6 +151,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
 
     selectedProjectsRemoved() {
         this.reportService.selectedProjects$.next([]);
+        this.activeIndex = 2;
         // const storageProjectTable = JSON.parse(this.tabProjectService.storageTable);
         // storageProjectTable.selection = [];
         // localStorage.setItem('projectRp', JSON.stringify(storageProjectTable));
@@ -156,6 +159,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
 
     selectedCampaignAdsRemoved() {
         this.reportService.selectedCampaignAds$.next([]);
+        this.activeIndex = 3;
         // const storageProjectTable = JSON.parse(this.tabProjectService.storageTable);
         // storageProjectTable.selection = [];
         // localStorage.setItem('campaignAdsRp', JSON.stringify(storageProjectTable));

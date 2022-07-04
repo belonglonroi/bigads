@@ -1,5 +1,5 @@
-<p-table [value]="organizations" responsiveLayout="scroll" scrollHeight="calc(100vh - 433px)" [loading]="fetchingData"
-    dataKey="organizationId" styleClass="p-datatable-sm" [(selection)]="selectedOrganizations"
+<p-table [fxHide.lt-md]="true" [value]="organizations" responsiveLayout="scroll" scrollHeight="calc(100vh - 433px)"
+    [loading]="fetchingData" dataKey="organizationId" styleClass="p-datatable-sm" [(selection)]="selectedOrganizations"
     (selectionChange)="selectionChange()">
     <ng-template *ngIf="actions.includes(501)" pTemplate="caption">
         <div class="flex">
@@ -47,14 +47,18 @@
             <td style="max-width: 4rem; min-width: 4rem">
                 <p-tableCheckbox [value]="organization"></p-tableCheckbox>
             </td>
-            <td>{{organization.organizationName}}</td>
+            <td>
+                <div class="cursor-pointer text-primary" (click)="organizationClicked(organization)">
+                    {{organization.organizationName}}
+                </div>
+            </td>
             <td>{{organization.description}}</td>
             <td>{{organization.address}}</td>
             <td>{{organization.quantity}}</td>
             <td>{{organization.website}}</td>
             <td style="min-width: 100px; max-width: 120px;">
-                <button pButton pRipple type="button" icon="pi pi-info-circle" pTooltip="{{'Detail' | translate}}"
-                    tooltipPosition="top" class="p-button-rounded p-button-text"
+                <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                    pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
                     (click)="openDialog(organization, 'VIEW')"></button>
 
                 <button [disabled]="!actions.includes(502)" pButton pRipple type="button" icon="pi pi-pencil"
@@ -73,6 +77,60 @@
         </tr>
     </ng-template>
 </p-table>
+
+<!-- Mobile & tablet view -->
+<div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
+    fxLayoutAlign.xs="start stretch">
+    <div class="card mb-3 border-round shadow-none" *ngFor="let organization of organizations" fxFlex.gt-xs="49"
+        fxFlex.xs="100">
+
+        <div fxLayoutAlign="space-between start">
+            <span class="cursor-pointer text-primary font-bold" (click)="organizationClicked(organization)">
+                {{organization.organizationName}}</span>
+            <p-checkbox [value]="organization" [(ngModel)]="selectedOrganizations"
+                (ngModelChange)="organizationSelectedHandle()"></p-checkbox>
+        </div>
+
+        <div fxLayoutAlign="space-between start">
+            <b>{{'Description' | translate}}:</b>
+            <span>{{organization.description}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start">
+            <b>{{'Address' | translate}}:</b>
+            <span>{{organization.address}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start">
+            <b>{{'Quantity' | translate}}:</b>
+            <span>{{organization.quantity}}</span>
+        </div>
+
+        <div fxLayoutAlign="space-between start">
+            <b>{{'Website' | translate}}:</b>
+            <span>{{organization.website}}</span>
+        </div>
+
+        <div *ngIf="!code" fxLayout="row wrap" fxLayoutAlign="center start">
+            <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
+                pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                (click)="openDialog(organization, 'VIEW')"></button>
+
+            <button [disabled]="!actions.includes(502)" pButton pRipple type="button" icon="pi pi-pencil"
+                pTooltip="{{'Update' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
+                (click)="openDialog(organization)"></button>
+
+            <button [disabled]="!actions.includes(201) && !actions.includes(202) " pButton pRipple type="button"
+                icon="pi pi-user-edit" pTooltip="{{'Update_member' | translate}}" tooltipPosition="top"
+                class="p-button-rounded p-button-text p-button-success"
+                (click)="updateUserOrganization(organization)"></button>
+
+            <button [disabled]="!actions.includes(503)" pButton pRipple type="button" icon="pi pi-trash"
+                pTooltip="{{'Delete' | translate}}" tooltipPosition="top"
+                class="p-button-rounded p-button-text p-button-danger" (click)="delete(organization)"></button>
+        </div>
+    </div>
+</div>
 
 <p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
     [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>

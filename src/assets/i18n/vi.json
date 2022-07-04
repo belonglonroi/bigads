@@ -12,7 +12,6 @@
         "gt": "Lớn hơn",
         "gte": "Lớn hơn hoặc bằng",
         "is": "Là",
-        "Other": "Khác",
         "isNot": "Không là",
         "before": "Trước",
         "after": "Sau",
@@ -233,7 +232,7 @@
     "Customer_phone": "Số điện thoại khách hàng",
     "Campaign_hotline": "Hotline chiến dịch",
     "Service_name": "Tên dịch vụ",
-    "Ad_account": "Tài khoản quảng cáo",
+    "Ad_account": "Tài khoản QC",
     "Ad_staff_name": "Nhân viên quảng cáo",
     "Business_staff_name": "Nhân viên kinh doanh",
     "Content_staff_name": "Nhân viên content",
@@ -372,5 +371,7 @@
     "One_month": "1 tháng",
     "Three_month": "3 tháng",
     "Six_month": "6 tháng",
-    "Twelve_month": "12 tháng"
+    "Twelve_month": "12 tháng",
+    "Campaign_service_name": "Tên chiến dịch",
+    "Other": "Khác"
 }
