@@ -30,11 +30,15 @@ export class AdServiceService extends BaseService {
     getAllService(query: {
         limit: number;
         page: number;
-        serviceTypeId: number;
+        serviceTypeId?: number;
     }): Observable<ApiResult<AdService>> {
+        let queryStr = '';
+        for (const key in query) {
+            queryStr = `${queryStr ? '&' : ''}${key}=${query[key]}`;
+        }
         const code = this.code ? `&code=${this.code}` : '';
         return this.http.get<ApiResult<AdService>>(
-            `${this.serviceUrl}/services?page=${query.page}&limit=${query.limit}&serviceTypeId=${query.serviceTypeId}${code}`
+            `${this.serviceUrl}/services?${queryStr}${code}`
         );
     }
 
