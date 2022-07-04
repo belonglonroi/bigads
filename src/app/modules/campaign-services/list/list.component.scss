@@ -1,4 +1,4 @@
-::ng-deep .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
+:host ::ng-deep .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
     padding: 0.5rem 0.5rem;
     position: -webkit-sticky;
     position: sticky;
