@@ -54,7 +54,7 @@
                 </td>
                 <td>{{campaignService.customerName}}
                     <b
-                        [ngClass]="{'text-pink-400': (campaignService.campaignAccounting) < 0, 'text-green-500': (campaignService.campaignAccounting) > 0}">
+                        [ngClass]="{'text-pink-400': (campaignService.campaignAccounting) < 0, 'text-green-500': (campaignService.customerAccounting) > 0}">
                         ({{campaignService.customerAccounting | number}})</b>
                 </td>
                 <td>{{campaignService.hotline}}</td>
