@@ -107,7 +107,7 @@
                 <p-tableCheckbox [value]="campaignAd"></p-tableCheckbox>
             </td>
             <td pFrozenColumn style="max-width: 7rem; min-width: 7rem">
-                <p-inputSwitch [(ngModel)]="campaignAd.isActive" (onChange)="toggleState(campaignAd, $event)">
+                <p-inputSwitch [disabled]="code" [(ngModel)]="campaignAd.isActive" (onChange)="toggleState(campaignAd, $event)">
                 </p-inputSwitch>
             </td>
             <td pFrozenColumn style="max-width: 20rem; min-width: 15rem;">
