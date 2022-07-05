@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+} from '@angular/core';
 import { ConfirmationService, SortEvent } from 'primeng/api';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { CampaignAds } from 'src/app/core/models/campaign-ads.model';
@@ -6,35 +12,51 @@ import { ReportService } from 'src/app/core/services/report.service';
 import * as moment from 'moment';
 import { User } from 'src/app/core/models/user.model';
 import { Campaign } from 'src/app/core/models/campaign.model';
-import { CampaignFilter, CampaignSort } from 'src/app/core/models/campaign-filter.model';
+import {
+    CampaignFilter,
+    CampaignSort,
+} from 'src/app/core/models/campaign-filter.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageConfigService } from 'src/app/service/message.config.service';
 import { DialogCampaignServiceComponent } from '../dialog-campaign-service/dialog-campaign-service.component';
 import { CampaignServicesService } from 'src/app/core/services/campaign-services.service';
-import { MESSAGE_TYPE, MESSAGE_SUMARY } from 'src/app/core/consts/message.const';
+import {
+    MESSAGE_TYPE,
+    MESSAGE_SUMARY,
+} from 'src/app/core/consts/message.const';
 import { CampaignService } from 'src/app/core/models/campaign-services.model';
 import { DialogOrtherServiceComponent } from '../dialog-orther-service/dialog-orther-service.component';
 import { UserService } from 'src/app/core/services/user.service';
+import { Organization } from 'src/app/core/models/organization.model';
 
 @Component({
     selector: 'app-campaign-ad',
     templateUrl: './campaign-ad.component.html',
     styleUrls: ['./campaign-ad.component.scss'],
-    providers: [ConfirmationService, DialogService]
+    providers: [ConfirmationService, DialogService],
 })
-export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges {
-
-    @Input() customerName: string;
+export class CampaignAdComponent
+    extends BaseClass
+    implements OnInit, OnChanges
+{
+    @Input() campaignFilterInput: CampaignFilter;
+    @Input() projectsInput: Campaign[];
+    @Input() organizationsInput: Organization[];
+    @Input() campaignAdsInput: CampaignAds[];
+    @Input() customersInput: User[];
     campaignAds: CampaignAds[] = [];
     fetchingData: boolean = false;
-    selectedCampaignAds: CampaignService[] = []
+    selectedOrganizations: Organization[] = [];
+    selectedCustomers: User[] = [];
+    selectedProjects: Campaign[] = [];
+    selectedCampaignAds: CampaignService[] = [];
     total = {
         avgAmountPer: 0,
         totalAmount: 0,
         totalResult: 0,
         totalAnotherServiceFee: 0,
-    }
+    };
     campaignFilter: CampaignFilter = {};
     sort: CampaignSort = {};
     code: string = '';
@@ -54,60 +76,33 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['customerName']) {
-            this.reportService.campaignFilter$.value.customerNameStr = changes['customerName'].currentValue;
-            this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
+        if (changes['projectsInput']) {
+            this.selectedProjects = changes.projectsInput.currentValue;
+        }
+
+        if (changes['organizationsInput']) {
+            this.selectedOrganizations =
+                changes.organizationsInput.currentValue;
+        }
+
+        if (changes['customersInput']) {
+            this.selectedCustomers = changes.customersInput.currentValue;
+        }
+
+        if (changes['campaignAdsInput']) {
+            this.selectedCampaignAds = changes.campaignAdsInput.currentValue;
+        }
+
+        if (changes['campaignFilterInput']) {
+            this.campaignFilter = {
+                ...changes.campaignFilterInput.currentValue,
+            };
+            this.getCampaignAds();
         }
     }
 
     ngOnInit(): void {
         this.actions = this.userService.action ?? [];
-
-        this.reportService.dateFilter$.asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.reportService.campaignFilter$.value.fromDate = res[0] ? moment(res[0]).format('YYYY-MM-DD') : '';
-                    this.reportService.campaignFilter$.value.toDate = res[1] ? moment(res[1]).format('YYYY-MM-DD') : '';
-                    this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
-                }
-            })
-
-        this.reportService.selectedCustomers$.asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res: User[]) => {
-                    this.reportService.campaignFilter$.value.customerIds = res.map(e => e.userId).toString();
-                    this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
-                }
-            })
-
-        this.reportService.selectedProjects$.asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res: Campaign[]) => {
-                    this.reportService.campaignFilter$.value.campaignIds = res.map(e => e.campaignId).toString();
-                    this.reportService.campaignFilter$.next(this.reportService.campaignFilter$.value);
-                }
-            })
-
-
-        this.reportService.campaignFilter$.asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.campaignFilter = { ...res };
-                    this.getCampaignAds();
-                }
-            })
-
-        this.reportService.selectedCampaignAds$.asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.selectedCampaignAds = res;
-                }
-            });
     }
 
     getCampaignAds() {
@@ -118,9 +113,17 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
         const params = {
             ...this.campaignFilter,
             sort: { ...this.sort },
-        }
+            organiztionIds: this.selectedOrganizations
+                .map((e) => e.organizationId)
+                .toString(),
+            customerIds: this.selectedCustomers.map((e) => e.userId).toString(),
+            campaignIds: this.selectedProjects
+                .map((e) => e.campaignId)
+                .toString(),
+        };
 
-        this.reportService.getCampaignAds(params)
+        this.reportService
+            .getCampaignAds(params)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
@@ -134,29 +137,40 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                         severity: MESSAGE_TYPE.error,
                         summary: this.translate.instant(MESSAGE_SUMARY.error),
                         detail: this.translate.instant('Internal_server'),
-                    })
-                }
-            })
+                    });
+                },
+            });
     }
 
     transferData(data: CampaignService[]) {
-        this.campaignAds = data.map(e => {
+        this.campaignAds = data.map((e) => {
             return {
                 ...e,
-                customerName: e.campaign.customer.lastName + ' ' + e.campaign.customer.firstName,
+                customerName:
+                    e.campaign.customer.lastName +
+                    ' ' +
+                    e.campaign.customer.firstName,
                 project: e.campaign.project.name,
                 serviceName: e.service.serviceName,
                 hotline: e.campaign.hotline,
                 startDate: moment(e.startDate).format('DD/MM/YYYY'),
-                endDate: e.endDate ? moment(e.endDate).format('DD/MM/YYYY') : '',
-                adStaffName: e.adStaff ? (e.adStaff.lastName + ' ' + e.adStaff.firstName) : '',
-                planningStaffName: e.planningStaff ? (e.planningStaff.lastName + ' ' + e.planningStaff.firstName) : '',
-                contentStaffName: e.contentStaff ? (e.contentStaff.lastName + ' ' + e.contentStaff.firstName) : '',
+                endDate: e.endDate
+                    ? moment(e.endDate).format('DD/MM/YYYY')
+                    : '',
+                adStaffName: e.adStaff
+                    ? e.adStaff.lastName + ' ' + e.adStaff.firstName
+                    : '',
+                planningStaffName: e.planningStaff
+                    ? e.planningStaff.lastName + ' ' + e.planningStaff.firstName
+                    : '',
+                contentStaffName: e.contentStaff
+                    ? e.contentStaff.lastName + ' ' + e.contentStaff.firstName
+                    : '',
                 costPerResult: e.campaignAdsIndex.cpr,
                 result: e.campaignAdsIndex.result,
-                amount: e.campaignAdsIndex.amount
-            }
-        })
+                amount: e.campaignAdsIndex.amount,
+            };
+        });
     }
 
     selectionChange() {
@@ -170,22 +184,29 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     }
 
     openDialog(e?, method?) {
-        const dialogRef = this.dialogService.open(DialogCampaignServiceComponent, {
-            header: method ? this.translate.instant('Detail_campaign') : (!e ? this.translate.instant('Add_campaign') : this.translate.instant('Update_campaign')),
-            width: '450px',
-            data: {
-                ...e,
-                method
-            },
-        })
+        const dialogRef = this.dialogService.open(
+            DialogCampaignServiceComponent,
+            {
+                header: method
+                    ? this.translate.instant('Detail_campaign')
+                    : !e
+                    ? this.translate.instant('Add_campaign')
+                    : this.translate.instant('Update_campaign'),
+                width: '450px',
+                data: {
+                    ...e,
+                    method,
+                },
+            }
+        );
 
         dialogRef.onClose.subscribe({
             next: (res) => {
                 if (res) {
                     this.getCampaignAds();
                 }
-            }
-        })
+            },
+        });
     }
 
     openDialogHandler(e: CampaignService) {
@@ -197,38 +218,46 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     }
 
     openDialogOtherService(e?, method?) {
-        const dialogRef = this.dialogService.open(DialogOrtherServiceComponent, {
-            header: !e ? this.translate.instant('Add_other_service') : this.translate.instant('Update_other_service'),
-            width: '450px',
-            data: {
-                ...e,
-                method: method,
+        const dialogRef = this.dialogService.open(
+            DialogOrtherServiceComponent,
+            {
+                header: !e
+                    ? this.translate.instant('Add_other_service')
+                    : this.translate.instant('Update_other_service'),
+                width: '450px',
+                data: {
+                    ...e,
+                    method: method,
+                },
             }
-        });
+        );
 
         dialogRef.onClose.subscribe({
             next: (res) => {
                 if (res) {
                     this.getCampaignAds();
                 }
-            }
-        })
+            },
+        });
     }
 
     toggleState(item, e) {
         const param = {
             campaignServiceId: item.campaignServiceId,
             isActive: e.checked,
-        }
+        };
 
-        this.campaignServicesService.toggleStateCampaignService(param)
+        this.campaignServicesService
+            .toggleStateCampaignService(param)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     if (res.data.success) {
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
-                            summary: this.translate.instant(MESSAGE_SUMARY.success),
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
                             detail: res.data.message,
                         });
                         this.getCampaignAds();
@@ -236,40 +265,53 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
                     this.getCampaignAds();
-                }
-            })
+                },
+            });
     }
 
     confirm(event: Event) {
         this.confirmationService.confirm({
             target: event.target,
-            message: this.translate.instant('Are_you_sure_that_you_want_to_proceed'),
+            message: this.translate.instant(
+                'Are_you_sure_that_you_want_to_proceed'
+            ),
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.deleteSelectedCustomers()
+                this.deleteSelectedCustomers();
             },
             reject: () => {
                 //reject action
-            }
+            },
         });
     }
 
     deleteSelectedCustomers() {
         const ids = this.selectedCampaignAds.map((e) => e.campaignServiceId);
         const param = { campaignServiceIds: ids.toString() };
-        this.campaignServicesService.deleteCampaignService(param)
+        this.campaignServicesService
+            .deleteCampaignService(param)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     if (res.data.success) {
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
-                            summary: this.translate.instant(MESSAGE_SUMARY.success),
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
                             detail: res.data.message,
                         });
                         this.selectedCampaignAds = [];
@@ -278,25 +320,36 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
-            })
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
+            });
     }
 
     delete(e: CampaignService) {
         const param = { campaignServiceIds: e.campaignServiceId.toString() };
 
-        this.campaignServicesService.deleteCampaignService(param)
+        this.campaignServicesService
+            .deleteCampaignService(param)
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
                     if (res.data.success) {
                         this.messageConfig.messageConfig.next({
                             severity: MESSAGE_TYPE.success,
-                            summary: this.translate.instant(MESSAGE_SUMARY.success),
+                            summary: this.translate.instant(
+                                MESSAGE_SUMARY.success
+                            ),
                             detail: res.data.message,
                         });
                         this.selectedCampaignAds = [];
@@ -305,20 +358,28 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
                 },
                 error: (err) => {
                     this.messageConfig.messageConfig.next({
-                        severity: err.error?.statusCode === 400 ? MESSAGE_TYPE.warn : MESSAGE_TYPE.error,
-                        summary: err.error?.statusCode === 400 ? this.translate.instant(MESSAGE_SUMARY.warn) : this.translate.instant(MESSAGE_SUMARY.error),
-                        detail: err.error?.message ?? this.translate.instant('Internal_server'),
-                    })
-                }
-            })
+                        severity:
+                            err.error?.statusCode === 400
+                                ? MESSAGE_TYPE.warn
+                                : MESSAGE_TYPE.error,
+                        summary:
+                            err.error?.statusCode === 400
+                                ? this.translate.instant(MESSAGE_SUMARY.warn)
+                                : this.translate.instant(MESSAGE_SUMARY.error),
+                        detail:
+                            err.error?.message ??
+                            this.translate.instant('Internal_server'),
+                    });
+                },
+            });
     }
 
     getColor(e: string) {
         let color = 'unset';
         if (e === 'Kém' || e === 'Rất kém') {
-            color = 'red'
+            color = 'red';
         } else if (e === 'Đạt yêu cầu') {
-            color = 'blue'
+            color = 'blue';
         } else if (e === 'Tốt' || e === 'Xuất sắc') {
             color = 'green';
         }
@@ -338,5 +399,4 @@ export class CampaignAdComponent extends BaseClass implements OnInit, OnChanges 
     campaignAdsSelectedHandle() {
         this.reportService.selectedCampaignAds$.next(this.selectedCampaignAds);
     }
-
 }

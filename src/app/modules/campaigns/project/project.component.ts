@@ -28,6 +28,7 @@ import {
 } from 'src/app/core/consts/message.const';
 import { TabProjectService } from 'src/app/core/services/tab-project.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { Organization } from 'src/app/core/models/organization.model';
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
@@ -35,11 +36,16 @@ import { UserService } from 'src/app/core/services/user.service';
     providers: [ConfirmationService, DialogService],
 })
 export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
-    @Input() customerName: string;
+    @Input() projectsInput: Campaign[];
+    @Input() organizationsInput: Organization[];
+    @Input() customersInput: User[];
+    @Input() campaignFilterInput: CampaignFilter;
     @Output() tabIndex = new EventEmitter<number>();
     projects: Campaign[] = [];
     fetchingData: boolean = false;
     selectedProjects: Campaign[] = [];
+    selectedOrganizations: Organization[] = [];
+    selectedCustomers: User[] = [];
     total = {
         totalAccountingAmount: 0,
         totalExpenditureAmount: 0,
@@ -66,12 +72,24 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['customerName']) {
-            this.reportService.campaignFilter$.value.customerNameStr =
-                changes['customerName'].currentValue;
-            this.reportService.campaignFilter$.next(
-                this.reportService.campaignFilter$.value
-            );
+        if (changes['projectsInput']) {
+            this.selectedProjects = changes.projectsInput.currentValue;
+        }
+
+        if (changes['organizationsInput']) {
+            this.selectedOrganizations =
+                changes.organizationsInput.currentValue;
+        }
+
+        if (changes['customersInput']) {
+            this.selectedCustomers = changes.customersInput.currentValue;
+        }
+
+        if (changes['campaignFilterInput']) {
+            this.campaignFilter = {
+                ...changes.campaignFilterInput.currentValue,
+            };
+            this.getProjects();
         }
     }
 
@@ -83,56 +101,6 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
                 expenditureAmount: 'DESC',
             };
         }
-
-        this.reportService.selectedProjects$
-            .asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.selectedProjects = res;
-                },
-            });
-
-        this.reportService.dateFilter$
-            .asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.reportService.campaignFilter$.value.fromDate = res[0]
-                        ? moment(res[0]).format('YYYY-MM-DD')
-                        : '';
-                    this.reportService.campaignFilter$.value.toDate = res[1]
-                        ? moment(res[1]).format('YYYY-MM-DD')
-                        : '';
-                    this.reportService.campaignFilter$.next(
-                        this.reportService.campaignFilter$.value
-                    );
-                },
-            });
-
-        this.reportService.selectedCustomers$
-            .asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res: User[]) => {
-                    this.reportService.campaignFilter$.value.customerIds = res
-                        .map((e) => e.userId)
-                        .toString();
-                    this.reportService.campaignFilter$.next(
-                        this.reportService.campaignFilter$.value
-                    );
-                },
-            });
-
-        this.reportService.campaignFilter$
-            .asObservable()
-            .pipe(this.unsubsribeOnDestroy)
-            .subscribe({
-                next: (res) => {
-                    this.campaignFilter = { ...res };
-                    this.getProjects();
-                },
-            });
     }
 
     getProjects() {
@@ -144,6 +112,10 @@ export class ProjectComponent extends BaseClass implements OnInit, OnChanges {
         const params = {
             ...this.campaignFilter,
             sort: { ...this.sort },
+            organiztionIds: this.selectedOrganizations
+                .map((e) => e.organizationId)
+                .toString(),
+            customerIds: this.selectedCustomers.map((e) => e.userId).toString(),
         };
 
         this.reportService

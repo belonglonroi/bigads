@@ -184,23 +184,12 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
                 }
             });
 
-            this.reportService.dateFilter$
-                .asObservable()
-                .pipe(this.unsubsribeOnDestroy)
-                .subscribe({
-                    next: (res) => {
-                        this.filter['fromDate'] = res[0]
-                            ? moment(res[0]).format('YYYY-MM-DD')
-                            : '';
-                        this.filter['toDate'] = res[1]
-                            ? moment(res[1]).format('YYYY-MM-DD')
-                            : '';
-                    },
-                });
             const filter = {
                 ...this.reportService.campaignFilter$.value,
                 ...this.filter,
             };
+
+            console.log(filter);
 
             this.reportService.campaignFilter$.next(filter);
         }

@@ -16,6 +16,7 @@ import { CustomerService } from 'src/app/core/services/customer.service';
 import { ReportService } from 'src/app/core/services/report.service';
 import { TabProjectService } from 'src/app/core/services/tab-project.service';
 import { UserService } from 'src/app/core/services/user.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-campaign',
@@ -87,16 +88,10 @@ export class CampaignComponent extends BaseClass implements OnInit {
             .pipe(this.unsubsribeOnDestroy)
             .subscribe({
                 next: (res) => {
-                    this.campaignFilter = res;
-                    if (res.fromDate && res.toDate) {
-                        const fromDate = new Date(
-                            new Date(res.fromDate).setHours(0, 0, 0, 0)
-                        );
-                        const toDate = new Date(
-                            new Date(res.toDate).setHours(0, 0, 0, 0)
-                        );
-                        this.dateFilter = [fromDate, toDate];
-                    }
+                    this.campaignFilter = {
+                        ...res,
+                        ...this.campaignFilter,
+                    };
                 },
             });
 
@@ -235,21 +230,33 @@ export class CampaignComponent extends BaseClass implements OnInit {
                 break;
         }
 
-        this.reportService.dateFilter$.next(this.dateFilter);
-        this.reportService.campaignFilter$.next(
-            this.reportService.campaignFilter$.value
+        // this.reportService.dateFilter$.next(this.dateFilter);
+        // this.reportService.campaignFilter$.next(
+        //     this.reportService.campaignFilter$.value
+        // );
+        this.campaignFilter.fromDate = moment(this.dateFilter[0]).format(
+            'YYYY-MM-DD'
         );
+        this.campaignFilter.toDate = moment(this.dateFilter[1]).format(
+            'YYYY-MM-DD'
+        );
+        this.campaignFilter = { ...this.campaignFilter };
     }
 
     dateFilterChange(e: Date[]) {
         if (e.length === 2 && e[0] && e[1]) {
             this.reportService.dateFilter$.next(e);
+            this.campaignFilter.fromDate = moment(e[0]).format('YYYY-MM-DD');
+            this.campaignFilter.toDate = moment(e[1]).format('YYYY-MM-DD');
+            this.campaignFilter = { ...this.campaignFilter };
         }
     }
 
     clearDate() {
         this.dateFilter = [];
-        this.reportService.dateFilter$.next([]);
+        this.campaignFilter.fromDate = '';
+        this.campaignFilter.toDate = '';
+        this.campaignFilter = { ...this.campaignFilter };
     }
 
     getFilterItem(e) {
@@ -271,6 +278,7 @@ export class CampaignComponent extends BaseClass implements OnInit {
         if (this.filterBinding.length === 0) {
             const filter = this.reportService.campaignFilter$.value;
             delete filter[removed];
+            delete this.campaignFilter[removed]
             this.reportService.campaignFilter$.next(filter);
         } else {
             this.filterBinding.forEach((e) => {
@@ -302,7 +310,8 @@ export class CampaignComponent extends BaseClass implements OnInit {
     }
 
     searchByCustomer(e: string) {
-        this.customerName = e;
+        this.campaignFilter.customerNameStr = e;
+        this.campaignFilter = { ...this.campaignFilter };
     }
 
     receivedActiveIndex(e: number) {

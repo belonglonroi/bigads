@@ -7,8 +7,8 @@
                 <input pInputText type="text" placeholder="{{'Search_by_customer' | translate}}"
                     [ngModel]="customerName" (ngModelChangeDebounced)="searchByCustomer($event)">
             </span>
-            <button type="text" pButton icon="pi pi-filter"
-                class="p-button-text" (click)="filterUpdate = undefined; op.toggle($event)"></button>
+            <button type="text" pButton icon="pi pi-filter" class="p-button-text"
+                (click)="filterUpdate = undefined; op.toggle($event)"></button>
             <p-overlayPanel #op>
                 <ng-template pTemplate>
                     <app-campaign-filter [filterUpdate]="filterUpdate" (updated)="op.toggle($event)">
@@ -77,7 +77,7 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-customer [customerName]="customerName" [organizationsInput]="selectedOrganizations"
+                <app-customer [campaignFilterInput]="campaignFilter" [organizationsInput]="selectedOrganizations"
                     [customersInput]="selectedCustomers" (tabIndex)="receivedActiveIndex($event)">
                 </app-customer>
             </ng-template>
@@ -92,7 +92,9 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-project [customerName]="customerName" (tabIndex)="receivedActiveIndex($event)"></app-project>
+                <app-project [campaignFilterInput]="campaignFilter" [organizationsInput]="selectedOrganizations"
+                    [customersInput]="selectedCustomers" [projectsInput]="selectedProjects"
+                    (tabIndex)="receivedActiveIndex($event)"></app-project>
             </ng-template>
         </p-tabPanel>
 
@@ -105,7 +107,8 @@
             </ng-template>
 
             <ng-template pTemplate="content">
-                <app-campaign-ad [customerName]="customerName"></app-campaign-ad>
+                <app-campaign-ad [campaignFilterInput]="campaignFilter" [organizationsInput]="selectedOrganizations"
+                    [customersInput]="selectedCustomers" [projectsInput]="selectedProjects" [campaignAdsInput]="selectedCampaignAds"></app-campaign-ad>
             </ng-template>
         </p-tabPanel>
     </p-tabView>
