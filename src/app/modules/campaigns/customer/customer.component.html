@@ -140,11 +140,11 @@
 </p-table>
 
 <!-- mobile & tablet view -->
-<div>
+<div [fxHide.gt-sm]="true">
     <div class="campaign overlay" *ngIf="fetchingData">
         <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
     </div>
-    <div [fxHide.gt-sm]="true" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
+    <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
         fxLayoutAlign.xs="start stretch">
         <div class="card mb-3 border-round shadow-none" *ngFor="let customer of customers" fxFlex.gt-xs="49"
             fxFlex.xs="100">
@@ -218,7 +218,7 @@
     </div>
 </div>
 
-<p-paginator *ngIf="!fetchingData" [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
+<p-paginator [rows]="limit" [totalRecords]="totalRecords" (onPageChange)="changePage($event)"
     [rowsPerPageOptions]="[30, 100, 500, 1000]"></p-paginator>
 
 <p-confirmPopup></p-confirmPopup>
