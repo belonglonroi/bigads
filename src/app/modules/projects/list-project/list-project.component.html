@@ -8,13 +8,13 @@
                 <p-button *ngIf="actions.includes(401)" label="{{'Add_project' | translate}}" icon="pi pi-plus"
                     styleClass="p-button-sm" (click)="openDialog()"></p-button>
                 <div class="ml-auto">
-                    <input pInputText type="text" [ngModel]="filter.name"
+                    <input pInputText type="text" class="mr-2" [ngModel]="filter.name"
                         (ngModelChangeDebounced)="searchByName($event)"
                         placeholder="{{'Search_by_name' | translate}}" />
 
-                    <input pInputText type="text" [ngModel]="filter.categoryName" class="mx-2"
+                    <!-- <input pInputText type="text" [ngModel]="filter.categoryName" class="mx-2"
                         (ngModelChangeDebounced)="searchByCategoryName($event)"
-                        placeholder="{{'Search_by_category_name' | translate}}" />
+                        placeholder="{{'Search_by_category_name' | translate}}" /> -->
 
                     <p-multiSelect inputId="category" [options]="categories" optionLabel="name"
                         [(ngModel)]="filter.categoryIds" (ngModelChange)="getProjects()"
