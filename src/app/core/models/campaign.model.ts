@@ -46,4 +46,6 @@ export class Campaign {
     totalCare: number;
     viewEveryTenSeconds: number;
     projectName?: string;
+    taxRate?: number;
+    taxAmount?: number;
 }

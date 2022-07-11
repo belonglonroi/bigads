@@ -1,7 +1,7 @@
-import { AdService } from "./ad-service.model";
-import { CampaignService } from "./campaign-services.model";
-import { Campaign } from "./campaign.model";
-import { User } from "./user.model";
+import { AdService } from './ad-service.model';
+import { CampaignService } from './campaign-services.model';
+import { Campaign } from './campaign.model';
+import { User } from './user.model';
 
 export class CampaignAds {
     adAccount?: string;
@@ -47,4 +47,6 @@ export class CampaignAds {
     planningStaff?: User;
     campaignService?: CampaignService;
     description?: string;
+    taxRate?: number;
+    taxAmount?: number;
 }

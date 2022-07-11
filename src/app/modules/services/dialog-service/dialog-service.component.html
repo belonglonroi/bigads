@@ -8,7 +8,7 @@
     <label for="description" class="block">{{'Description' | translate}}</label>
     <textarea pInputTextarea id="description" type="text" pInputText class="w-full" [(ngModel)]="dialogData.description"
         autocomplete="off"></textarea>
-    <small *ngIf="!dialogData.description && invalid" class="p-error">{{'Description_required' | translate}}</small>
+    <!-- <small *ngIf="!dialogData.description && invalid" class="p-error">{{'Description_required' | translate}}</small> -->
 </div>
 
 <div class="field">
@@ -30,6 +30,12 @@
 <div class="field" *ngIf="!config.data">
     <label for="name" class="block">{{'Active' | translate}}</label>
     <p-inputSwitch [(ngModel)]="dialogData.isActive"></p-inputSwitch>
+</div>
+
+<div class="field">
+    <label for="taxRate" class="block">{{'Tax_rate' | translate}}</label>
+    <p-inputNumber [(ngModel)]="dialogData.taxRate" class="w-full" styleClass="w-full" inputId="taxRate" suffix=" %"
+        autocomplete="off"></p-inputNumber>
 </div>
 
 <div class="flex justify-content-end mt-3">

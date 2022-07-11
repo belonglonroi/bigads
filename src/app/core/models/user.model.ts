@@ -27,6 +27,7 @@ export class User {
     lastLogin?: string;
     department?: Department;
     organizations: Organization[];
+    taxAmount?: number
 }
 
 export class ListUserResult {

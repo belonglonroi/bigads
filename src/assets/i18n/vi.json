@@ -373,5 +373,7 @@
     "Six_month": "6 tháng",
     "Twelve_month": "12 tháng",
     "Campaign_service_name": "Tên chiến dịch",
-    "Other": "Khác"
+    "Other": "Khác",
+    "Get_receipt": "Lấy hóa đơn",
+    "Tax_rate": "Giá trị thuế"
 }

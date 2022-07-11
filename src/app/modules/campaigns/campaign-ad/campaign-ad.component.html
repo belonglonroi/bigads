@@ -83,6 +83,10 @@
                 <p-sortIcon field="feeAmount"></p-sortIcon>
                 <p-columnFilter type="text" field="serviceFee" display="menu"></p-columnFilter>
             </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxRate">
+                {{'Tax_rate' | translate}}
+                <p-columnFilter type="numeric" field="taxRate" display="menu"></p-columnFilter>
+            </th>
             <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="campaignServiceCPR">
                 {{'Cost_per_result' | translate}}
                 <p-sortIcon field="campaignServiceCPR"></p-sortIcon>
@@ -140,6 +144,8 @@
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.goal | number}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.description}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.serviceFee | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{campaignAd.taxAmount | number}}({{campaignAd.taxRate * 100}}%)
+            </td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.costPerResult | number}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.result | number}}</td>
             <td style="max-width: 20rem; min-width: 10rem">{{campaignAd.amount | number}}</td>

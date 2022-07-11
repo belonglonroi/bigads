@@ -66,6 +66,10 @@
                 <p-sortIcon field="customerFeeRate"></p-sortIcon>
                 <p-columnFilter type="numeric" field="feeRate" display="menu"></p-columnFilter>
             </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxRate">
+                {{'Tax_rate' | translate}}
+                <p-columnFilter type="numeric" field="taxRate" display="menu"></p-columnFilter>
+            </th>
             <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
         </tr>
     </ng-template>
@@ -94,6 +98,7 @@
             <td style="max-width: 25rem; min-width: 11rem">{{customer.accountingAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{customer.feeAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{customer.feeRate * 100}} %</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{customer.taxAmount | number}}</td>
             <td style="min-width: 100px; max-width: 120px;">
                 <button [disabled]="code" pButton pRipple type="button" icon="pi pi-info-circle"
                     pTooltip="{{'Detail' | translate}}" tooltipPosition="top" class="p-button-rounded p-button-text"
@@ -144,8 +149,7 @@
     <div class="campaign overlay" *ngIf="fetchingData">
         <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
     </div>
-    <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column"
-        fxLayoutAlign.xs="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayout.xs="column" fxLayoutAlign.xs="start stretch">
         <div class="card mb-3 border-round shadow-none" *ngFor="let customer of customers" fxFlex.gt-xs="49"
             fxFlex.xs="100">
 

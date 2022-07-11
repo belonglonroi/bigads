@@ -69,11 +69,16 @@
                 <p-sortIcon field="customerFeeRate"></p-sortIcon>
                 <p-columnFilter type="numeric" field="fixedRate" display="menu"></p-columnFilter>
             </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxRate">
+                {{'Tax_rate' | translate}}
+                <p-columnFilter type="numeric" field="taxRate" display="menu"></p-columnFilter>
+            </th>
             <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="dayLeft">
                 {{'Day_left' | translate}}
                 <p-sortIcon field="dayLeft"></p-sortIcon>
                 <p-columnFilter type="numeric" field="dayLeft" display="menu"></p-columnFilter>
             </th>
+
             <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
         </tr>
     </ng-template>
@@ -102,6 +107,8 @@
             <td style="max-width: 25rem; min-width: 10rem">{{project.feeAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.feeType === 2 ? ('Package_fee' | translate) :
                 project.fixedRate * 100 + ' %'}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.taxAmount | number}}({{project.taxRate * 100}}%)
+            </td>
             <td style="max-width: 25rem; min-width: 10rem">
                 <ng-container *ngIf="project.isExpired; else dayLeft">
                     <span class="red">{{'Expired' | translate}}</span>
