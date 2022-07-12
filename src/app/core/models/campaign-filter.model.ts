@@ -47,5 +47,6 @@ export interface CampaignSort {
     campaignServiceName?: string,
     campaignServiceAmount?: string,
     campaignServiceResult?: string,
-    campaignServiceCPR?: string
+    campaignServiceCPR?: string,
+    taxAmount?: string,
 }

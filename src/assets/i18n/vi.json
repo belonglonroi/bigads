@@ -375,5 +375,8 @@
     "Campaign_service_name": "Tên chiến dịch",
     "Other": "Khác",
     "Get_receipt": "Lấy hóa đơn",
-    "Tax_rate": "Giá trị thuế"
+    "Tax_rate": "Giá trị thuế",
+    "Total_tax_amount": "Tổng giá trị thuế",
+    "Yes": "Có",
+    "No": "Không"
 }

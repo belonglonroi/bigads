@@ -83,8 +83,9 @@
                 <p-sortIcon field="feeAmount"></p-sortIcon>
                 <p-columnFilter type="text" field="serviceFee" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxRate">
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxAmount">
                 {{'Tax_rate' | translate}}
+                <p-sortIcon field="taxAmount"></p-sortIcon>
                 <p-columnFilter type="numeric" field="taxRate" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 20rem; min-width: 10rem" pSortableColumn="campaignServiceCPR">
@@ -184,6 +185,11 @@
             <div class="px-2">
                 <div class="text-center">{{total.totalAnotherServiceFee | number}}</div>
                 <div class="font-italic">{{'Total_another_service' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalTaxAmount | number}}</div>
+                <div class="font-italic">{{'Total_tax_amount' | translate}}</div>
             </div>
         </div>
     </ng-template>

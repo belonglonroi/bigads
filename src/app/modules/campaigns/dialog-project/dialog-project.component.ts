@@ -29,7 +29,12 @@ import { BOOLEAN_SELECT } from 'src/app/core/consts/boolean-select.const';
     styleUrls: ['./dialog-project.component.scss'],
 })
 export class DialogProjectComponent extends BaseClass implements OnInit {
-    booleanSelect = BOOLEAN_SELECT;
+    booleanSelect = BOOLEAN_SELECT.map(e => {
+        return {
+            value: e.value,
+            label: this.translate.instant(e.label)
+        }
+    });
     customers: User[] = [];
     projects: Project[] = [];
     services: AdService[] = [];
@@ -85,7 +90,9 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
                 fixedAmount: this.dialogConfig.data.fixedAmount,
                 customRate: this.dialogConfig.data.customRate,
                 isReceipt: this.dialogConfig.data.isReceipt,
-                taxRate: this.dialogConfig.data.taxRate ?? 0,
+                taxRate: this.dialogConfig.data.taxRate
+                    ? this.dialogConfig.data.taxRate * 100
+                    : 0,
                 startDate: moment(this.startDate).format('YYYY-MM-DD'),
             };
         }

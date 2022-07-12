@@ -1,5 +1,5 @@
 <!-- desktop view -->
-<p-table [fxHide.lt-md]="true" [lazy]="true" #customerData [value]="customers" dataKey="userId"
+<p-table [fxHide.lt-md]="true" #customerData [lazy]="true" [value]="customers" dataKey="userId"
     styleClass="p-datatable-sm" responsiveLayout="scroll"
     [scrollHeight]="code ? 'calc(100vh - 272px)' :'calc(100vh - 433px)'" [loading]="fetchingData"
     [(selection)]="selectedCustomers" (selectionChange)="selectionChange()" (onSort)="sortCustom($event)"
@@ -66,9 +66,10 @@
                 <p-sortIcon field="customerFeeRate"></p-sortIcon>
                 <p-columnFilter type="numeric" field="feeRate" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxRate">
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxAmount">
                 {{'Tax_rate' | translate}}
-                <p-columnFilter type="numeric" field="taxRate" display="menu"></p-columnFilter>
+                <p-sortIcon field="taxAmount"></p-sortIcon>
+                <!-- <p-columnFilter type="numeric" field="taxAmount" display="menu"></p-columnFilter> -->
             </th>
             <th style="min-width: 100px; max-width: 120px;">{{'Action' | translate}}</th>
         </tr>
@@ -139,6 +140,11 @@
             <div class="px-2">
                 <div class="text-center">{{total.totalAnotherServiceFee | number}}</div>
                 <div class="font-italic">{{'Total_another_service' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalTaxAmount | number}}</div>
+                <div class="font-italic">{{'Total_tax_amount' | translate}}</div>
             </div>
         </div>
     </ng-template>

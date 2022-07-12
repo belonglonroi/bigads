@@ -69,9 +69,10 @@
                 <p-sortIcon field="customerFeeRate"></p-sortIcon>
                 <p-columnFilter type="numeric" field="fixedRate" display="menu"></p-columnFilter>
             </th>
-            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxRate">
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="taxAmount">
                 {{'Tax_rate' | translate}}
-                <p-columnFilter type="numeric" field="taxRate" display="menu"></p-columnFilter>
+                <p-sortIcon field="customerFeeRate"></p-sortIcon>
+                <p-columnFilter type="numeric" field="taxAmount" display="menu"></p-columnFilter>
             </th>
             <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="dayLeft">
                 {{'Day_left' | translate}}
@@ -161,6 +162,11 @@
             <div class="px-2">
                 <div class="text-center">{{total.totalAnotherServiceFee | number}}</div>
                 <div class="font-italic">{{'Total_another_service' | translate}}</div>
+            </div>
+
+            <div class="px-2">
+                <div class="text-center">{{total.totalTaxAmount | number}}</div>
+                <div class="font-italic">{{'Total_tax_amount' | translate}}</div>
             </div>
         </div>
     </ng-template>
