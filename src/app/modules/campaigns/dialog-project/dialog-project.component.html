@@ -66,8 +66,8 @@
 </div>
 
 <div class="field" *ngIf="dialogData.feeType === 3">
-    <label for="dailyPayment" class="block">{{'Custom_rate' | translate}}</label>
-    <input id="dailyPayment" type="text" pInputText class="w-full" [(ngModel)]="dialogData.dailyPayment"
+    <label for="customRate" class="block">{{'Custom_rate' | translate}}</label>
+    <input id="customRate" type="text" pInputText class="w-full" [(ngModel)]="dialogData.customRate"
         [disabled]="dialogConfig?.data?.method" autocomplete="off" />
 </div>
 

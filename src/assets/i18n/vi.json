@@ -378,5 +378,7 @@
     "Tax_rate": "Giá trị thuế",
     "Total_tax_amount": "Tổng giá trị thuế",
     "Yes": "Có",
-    "No": "Không"
+    "No": "Không",
+    "Other_service_fee": "Phí DV khác",
+    "Customize" : "Tùy chỉnh"
 }

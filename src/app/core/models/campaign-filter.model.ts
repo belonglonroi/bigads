@@ -27,26 +27,27 @@ export class CompareFilter {
 }
 
 export interface CampaignSort {
-    customerName?: string,
-    performance?: string,
-    hotline?: string,
-    customerFeeRate?: string,
-    customerPhone?: string,
-    businessStaffName?: string,
-    transactionAmount?: string,
-    accountingAmount?: string,
-    expenditureAmount?: string,
-    feeAmount?: string,
-    projectName?: string,
-    dayLeft?: string,
-    serviceName?: string,
-    adAccount?: string,
-    startDate?: string,
-    endDate?: string,
-    campaignServiceGoal?: string,
-    campaignServiceName?: string,
-    campaignServiceAmount?: string,
-    campaignServiceResult?: string,
-    campaignServiceCPR?: string,
-    taxAmount?: string,
+    customerName?: string;
+    performance?: string;
+    hotline?: string;
+    customerFeeRate?: string;
+    customerPhone?: string;
+    businessStaffName?: string;
+    transactionAmount?: string;
+    accountingAmount?: string;
+    expenditureAmount?: string;
+    feeAmount?: string;
+    projectName?: string;
+    dayLeft?: string;
+    serviceName?: string;
+    adAccount?: string;
+    startDate?: string;
+    endDate?: string;
+    campaignServiceGoal?: string;
+    campaignServiceName?: string;
+    campaignServiceAmount?: string;
+    campaignServiceResult?: string;
+    campaignServiceCPR?: string;
+    taxAmount?: string;
+    anotherServiceFee?: string;
 }
