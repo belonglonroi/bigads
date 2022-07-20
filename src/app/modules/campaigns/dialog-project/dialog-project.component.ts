@@ -29,11 +29,11 @@ import { BOOLEAN_SELECT } from 'src/app/core/consts/boolean-select.const';
     styleUrls: ['./dialog-project.component.scss'],
 })
 export class DialogProjectComponent extends BaseClass implements OnInit {
-    booleanSelect = BOOLEAN_SELECT.map(e => {
+    booleanSelect = BOOLEAN_SELECT.map((e) => {
         return {
             value: e.value,
-            label: this.translate.instant(e.label)
-        }
+            label: this.translate.instant(e.label),
+        };
     });
     customers: User[] = [];
     projects: Project[] = [];
@@ -226,6 +226,11 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
             });
     }
 
+    /**
+     * @Update
+     * Update project for customer
+     * @returns
+     */
     update() {
         if (
             !this.dialogData.projectId ||
@@ -237,7 +242,7 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
         }
 
         for (const key in this.dialogData) {
-            if (!this.dialogData[key]) {
+            if (!this.dialogData[key] && key !== 'isReceipt') {
                 delete this.dialogData[key];
             }
         }
@@ -258,6 +263,8 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
 
         if (this.dialogData.isReceipt) {
             this.dialogData.taxRate = this.dialogData.taxRate / 100;
+        } else {
+            delete this.dialogData.taxRate;
         }
 
         this.dialogData.startDate = moment(this.startDate).format('YYYY-MM-DD');
@@ -266,6 +273,7 @@ export class DialogProjectComponent extends BaseClass implements OnInit {
             ...this.dialogData,
             campaignId: this.dialogConfig.data.campaignId,
         };
+
         this.tabProjectService
             .updateProject(param)
             .pipe(this.unsubsribeOnDestroy)
