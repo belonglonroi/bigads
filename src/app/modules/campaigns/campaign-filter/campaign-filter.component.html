@@ -14,25 +14,25 @@
         type="text" pInputText class="w-full mb-3" placeholder="{{'Filter_value' | translate}}"
         [(ngModel)]="filterForm.value">
 
-    <p-multiSelect *ngIf="filterForm.filterOption === 'staffName'" appendTo="body" [options]="employees"
+    <p-multiSelect *ngIf="filterForm.filterOption === 'staffName' && filterForm.compareOption !== 4" appendTo="body" [options]="employees"
         [(ngModel)]="filterForm.value" optionLabel="fullname" optionValue="fullname" [filter]="true" filterBy="fullname"
         placeholder="{{'Select_employee' | translate}}" styleClass="w-full mb-3"></p-multiSelect>
 
-    <p-multiSelect *ngIf="filterForm.filterOption === 'serviceName'" appendTo="body" [options]="adServices"
+    <p-multiSelect *ngIf="filterForm.filterOption === 'serviceName' && filterForm.compareOption !== 4" appendTo="body" [options]="adServices"
         [(ngModel)]="filterForm.value" optionLabel="serviceName" optionValue="serviceName" [filter]="true"
         filterBy="serviceName" placeholder="{{'Select_service' | translate}}" styleClass="w-full mb-3"></p-multiSelect>
 
-    <p-multiSelect *ngIf="filterForm.filterOption === 'projectName'" appendTo="body" [options]="projects"
+    <p-multiSelect *ngIf="filterForm.filterOption === 'projectName' && filterForm.compareOption !== 4" appendTo="body" [options]="projects"
         [(ngModel)]="filterForm.value" optionLabel="name" optionValue="name" [filter]="true" filterBy="name"
         placeholder="{{'Select_project' | translate}}" styleClass="w-full mb-3"></p-multiSelect>
 
-    <p-dropdown *ngIf="filterForm.filterOption === 'campaignServiceIsActive'" appendTo="body"
+    <p-dropdown *ngIf="filterForm.filterOption === 'campaignServiceIsActive' && filterForm.compareOption !== 4" appendTo="body"
         [options]="isActiveOptions" [(ngModel)]="filterForm.value" optionLabel="label" optionValue="value"
         placeholder="{{'Status' | translate}}" styleClass="w-full mb-3"></p-dropdown>
 
     <div class="flex justify-content-end mt-3">
-        <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text"
-            [disabled]="!this.filterForm.compareOption || !this.filterForm.filterOption" (click)="submitHandler()">
+        <p-button icon="pi pi-check" label="{{'Submit' | translate}}" styleClass="p-button-text" #btnSubmit
+            [disabled]="disabledBtnSubmit()" (click)="submitHandler()">
         </p-button>
     </div>
 </div>

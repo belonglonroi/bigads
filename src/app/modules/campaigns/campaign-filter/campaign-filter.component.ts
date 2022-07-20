@@ -1,6 +1,7 @@
 import {
     Component,
     EventEmitter,
+    HostListener,
     Input,
     OnInit,
     Output,
@@ -30,6 +31,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class CampaignFilterComponent extends BaseClass implements OnInit {
     @ViewChild('compare') compareDropdown: Dropdown;
+    @ViewChild('btnSubmit') btnSubmit: HTMLButtonElement;
     @Input() filterUpdate;
     @Output() updated = new EventEmitter();
     campaignFilterOptions = CAMPAIGN_FILTER_OPTIONS.map((e) => {
@@ -122,6 +124,15 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
                 },
             });
     }
+
+    @HostListener('window:keydown.enter', ['$event'])
+    handleKeyDown(event: KeyboardEvent) {
+        if (this.btnSubmit.disabled) {
+            event.preventDefault();
+        }
+        this.submitHandler();
+    }
+
     changeFilterOption(e) {
         if (e.value === 'campaignServiceAmount') {
             this.filterForm.compareOption = 4;
@@ -138,6 +149,9 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
     }
 
     submitHandler() {
+        if (this.btnSubmit.disabled) {
+            return;
+        }
         if (this.filterUpdate) {
             this.update();
             return;
@@ -232,5 +246,26 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         // sessionStorage.setItem('campaignFilter', JSON.stringify(this.filterBinding));
         this.reportService.filterBinding$.next(this.filterBinding);
         this.filterChange();
+    }
+
+    disabledBtnSubmit(): boolean {
+        if (this.filterForm.compareOption === 4) {
+            if (
+                !this.filterForm.compareOption ||
+                !this.filterForm.filterOption
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (
+            !this.filterForm.compareOption ||
+            !this.filterForm.filterOption ||
+            !this.filterForm.value
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
