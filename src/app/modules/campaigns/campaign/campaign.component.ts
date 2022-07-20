@@ -89,8 +89,8 @@ export class CampaignComponent extends BaseClass implements OnInit {
             .subscribe({
                 next: (res) => {
                     this.campaignFilter = {
-                        ...res,
                         ...this.campaignFilter,
+                        ...res,
                     };
                 },
             });
