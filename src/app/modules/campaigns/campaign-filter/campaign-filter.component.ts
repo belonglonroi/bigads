@@ -62,7 +62,7 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
     filterForm = {
         filterOption: '',
         compareOption: 0,
-        value: '',
+        value: null,
     };
 
     filterBinding = [];
@@ -143,6 +143,7 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
         if (e.value === 'campaignServiceIsActive') {
             this.filterForm.compareOption = 1;
             this.compareDropdown.disabled = true;
+            this.filterForm.value = true;
             return;
         }
         this.compareDropdown.show();
@@ -258,6 +259,8 @@ export class CampaignFilterComponent extends BaseClass implements OnInit {
             } else {
                 return false;
             }
+        } else if(this.filterForm.filterOption === 'campaignServiceIsActive') {
+            return false;
         } else if (
             !this.filterForm.compareOption ||
             !this.filterForm.filterOption ||
