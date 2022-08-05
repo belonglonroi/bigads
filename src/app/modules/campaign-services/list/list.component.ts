@@ -34,7 +34,8 @@ export class ListComponent extends BaseClass implements OnInit {
         result: 0,
     };
     itemUpdate: CampaignAds;
-    dateFilter: Date = new Date();
+    today: Date = new Date();
+    dateFilter: Date = new Date(new Date().setDate(new Date().getDate()-1));
 
     constructor(
         private campaignServicesService: CampaignServicesService,

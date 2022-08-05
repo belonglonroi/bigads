@@ -267,8 +267,8 @@
     "Update_customer": "Cập nhật khách hàng",
     "Internal": "Nội bộ",
     "Personal": "Cá nhân",
-    "Customer_type": "Loại khách hàng",
-    "Customer_type_required": "Yêu cầu chọn 'Loại khách hàng'",
+    "Customer_type": "Nguồn khách hàng",
+    "Customer_type_required": "Yêu cầu chọn 'Nguồn khách hàng'",
     "Business_staff": "Nhân viên kinh doanh",
     "Select_business_staff": "Chọn nhân viên kinh doanh",
     "Email_required": "Yêu cầu nhập 'Email'",
@@ -329,7 +329,7 @@
     "Update_organization_successfully": "Cập nhật nhóm khách hàng thành công",
     "Create_organization_successfully": "Thêm nhóm khách hàng thành công",
     "Select_gender": "Chọn giới tính",
-    "Select_customer_type": "Chọn loại khách hàng",
+    "Select_customer_type": "Chọn Nguồn khách hàng",
     "Records": "bản ghi",
     "Update_member": "Cập nhật thành viên",
     "Owner": "Người đại diện",
@@ -380,5 +380,6 @@
     "Yes": "Có",
     "No": "Không",
     "Other_service_fee": "Phí DV khác",
-    "Customize" : "Tùy chỉnh"
+    "Customize" : "Tùy chỉnh",
+    "Add_to_organization": "Thêm vào nhóm"
 }

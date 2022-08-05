@@ -8,15 +8,15 @@
         <i class="pi pi-bars"></i>
     </a>
 
-    <a class="p-link layout-topbar-menu-button layout-topbar-button" href="#" (click)="appMain.toggleTopMenu($event)">
-        <i class="pi pi-ellipsis-v"></i>
-    </a>
+    <p-splitButton #splitbutton class="p-link layout-topbar-menu-button layout-topbar-menu" styleClass="p-button-text p-button-secondary"
+        label="{{user.lastName + ' ' + user.firstName}}" [model]="items" (onClick)="btnUserClick()">
+    </p-splitButton>
 
-    <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
-        <!-- <a href="#" class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-        </a> -->
+    <!-- <a class="p-link layout-topbar-menu-button layout-topbar-button" href="#" (click)="appMain.toggleTopMenu($event)">
+        <i class="pi pi-ellipsis-v"></i>
+    </a> -->
+
+    <!-- <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active':appMain.topMenuActive}">
         <a routerLink="/employees/profile" class="p-link layout-topbar-button">
             <i class="pi pi-user"></i>
             <span>{{'Profile' | translate}}</span>
@@ -25,5 +25,5 @@
             <i class="pi pi-sign-out"></i>
             <span>{{'Sign_out' | translate}}</span>
         </a>
-    </div>
+    </div> -->
 </div>

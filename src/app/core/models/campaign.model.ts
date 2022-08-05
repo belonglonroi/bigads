@@ -48,4 +48,6 @@ export class Campaign {
     projectName?: string;
     taxRate?: number;
     taxAmount?: number;
+    anotherServiceFee?: number;
+    expenditureAmount?: number;
 }

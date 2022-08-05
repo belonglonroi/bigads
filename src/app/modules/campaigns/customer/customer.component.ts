@@ -378,4 +378,8 @@ export class CustomerComponent extends BaseClass implements OnInit, OnChanges {
     customerSelectedHandle() {
         this.reportService.selectedCustomers$.next(this.selectedCustomers);
     }
+
+    openDialogOrganiztion() {
+
+    }
 }

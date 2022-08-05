@@ -1,7 +1,6 @@
 import { environment } from './../../../environments/environment';
 
 export class BaseService {
-
     get apiUrl() {
         return environment.apiUrl;
     }
@@ -62,4 +61,7 @@ export class BaseService {
         return `${this.apiUrl}/category`;
     }
 
+    get dashboardUrl() {
+        return `${this.apiUrl}/dashboard`;
+    }
 }

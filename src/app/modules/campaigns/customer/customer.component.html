@@ -8,11 +8,14 @@
         <div class="flex">
             <p-button *ngIf="actions.includes(105)" label="{{'Add_customer' | translate}}" icon="pi pi-plus"
                 styleClass="p-button-sm mr-2" (click)="openDialog()"></p-button>
-            <p-splitButton label="{{'Add_employee_from_Excel' | translate}}" icon="pi pi-plus" [model]="items">
+            <!-- <p-button *ngIf="selectedCustomers?.length > 0 && actions.includes(202)"
+                label="{{'Add_to_organization' | translate}}" icon="pi pi-plus" styleClass="p-button-sm mr-2"
+                (click)="openDialogOrganiztion()"></p-button> -->
+            <!-- <p-splitButton label="{{'Add_employee_from_Excel' | translate}}" icon="pi pi-plus" [model]="items">
             </p-splitButton>
             <input type="file" #file style="display: none;" (change)="selectFileHandler($event)"
                 accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-            <a #template href="/assets/template/template_create_employees.xlsx"></a>
+            <a #template href="/assets/template/template_create_employees.xlsx"></a> -->
 
             <span class="ml-auto">
                 <p-button label="{{'Delete' | translate}}" icon="pi pi-trash"
@@ -61,6 +64,11 @@
                 <p-sortIcon field="feeAmount"></p-sortIcon>
                 <p-columnFilter type="numeric" field="feeAmount" display="menu"></p-columnFilter>
             </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="feeAmount">
+                {{'Other_service_fee' | translate}}
+                <p-sortIcon field="anotherServiceFee"></p-sortIcon>
+                <p-columnFilter type="numeric" field="anotherServiceFee" display="menu"></p-columnFilter>
+            </th>
             <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="customerFeeRate">
                 {{'Fee_rate' | translate}}
                 <p-sortIcon field="customerFeeRate"></p-sortIcon>
@@ -98,6 +106,7 @@
             <td style="max-width: 25rem; min-width: 10rem">{{customer.expenditureAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 11rem">{{customer.accountingAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{customer.feeAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{customer.anotherServiceFee | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{customer.feeRate * 100}} %</td>
             <td style="max-width: 25rem; min-width: 10rem">{{customer.taxAmount | number}}</td>
             <td style="min-width: 100px; max-width: 120px;">

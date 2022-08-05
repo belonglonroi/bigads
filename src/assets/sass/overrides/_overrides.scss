@@ -16,10 +16,30 @@
 
 .p-multiselect .p-multiselect-label {
     white-space: unset;
+
     .p-multiselect-token {
         margin: .1rem;
     }
 }
 
+.layout-topbar-menu .p-button-text .p-button {
+    font-size: 1rem !important;
+    background-color: transparent;
+    color: black;
+    border: none;
+    height: 100% !important;
 
+    &:hover {
+        background-color: transparent !important;
+        color: black !important;
+        border: none;
+    }
 
+    &.p-splitbutton-menubutton {
+        display: none;
+    }
+}
+
+p-splitbutton.layout-topbar-menu {
+    height: 100%;
+}

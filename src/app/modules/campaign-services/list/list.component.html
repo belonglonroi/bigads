@@ -70,7 +70,7 @@
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" (paste)="pasteHandle($event, campaignService, 'result')"
+                            <input pInputText class="w-7rem" type="text" (paste)="pasteHandle($event, campaignService, 'result')"
                                 [(ngModel)]="campaignService.campaignAdsIndex.result"
                                 (blur)="changeAmount(campaignService)" required>
                             <!-- <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.result" (paste)="pasteHandle($event)"
@@ -78,7 +78,7 @@
                             </p-inputNumber> -->
                         </ng-template>
                         <ng-template pTemplate="output">
-                            <input pInputText type="text" disabled
+                            <input pInputText class="w-7rem" type="text" disabled
                                 value="{{(campaignService.campaignAdsIndex.result ? campaignService.campaignAdsIndex.result : 0) | number}}">
                         </ng-template>
                     </p-cellEditor>
@@ -86,7 +86,7 @@
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" (paste)="pasteHandle($event, campaignService, 'amount')"
+                            <input pInputText class="w-7rem" type="text" (paste)="pasteHandle($event, campaignService, 'amount')"
                                 [(ngModel)]="campaignService.campaignAdsIndex.amount"
                                 (blur)="changeAmount(campaignService)" required>
                             <!-- <p-inputNumber [(ngModel)]="campaignService.campaignAdsIndex.amount"
@@ -94,7 +94,7 @@
                             </p-inputNumber> -->
                         </ng-template>
                         <ng-template pTemplate="output">
-                            <input pInputText type="text" disabled
+                            <input pInputText class="w-7rem" type="text" disabled
                                 value="{{(campaignService.campaignAdsIndex.amount ? campaignService.campaignAdsIndex.amount : 0) | number}}">
                         </ng-template>
                     </p-cellEditor>

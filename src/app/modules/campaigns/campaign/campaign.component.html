@@ -9,7 +9,7 @@
             </span>
             <button type="text" pButton icon="pi pi-filter" class="p-button-text"
                 (click)="filterUpdate = undefined; op.toggle($event)"></button>
-            <p-overlayPanel #op>
+            <p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true">
                 <ng-template pTemplate>
                     <app-campaign-filter [filterUpdate]="filterUpdate" (updated)="op.toggle($event)">
                     </app-campaign-filter>

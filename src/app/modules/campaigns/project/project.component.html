@@ -64,6 +64,11 @@
                 <p-sortIcon field="feeAmount"></p-sortIcon>
                 <p-columnFilter type="numeric" field="feeAmount" display="menu"></p-columnFilter>
             </th>
+            <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="feeAmount">
+                {{'Other_service_fee' | translate}}
+                <p-sortIcon field="anotherServiceFee"></p-sortIcon>
+                <p-columnFilter type="numeric" field="anotherServiceFee" display="menu"></p-columnFilter>
+            </th>
             <th style="max-width: 25rem; min-width: 10rem" pSortableColumn="customerFeeRate">
                 {{'Fee_rate' | translate}}
                 <p-sortIcon field="customerFeeRate"></p-sortIcon>
@@ -106,6 +111,7 @@
             <td style="max-width: 25rem; min-width: 10rem">{{project.expenditureAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 11rem">{{project.accountingAmount | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.feeAmount | number}}</td>
+            <td style="max-width: 25rem; min-width: 10rem">{{project.anotherServiceFee | number}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.feeType !== 1 ? (project.feeType === 2 ?
                 ('Package_fee' | translate) : ('Customize' | translate)) : project.fixedRate * 100 + ' %'}}</td>
             <td style="max-width: 25rem; min-width: 10rem">{{project.isReceipt ? (project.taxAmount | number) + ' (' +

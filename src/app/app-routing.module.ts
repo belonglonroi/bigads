@@ -18,7 +18,7 @@ import { InitialDataResolver } from './app.resolve';
                     initialData: InitialDataResolver,
                 },
                 children: [
-                    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+                    { path: '', redirectTo: 'employees/profile', pathMatch: 'full' },
                     { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'employees', loadChildren: () => import('./modules/employees/employees.module').then(m => m.EmployeesModule) },
                     { path: 'permissions', loadChildren: () => import('./modules/permissions/permissions.module').then(m => m.PermissionsModule) },
