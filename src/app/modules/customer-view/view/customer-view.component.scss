@@ -102,7 +102,8 @@
     }
 }
 
-.card-customer-info, .bg-mobile {
+.card-customer-info,
+.bg-mobile {
     background: #007aff;
     // background: linear-gradient(129deg, #27b2ff 0%, #007aff 35%, #94ebff 100%);
 }
@@ -129,4 +130,8 @@
             }
         }
     }
+}
+
+.loading {
+    height: -webkit-fill-available;
 }
