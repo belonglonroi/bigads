@@ -23,6 +23,7 @@ export class CampaignAds {
     inputDate?: string;
     inputDateTime?: string;
     isDelete?: boolean;
+    isActive?: boolean;
     isLock?: boolean;
     like?: number;
     message?: number;

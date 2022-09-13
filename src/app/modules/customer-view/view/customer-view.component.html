@@ -1,0 +1,139 @@
+<div ngClass="{{fetchingData ? 'overflow-hidden' : ''}}" class="w-screen h-screen flex justify-content-center">
+    <div class="lg:w-9 w-screen">
+        <div class="lg:hidden bg-mobile w-full h-26rem absolute top-0 left-0 z-0 border"
+            style="border-radius: 0 0 66px 66px;">
+        </div>
+        <div class="grid grid-nogutter lg:p-6 p-2">
+            <div class="col-6 p-2 lg:block hidden">
+                <div class="card h-full card-customer-info flex flex-column gap-6">
+                    <div class="text-3xl font-semibold text-white">Tạ Hoàng Long</div>
+                    <div class="text-3xl font-semibold text-white">Số dư: </div>
+                    <div class="text-3xl font-semibold text-white text-right">{{10000000 | number}} VND</div>
+                    <div class=" text-3xl font-semibold text-white">Tổng chuyển khoản: </div>
+                    <div class="text-3xl font-semibold text-white text-right">{{123456789 | number}} VND</div>
+                </div>
+            </div>
+
+            <div class="grid grid-nogutter lg:col-6 col-12 z-1">
+                <div class="col-12 p-2 sticky top-0 z-5">
+                    <div class="card h-full py-2 flex justify-content-between align-items-center">
+                        <img class="hidden md:block" src="../../../../assets/images/logo_ngang_nen_sang.svg"
+                            height="32px" alt="">
+                        <img class="block md:hidden" src="../../../../assets/images/favicon.svg" height="32px" alt="">
+                        <div class="relative">
+                            <p-calendar #calendar [(ngModel)]="dateFilter" styleClass="pr-3" inputStyleClass="pr-5"
+                                [numberOfMonths]="setCalendar()" placeholder="{{'Filter_by_date' | translate}}"
+                                selectionMode="range" [readonlyInput]="true" (ngModelChange)="dateFilterChange($event)">
+                                <p-footer>
+                                    <button type="text" pButton label="{{'Today' | translate}}" class="p-button-text"
+                                        (click)="selectDate(1); calendar.toggle()"></button>
+                                    <button type="text" pButton label="{{'Yesterday' | translate}}"
+                                        class="p-button-text" (click)="selectDate(2); calendar.toggle()"></button>
+                                    <button type="text" pButton label="{{'7_days_ago' | translate}}"
+                                        class="p-button-text" (click)="selectDate(3); calendar.toggle()"></button>
+                                    <button type="text" pButton label="{{'30_days_ago' | translate}}"
+                                        class="p-button-text" (click)="selectDate(4); calendar.toggle()"></button>
+                                    <button type="text" pButton label="{{'This_month' | translate}}"
+                                        class="p-button-text" (click)="selectDate(5); calendar.toggle()"></button>
+                                    <button type="text" pButton label="{{'Last_month' | translate}}"
+                                        class="p-button-text" (click)="selectDate(6); calendar.toggle()"></button>
+                                </p-footer>
+                            </p-calendar>
+                            <button *ngIf="dateFilter?.length === 2" pButton pRipple type="button" icon="pi pi-times"
+                                style="position: absolute; top: 0; right: 1rem;"
+                                class="p-button-rounded p-button-text p-button-sm" (click)="clearDate()"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 p-2 lg:hidden block">
+                    <div style="box-shadow: unset !important;"
+                        class="card h-full card-customer-info flex flex-column shadow-none border-none">
+                        <div class="text-2xl text-white">Số dư: </div>
+                        <div class="text-3xl font-semibold text-white text-right mb-3">{{10000000 | number}} VNĐ</div>
+                        <div class=" text-2xl text-white">Tổng chuyển khoản: </div>
+                        <div class="text-3xl font-semibold text-white text-right">{{123456789 | number}} VNĐ</div>
+                    </div>
+                </div>
+
+                <div class="col-6 p-2">
+                    <div class="card h-full card-project text-white">
+                        <div class="text-3xl font-semibold">{{total.projects}}</div>
+                        <div class="text-2xl text-right">
+                            <i class="pi pi-briefcase text-2xl mr-2"></i>Dự án
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 p-2">
+                    <div class="card h-full card-campaign text-white relative">
+                        <div class="text-3xl font-semibold">{{total.activeCampaigns}} / {{total.campaigns}}</div>
+                        <div class="text-2xl text-right">
+                            <i class="pi pi-chart-line text-2xl mr-2"></i>Chiến dịch
+                        </div>
+                        <div class="text-2xl text-right">({{total.activeCampaigns}} đang chạy)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- statistical -->
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.totalTransactionAmount | number}}đ
+                    </div>
+                    <div class="text-xl text-center">Chuyển khoản</div>
+                </div>
+            </div>
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.totalExpenditureAmount | number}}đ
+                    </div>
+                    <div class="text-xl text-center">Chi tiêu</div>
+                </div>
+            </div>
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.totalAccountingAmount | number}}đ
+                    </div>
+                    <div class="text-xl text-center">Hạch toán</div>
+                </div>
+            </div>
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.totalFeeAmount | number}}đ</div>
+                    <div class="text-xl text-center">Thu phí</div>
+                </div>
+            </div>
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.totalAnotherServiceFee | number}}đ
+                    </div>
+                    <div class="text-xl text-center">Phí dịch vụ khác</div>
+                </div>
+            </div>
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.totalTaxAmount | number}}đ</div>
+                    <div class="text-xl text-center">Thuế</div>
+                </div>
+            </div>
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.totalResult | number}}</div>
+                    <div class="text-xl text-center">Kết quả</div>
+                </div>
+            </div>
+            <div class="lg:col-3 col-6 p-2">
+                <div class="card h-full">
+                    <div class="text-3xl font-semibold text-center">{{statistical.avgAmountPer | number}}đ</div>
+                    <div class="text-xl text-center">Chi phí/Kết quả</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="fetchingData"
+    class="flex flex-column justify-content-center align-items-center absolute top-0 left-0 w-screen h-full z-1 bg-white">
+    <img width="150" src="../../../../assets/images/logo_doc_nen_sang.svg" alt="">
+    <div class="dot-elastic"></div>
+</div>
