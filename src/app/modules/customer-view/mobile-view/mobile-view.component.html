@@ -1,0 +1,84 @@
+<div class="main bg-gray-100 w-full px-1">
+    <div class="black-card black-card--front">
+        <div class="text-center">Tổng hạch toán</div>
+        <div class="black-card__number">{{10000000 | number}} VND
+            <i class="pi pi-plus-circle cursor-pointer" (click)="displayChargeComponent = true"></i>
+        </div>
+        <div class="mb-3"></div>
+        <div class="text-center">Tổng chuyển khoản</div>
+        <div class="black-card__number">{{123456789 | number}} VND</div>
+        <div class="mb-3"></div>
+        <!-- <div class="black-card__expiry-date">10/17</div> -->
+        <div class="black-card__owner">TA HOANG LONG</div>
+        <img class="black-card__logo" src="../../../../assets/images/favicon.svg" />
+    </div>
+
+    <div class="flex flex-row relative z-3 mt--20">
+        <div class="w-6 p-2">
+            <div class="card w-full relative">
+                <div class="text-lg">Dự án</div>
+                <div class="text-2xl font-semibold">{{data.projects}}</div>
+                <p-avatar icon="pi pi-briefcase" class="mr-2 absolute right-0 bottom--1rem opacity-70" size="xlarge"
+                    shape="square" [style]="{'background-color':'#2196F3', 'color': '#ffffff'}"></p-avatar>
+            </div>
+        </div>
+        <div class="w-6 p-2">
+            <div class="card w-full relative">
+                <div class="text-lg">Chiến dịch</div>
+                <div class="text-2xl font-semibold">{{data.activeCampaigns}}/{{data.campaigns}}</div>
+                <p-avatar icon="pi pi-chart-line" class="mr-2 absolute right-0 bottom--1rem opacity-70" size="xlarge"
+                    shape="square" [style]="{'background-color':'#2196F3', 'color': '#ffffff'}"></p-avatar>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-column">
+        <div class="card flex flex-row justify-content-between">
+            <div>
+                <div>Chuyển khoản</div>
+                <div class="text-green-500 text-xl">{{data.totalTransactionAmount | number}}</div>
+            </div>
+            <div class="text-right">
+                <div>Hạch toán</div>
+                <div class="text-green-500 text-xl">{{data.totalAccountingAmount | number}}</div>
+            </div>
+        </div>
+
+        <div class="card flex flex-row justify-content-between">
+            <div>
+                <div>Chi tiêu</div>
+                <div class="text-green-500 text-xl">{{data.totalExpenditureAmount | number}}</div>
+            </div>
+            <div class="text-right">
+                <div>Thu phí</div>
+                <div class="text-green-500 text-xl">{{data.totalFeeAmount | number}}</div>
+            </div>
+        </div>
+
+        <div class="card flex flex-row justify-content-between">
+            <div>
+                <div>Dịch vụ khác</div>
+                <div class="text-green-500 text-xl">{{data.totalAnotherServiceFee | number}}</div>
+            </div>
+            <div class="text-right">
+                <div>Thuế</div>
+                <div class="text-green-500 text-xl">{{data.totalTaxAmount | number}}</div>
+            </div>
+        </div>
+
+        <div class="card flex flex-row justify-content-between">
+            <div>
+                <div>Kết quả</div>
+                <div class="text-green-500 text-xl">{{data.totalResult | number}}</div>
+            </div>
+            <div class="text-right">
+                <div>Chi phí/Kết quả</div>
+                <div class="text-green-500 text-xl">{{data.avgAmountPer | number}}</div>
+            </div>
+        </div>
+    </div>
+
+    <p-sidebar [(visible)]="displayChargeComponent" position="right" [style]="{width:'25rem'}" [baseZIndex]="10000">
+        <app-charge *ngIf="displayChargeComponent" [submitted]="false"></app-charge>
+    </p-sidebar>
+</div>

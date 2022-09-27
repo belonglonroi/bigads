@@ -1,0 +1,47 @@
+<div *ngIf="!submitted" class="w-full flex flex-column justify-content-center align-items-center">
+    <h3>Nạp tiền</h3>
+    <span class="px-3 mb-2 text-center">Vui lòng chọn mệnh giá tương ứng để thanh toán</span>
+    <div class="flex flex-column w-full">
+        <div class="w-full flex flex-column">
+            <div class="card">
+                <p-radioButton class="text-xl font-semibold" name="chargeValue" [value]="2" label="{{2000000 | number}}"
+                    [(ngModel)]="chargeValue" inputId="2"></p-radioButton>
+            </div>
+            <div class="card">
+                <p-radioButton class="text-xl font-semibold" name="chargeValue" [value]="5" label="{{5000000 | number}}"
+                    [(ngModel)]="chargeValue" inputId="5"></p-radioButton>
+            </div>
+            <div class="card">
+                <p-radioButton class="text-xl font-semibold" name="chargeValue" [value]="10"
+                    label="{{1000000 | number}}" [(ngModel)]="chargeValue" inputId="10"></p-radioButton>
+            </div>
+            <div class="card">
+                <p-radioButton class="text-xl font-semibold" name="chargeValue" [value]="20"
+                    label="{{20000000 | number}}" [(ngModel)]="chargeValue" inputId="20"></p-radioButton>
+            </div>
+            <div class="card">
+                <p-radioButton class="text-xl" name="chargeValue" [value]="0" label="Mệnh giá khác"
+                    [(ngModel)]="chargeValue" inputId="0"></p-radioButton>
+                <p-inputNumber class="w-full mt-2" styleClass="w-full" autocomplete="off" *ngIf="chargeValue === 0"
+                    [(ngModel)]="amount" inputId="amount" suffix=" đ">
+                </p-inputNumber>
+            </div>
+            <button pButton class="w-full" icon="pi pi-check" label="Lấy mã thanh toán"
+                (click)="submitAmount()"></button>
+        </div>
+        <!-- <div class="w-6 flex flex-column justify-content-center align-items-center">
+            <span>Vui lòng chọn mệnh giá tương ứng ở bên trái để thanh toán</span>
+            <ng-template *ngIf="false">
+                <span>Quét mã QR dưới đây bằng ứng dụng Internet Banking để thanh toán</span>
+                <img *ngIf="false" width="300px"
+                    src="https://img.vietqr.io/image/970422-8666699991997-hfrspu6.jpg?accountName=Bigads&amount=1000000&addInfo=Nap%20tien%20du%20an%20VHSC"
+                    alt="">
+                <span>Lưu ý: Mã QR này sẽ hết hạn sau 24 giờ kể từ lúc tạo
+                    Số hoá đơn: 1123165795656370304
+                    Sau khi thanh toán, nhấp vào nút bên dưới</span>
+                <p-button label="Hoàn tất thanh toán"></p-button>
+            </ng-template>
+        </div> -->
+    </div>
+</div>
+<app-qr-code *ngIf="submitted" [amount]="amount"></app-qr-code>

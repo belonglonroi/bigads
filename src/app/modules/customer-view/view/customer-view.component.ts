@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { BaseClass } from 'src/app/core/base/base.class';
 import { ApiPagingResult } from 'src/app/core/models/api-result.model';
@@ -22,8 +23,24 @@ export class CustomerViewComponent extends BaseClass implements OnInit {
         activeCampaigns: 0,
     };
     dateFilter: Date[] = [];
-    constructor(private reportService: ReportService) {
+    code: string = '';
+    displayChargeComponent: boolean = false;
+    data = {};
+
+    constructor(
+        private reportService: ReportService,
+        private route: ActivatedRoute
+    ) {
         super();
+        this.route.queryParams
+            .pipe(this.unsubsribeOnDestroy)
+            .subscribe((params) => {
+                if (params.hasOwnProperty('code')) {
+                    this.code = params.code;
+                    sessionStorage.setItem('code', this.code);
+                    this.selectDate(5);
+                }
+            });
     }
 
     ngOnInit(): void {
@@ -57,7 +74,12 @@ export class CustomerViewComponent extends BaseClass implements OnInit {
                             (e: CampaignAds) => e.isActive
                         ).length,
                     };
-                    console.log(this.statistical);
+                    this.data = {
+                        ...this.projectsData,
+                        ...this.campaignsData,
+                        ...this.statistical,
+                        ...this.total,
+                    };
                 },
                 error: (err) => {
                     console.log(err);

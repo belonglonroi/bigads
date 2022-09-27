@@ -1,16 +1,52 @@
-<div *ngIf="!fetchingData" class="w-screen h-screen flex justify-content-center">
-    <div class="lg:w-9 w-screen">
+<div *ngIf="!fetchingData"
+    class="w-screen h-screen flex flex-column align-items-center overflow-x-hidden">
+    <div class="w-25rem p-1 sticky top-0 z-5">
+        <div class="card h-full py-2 flex justify-content-between align-items-center">
+            <img class="block" src="../../../../assets/images/favicon.svg" height="32px" alt="">
+            <div class="relative">
+                <p-calendar #calendar [(ngModel)]="dateFilter" styleClass="pr-3" inputStyleClass="pr-5"
+                    [numberOfMonths]="setCalendar()" placeholder="{{'Filter_by_date' | translate}}"
+                    selectionMode="range" [readonlyInput]="true" (ngModelChange)="dateFilterChange($event)">
+                    <p-footer>
+                        <button type="text" pButton label="{{'Today' | translate}}" class="p-button-text"
+                            (click)="selectDate(1); calendar.toggle()"></button>
+                        <button type="text" pButton label="{{'Yesterday' | translate}}" class="p-button-text"
+                            (click)="selectDate(2); calendar.toggle()"></button>
+                        <button type="text" pButton label="{{'7_days_ago' | translate}}" class="p-button-text"
+                            (click)="selectDate(3); calendar.toggle()"></button>
+                        <button type="text" pButton label="{{'30_days_ago' | translate}}" class="p-button-text"
+                            (click)="selectDate(4); calendar.toggle()"></button>
+                        <button type="text" pButton label="{{'This_month' | translate}}" class="p-button-text"
+                            (click)="selectDate(5); calendar.toggle()"></button>
+                        <button type="text" pButton label="{{'Last_month' | translate}}" class="p-button-text"
+                            (click)="selectDate(6); calendar.toggle()"></button>
+                    </p-footer>
+                </p-calendar>
+                <button *ngIf="dateFilter?.length === 2" pButton pRipple type="button" icon="pi pi-times"
+                    style="position: absolute; top: 0; right: 1rem;" class="p-button-rounded p-button-text p-button-sm"
+                    (click)="clearDate()"></button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="lg:w-9 w-screen">
         <div class="lg:hidden bg-mobile w-full h-26rem absolute top-0 left-0 z-0 border"
             style="border-radius: 0 0 66px 66px;">
         </div>
         <div class="grid grid-nogutter lg:p-6 p-2">
             <div class="col-6 p-2 lg:block hidden">
-                <div class="card h-full card-customer-info flex flex-column gap-6">
-                    <div class="text-3xl font-semibold text-white">Tạ Hoàng Long</div>
-                    <div class="text-3xl font-semibold text-white">Số dư: </div>
-                    <div class="text-3xl font-semibold text-white text-right">{{10000000 | number}} VND</div>
-                    <div class=" text-3xl font-semibold text-white">Tổng chuyển khoản: </div>
-                    <div class="text-3xl font-semibold text-white text-right">{{123456789 | number}} VND</div>
+                <div
+                    class="card shadow-7 h-full card-customer-info flex flex-column justify-content-center align-items-center">
+                    <div class="text-xl text-white">Tổng hạch toán </div>
+                    <div class="text-3xl font-semibold text-white mb-3 flex align-items-center">
+                        <span>{{10000000 | number}} VNĐ</span>
+                        <i class="ml-3 text-xl pi pi-plus-circle cursor-pointer"
+                            (click)="displayChargeComponent = true"></i>
+                    </div>
+                    <div class=" text-lg text-white">Tổng chuyển khoản </div>
+                    <div class="text-3xl font-semibold text-white flex align-items-center">
+                        <span>{{123456789 | number}} VNĐ</span>
+                        <i class="ml-3 text-xl pi pi-clock"></i>
+                    </div>
                 </div>
             </div>
 
@@ -75,7 +111,6 @@
                 </div>
             </div>
 
-            <!-- statistical -->
             <div class="lg:col-3 col-6 p-2">
                 <div class="card h-full">
                     <div class="text-3xl font-semibold text-center">{{statistical.totalTransactionAmount | number}}đ
@@ -129,8 +164,16 @@
                 </div>
             </div>
         </div>
+    </div> -->
+    <div class="mt-2">
+        <app-mobile-view [data]="data"></app-mobile-view>
     </div>
 </div>
+
+<p-sidebar [(visible)]="displayChargeComponent" [fullScreen]="true" [baseZIndex]="10000">
+    <app-charge></app-charge>
+</p-sidebar>
+
 
 <div *ngIf="fetchingData"
     class="loading flex flex-column justify-content-center align-items-center absolute top-0 left-0 w-screen h-full z-1 bg-white overflow-y-hidden">
