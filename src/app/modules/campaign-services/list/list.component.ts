@@ -35,7 +35,9 @@ export class ListComponent extends BaseClass implements OnInit {
     };
     itemUpdate: CampaignAds;
     today: Date = new Date();
-    dateFilter: Date = new Date(new Date().setDate(new Date().getDate()-1));
+    dateFilter: Date = new Date(new Date().setDate(new Date().getDate() - 1));
+    isUpdate: boolean = false;
+    hotline: string = '';
 
     constructor(
         private campaignServicesService: CampaignServicesService,
@@ -84,6 +86,7 @@ export class ListComponent extends BaseClass implements OnInit {
             page: this.page,
             limit: this.limit,
             isActive: true,
+            hotline: this.hotline,
             inputDate: moment(this.dateFilter).format('YYYY-MM-DD'),
         };
         this.campaignServicesService
@@ -200,6 +203,7 @@ export class ListComponent extends BaseClass implements OnInit {
     }
 
     updateCost(e: CampaignService) {
+        this.isUpdate = true;
         const param = {
             campaignAds: this.recordsHasChanged.map((x) => {
                 return {
@@ -239,6 +243,9 @@ export class ListComponent extends BaseClass implements OnInit {
                             err.error?.message ??
                             this.translate.instant('Internal_server'),
                     });
+                },
+                complete: () => {
+                    this.isUpdate = false;
                 },
             });
     }
@@ -323,12 +330,17 @@ export class ListComponent extends BaseClass implements OnInit {
     getColor(e: string) {
         let color = 'unset';
         if (e === 'Kém' || e === 'Rất kém') {
-            color = 'red'
+            color = 'red';
         } else if (e === 'Đạt yêu cầu') {
-            color = 'blue'
+            color = 'blue';
         } else if (e === 'Tốt' || e === 'Xuất sắc') {
             color = 'green';
         }
         return color;
+    }
+
+    searchByHotline(e) {
+        this.hotline = e;
+        this.getCampaignServices();
     }
 }
